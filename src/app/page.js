@@ -20,8 +20,8 @@ export default function Home() {
         <div className={styles.carousel}>
           <div className={styles.carouselItems}>
             <ul className={styles.unorderedList}>
-              {testData.map(item => (
-                <li key={1} className={styles.listItem}>{item}</li>
+              {testData.map((item, index) => (
+                <li key={index} className={styles.listItem}>{item}</li>
               ))}
             </ul>
           </div>
