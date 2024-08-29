@@ -28,9 +28,12 @@
 /* form body */
 .formBody {
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100vw;
     height: 500px;
+}
+.form {
+    display: flex;
+    flex-direction: column;
 }
