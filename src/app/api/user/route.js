@@ -6,14 +6,17 @@ const { v4: uuidv4 } = require('uuid');
 export async function POST(request) {
     try {
         const data = await request.json();
+        console.log(`data: ${data}`)
     
         const uniqueId = uuidv4();
         const params = {
             TableName: 'users',
             Item: {
                 id: uniqueId,
-                name: data.name,
+                firstName: data.firstName,
+                lastName: data.lastName,
                 email: data.email,
+                role: data.role,
                 password: data.password,
             },
         };

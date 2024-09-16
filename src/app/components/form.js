@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
 import styles from '../page.module.css';
 
-export default function Form() {    
-    const [formData, setFormData] = useState({
-        name: '',
+export default function Form() {  
+    const initialFormData = {
+        firstName: '',
+        lastName: '',
         email: '',
+        role: 'Seller',
         password: '',
-    });
+    }  
+    const [formData, setFormData] = useState(initialFormData);
 
     async function onChange(event) {
         const { name, value } = event.target
@@ -29,20 +32,32 @@ export default function Form() {
         });
 
         const result = await response.json();
-        console.log(`Result: ${result.message}`);
+        console.log(`Result: ${result.message}`); // logs result
+
+        setFormData(initialFormData) // clears form data after submission
     }
 
     return (
         <div className={styles.formBody}>
             <form onSubmit={onSubmit} className={styles.form}>
-                <label>Name</label>
+                <label>First Name</label>
                 <input
                 onChange={onChange}
                 type="text"
                 className={styles.input}
-                name="name"
-                value={formData.name}
+                name="firstName"
+                value={formData.firstName}
                 />
+
+                <label>Last Name</label>
+                <input
+                onChange={onChange}
+                type="text"
+                className={styles.input}
+                name="lastName"
+                value={formData.lastName}
+                />
+
                 <label>Email</label>
                 <input
                 onChange={onChange}
@@ -51,6 +66,17 @@ export default function Form() {
                 name="email"
                 value={formData.email}
                 />
+
+                <label>Select a role</label>
+                <select
+                onChange={onChange}
+                className={styles.input}
+                name="role"
+                value={formData.role}>
+                    <option>Seller</option>
+                    <option>Buyer</option>
+                </select>
+
                 <label>Password</label>
                 <input
                 onChange={onChange}
@@ -59,6 +85,7 @@ export default function Form() {
                 name="password"
                 value={formData.password}
                 />
+
                 <button
                 type="submit"
                 className={styles.formButton}>Submit</button>
