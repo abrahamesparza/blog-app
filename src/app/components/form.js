@@ -8,7 +8,7 @@ export default function Form() {
         email: '',
         role: 'Seller',
         password: '',
-    }  
+    }
     const [formData, setFormData] = useState(initialFormData);
 
     async function onChange(event) {
