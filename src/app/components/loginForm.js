@@ -20,7 +20,7 @@ export default function LoginForm({ formType }) {
         event.preventDefault();
 
         let data = JSON.stringify(formData);
-        const response = await fetch('/api/user', {
+        const response = await fetch('/api/login', {
             method: 'POST',
             body: data,
             headers: {
