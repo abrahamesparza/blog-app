@@ -23,7 +23,7 @@ export default function SignupForm({ formType }) {
         event.preventDefault();
 
         let data = JSON.stringify(formData);
-        const response = await fetch('/api/user', {
+        const response = await fetch('/api/signup', {
             method: 'POST',
             body: data,
             headers: {
