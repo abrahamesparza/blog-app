@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styles from '../page.module.css';
 
-export default function Form() {  
+export default function LoginForm({ formType }) {  
     const initialFormData = {
-        firstName: '',
-        lastName: '',
         email: '',
-        role: 'Seller',
         password: '',
     }  
     const [formData, setFormData] = useState(initialFormData);
@@ -40,23 +37,6 @@ export default function Form() {
     return (
         <div className={styles.formBody}>
             <form onSubmit={onSubmit} className={styles.form}>
-                <label>First Name</label>
-                <input
-                onChange={onChange}
-                type="text"
-                className={styles.input}
-                name="firstName"
-                value={formData.firstName}
-                />
-
-                <label>Last Name</label>
-                <input
-                onChange={onChange}
-                type="text"
-                className={styles.input}
-                name="lastName"
-                value={formData.lastName}
-                />
 
                 <label>Email</label>
                 <input
@@ -66,16 +46,6 @@ export default function Form() {
                 name="email"
                 value={formData.email}
                 />
-
-                <label>Select a role</label>
-                <select
-                onChange={onChange}
-                className={styles.input}
-                name="role"
-                value={formData.role}>
-                    <option>Seller</option>
-                    <option>Buyer</option>
-                </select>
 
                 <label>Password</label>
                 <input
@@ -89,6 +59,12 @@ export default function Form() {
                 <button
                 type="submit"
                 className={styles.formButton}>Submit</button>
+
+                <p
+                onClick={() => formType('Sign Up')}
+                className={styles.pText}
+                value='Sign Up'
+                >New User? Sign Up</p>
             </form>
         </div>
     )

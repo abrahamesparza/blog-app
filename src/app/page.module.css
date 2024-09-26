@@ -25,6 +25,15 @@
     justify-content: center;
 }
 
+/* form options */
+.formOption {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    text-align: center;
+    margin-top: 15%;
+}
+
 /* form body */
 .formBody {
     display: flex;
@@ -34,6 +43,20 @@
     height: 500px;
 }
 .form {
+    margin-top: 12.5vh;
     display: flex;
+    justify-content: center;
     flex-direction: column;
+    /* border: 1px solid white;
+    border-radius: 5%;
+    padding: 100px; */
+}
+
+.input {
+    margin-bottom: 25px;
+    width: 25vw;
+}
+
+.pText {
+    margin-top: 25px;
 }
