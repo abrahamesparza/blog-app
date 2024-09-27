@@ -24,11 +24,15 @@ export default function Home() {
     setForm(formType)
   }
 
+  async function resetHome() {
+    setForm('');
+  }
+
   return (
     <main>
       <div className={styles.homePage}>
         <div className={styles.banner}>
-          <h1>MARKETPLACE</h1>
+          <h1 onClick={resetHome}>MARKETPLACE</h1>
           <Menu />
         </div>
         <div>
