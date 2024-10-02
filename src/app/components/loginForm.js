@@ -7,6 +7,7 @@ export default function LoginForm({ formType }) {
         password: '',
     }  
     const [formData, setFormData] = useState(initialFormData);
+    const [loginResult, setLoginResult] = useState('');
 
     async function onChange(event) {
         const { name, value } = event.target
@@ -14,6 +15,17 @@ export default function LoginForm({ formType }) {
             ...prevData,
             [name]: value
         }))
+    }
+
+    async function checkLoginResult() {
+        if (loginResult === 'Success') {
+            alert('Successful loginResut') // next page component here
+        }
+        else {
+            return; // some sort of try again modal or
+                    // refresh the page with all the
+                    // fields filled besides the password
+        }
     }
 
     async function onSubmit(event) {
@@ -29,9 +41,9 @@ export default function LoginForm({ formType }) {
         });
 
         const result = await response.json();
-        console.log(`Result: ${result.message}`); // logs result
-
-        setFormData(initialFormData) // clears form data after submission
+        setLoginResult(result.message);
+        setFormData(initialFormData);
+        checkLoginResult();
     }
 
     return (
