@@ -29,7 +29,7 @@ export async function POST(request) {
         };
         
         await dynamoDB.put(params).promise();
-        return NextResponse.json({'message': 'Data stored successfully.'});
+        return NextResponse.json({'message': 'Success'});
     }
     catch(error) {
         console.error(`Error storing data', ${error}`)
