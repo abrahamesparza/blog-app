@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styles from '../page.module.css';
 
+import HomePage from "./isLoggedIn/homePage";
+
 export default function LoginForm({ formType }) {  
     const initialFormData = {
         email: '',
@@ -8,6 +10,7 @@ export default function LoginForm({ formType }) {
     }  
     const [formData, setFormData] = useState(initialFormData);
     const [loginResult, setLoginResult] = useState('');
+    const [nextPage, setNextPage] = useState(false);
 
     async function onChange(event) {
         const { name, value } = event.target
@@ -19,9 +22,10 @@ export default function LoginForm({ formType }) {
 
     async function checkLoginResult() {
         if (loginResult === 'Success') {
-            alert('Successful loginResut') // next page component here
+            setNextPage(true);
         }
         else {
+            setNextPage(false);
             return; // some sort of try again modal or
                     // refresh the page with all the
                     // fields filled besides the password
@@ -43,7 +47,12 @@ export default function LoginForm({ formType }) {
         const result = await response.json();
         setLoginResult(result.message);
         setFormData(initialFormData);
+
         checkLoginResult();
+    }
+
+    if (nextPage) {
+        return <HomePage message={'Welcome back!'} />
     }
 
     return (

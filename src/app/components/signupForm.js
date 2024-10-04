@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import styles from '../page.module.css';
 
+import HomePage from './isLoggedIn/homePage';
+
 export default function SignupForm({ formType }) {  
     const initialFormData = {
         firstName: '',
@@ -10,6 +12,7 @@ export default function SignupForm({ formType }) {
         password: '',
     }  
     const [formData, setFormData] = useState(initialFormData);
+    const [nextPage, setNextPage] = useState(false);
 
     async function onChange(event) {
         const { name, value } = event.target
@@ -17,6 +20,15 @@ export default function SignupForm({ formType }) {
             ...prevData,
             [name]: value
         }))
+    }
+
+    async function checkNextStep(message) {
+        if (message === 'Success') {
+            setNextPage(true);
+        }
+        else {
+            setNextPage(false);
+        }
     }
 
     async function onSubmit(event) {
@@ -38,8 +50,13 @@ export default function SignupForm({ formType }) {
 
         const result = await response.json();
         console.log(`Result: ${result.message}`); // logs result
-
+       
+        checkNextStep(result.message)
         setFormData(initialFormData) // clears form data after submission
+    }
+
+    if (nextPage) {
+        return <HomePage message={'You have successfully logged in.'} />
     }
 
     return (
