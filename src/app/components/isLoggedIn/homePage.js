@@ -1,7 +1,4 @@
-const HomePage = ({ status, message }) => {
-    if (status) {
-        alert(message)
-    }
+const HomePage = () => {
     return (
         <div>
             <h2>Logged in user page.</h2>
