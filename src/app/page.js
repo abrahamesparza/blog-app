@@ -8,6 +8,7 @@ import Menu from './components/menu';
 import SignupForm from "./components/signupForm";
 import LoginForm from "./components/loginForm";
 import FormTypes from "./components/formTypes";
+import HomePage from "./components/isLoggedIn/homePage";
 
 const testData = ['TEST', 'TEST', 'TEST'];
 
@@ -32,15 +33,15 @@ export default function Home() {
     <main>
       <div className={styles.homePage}>
         <div className={styles.banner}>
-          <h1 onClick={resetHome}>MARKETPLACE</h1>
-          <Menu />
+          {/* <Menu /> */}
         </div>
         <div>
-          {
+          <HomePage />
+          {/* {
             form === 'Sign Up' ? <SignupForm formType={updateForm}/>
             : form === 'Log In' ? <LoginForm formType={updateForm}/>
             : <FormTypes formType={handleForm}/>
-          }
+          } */}
         </div>
       </div>
     </main>
