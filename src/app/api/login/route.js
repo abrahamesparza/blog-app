@@ -1,3 +1,4 @@
+import { generateSessionId, storeSession } from '../lib/session';
 const { v4: uuidv4 } = require('uuid');
 import bcrypt from 'bcryptjs'
 
@@ -33,7 +34,13 @@ export async function POST(request) {
             return NextResponse.json({ message: 'Invalid password' }, { status: 401 });
         }
 
-        return NextResponse.json({ message: 'Success' });
+        const sessionId = generateSessionId();
+        storeSession(sessionId, { id: user.id, email: user.email });
+
+        const response = NextResponse.json({ message: 'Success' })
+        response.cookies.set('sessionId', sessionId, {httpOnly: true, maxAge: 3600});
+        
+        return response;
     } catch(error) {
         console.error(`Error checking user: ${user}`);
         return NextResponse.error();
