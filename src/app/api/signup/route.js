@@ -23,7 +23,6 @@ export async function POST(request) {
                 firstName: data.firstName,
                 lastName: data.lastName,
                 email: data.email,
-                role: data.role,
                 password: hashedPassword,
             },
         };
