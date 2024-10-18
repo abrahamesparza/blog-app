@@ -8,7 +8,6 @@ export default function SignupForm({ formType }) {
         firstName: '',
         lastName: '',
         email: '',
-        role: 'Seller',
         password: '',
     }  
     const [formData, setFormData] = useState(initialFormData);
@@ -56,7 +55,7 @@ export default function SignupForm({ formType }) {
     }
 
     if (nextPage) {
-        return <HomePage message={'You have successfully logged in.'} />
+        return <HomePage />
     }
 
     return (
@@ -88,16 +87,6 @@ export default function SignupForm({ formType }) {
                 name="email"
                 value={formData.email}
                 />
-
-                <label>Select a role</label>
-                <select
-                onChange={onChange}
-                className={styles.input}
-                name="role"
-                value={formData.role}>
-                    <option>Seller</option>
-                    <option>Buyer</option>
-                </select>
 
                 <label>Password</label>
                 <input
