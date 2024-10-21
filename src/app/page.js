@@ -5,10 +5,10 @@ import { MdOutlineMenu } from "react-icons/md";
 import styles from "./page.module.css";
 
 import Menu from './components/menu';
-import SignupForm from "./components/signupForm";
-import LoginForm from "./components/loginForm";
+import SignupForm from "./components/signup/signupForm";
+import LoginForm from "./components/login/loginForm";
 import FormTypes from "./components/formTypes";
-import HomePage from "./components/isLoggedIn/homePage";
+import HomePage from "./components/landing/homePage";
 
 const testData = ['TEST', 'TEST', 'TEST'];
 
@@ -36,12 +36,12 @@ export default function Home() {
           {/* <Menu /> */}
         </div>
         <div>
-          <HomePage />
-          {/* {
+          {/* <HomePage /> */}
+          {
             form === 'Sign Up' ? <SignupForm formType={updateForm}/>
             : form === 'Log In' ? <LoginForm formType={updateForm}/>
             : <FormTypes formType={handleForm}/>
-          } */}
+          }
         </div>
       </div>
     </main>
