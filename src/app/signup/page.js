@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import styles from '../page.module.css';
 import { useRouter } from 'next/navigation';
 
-import HomePage from '../components/landing/homePage';
+import HomePage from '../landing/page';
 
 export default function SignupForm() {  
     const router = useRouter();

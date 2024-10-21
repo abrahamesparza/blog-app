@@ -4,7 +4,7 @@ import styles from '../page.module.css';
 
 import { useRouter } from "next/navigation";
 
-import HomePage from "../components/landing/homePage";
+import HomePage from "../landing/page";
 
 export default function LoginForm() {  
     const router = useRouter();
@@ -25,7 +25,9 @@ export default function LoginForm() {
     }
 
     async function checkLoginResult() {
-        if (loginResult === 'Success') {
+        if (loginResult) {
+            router.push('/landing')
+
             setNextPage(true);
         }
         else {
@@ -59,6 +61,7 @@ export default function LoginForm() {
 
     function handleRouting(e) {
         let page = e.target.innerText;
+
         if (page.includes('Sign Up')) {
             page = 'signup';
         }
