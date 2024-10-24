@@ -28,12 +28,24 @@ const generateBlogData = () => {
 };
 
 const generateUserData = () => {
+    const prefix = lorem.generateWords(1);
+    const suffix = lorem.generateWords(1);
+    const loremPassword = lorem.generateWords(1).concat(Math.floor(Math.random() * 900) + 100);
     const data = {
         user: generateUniqueName(),
-        blogData: generateBlogData(),
+        email: `${prefix}@${suffix}.com`,
+        password: loremPassword
     }
     return data;
 };
+
+// todo: write below scripts and connect them through a unique id
+// on the server (will research best approach) so each user has 2 random blogs
+
+// write function to generate 1000 blogs for seeding database
+
+//write function to generate 500 users and seed to database
+
 
 module.exports = {
     generateUserData,
