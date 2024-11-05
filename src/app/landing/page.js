@@ -16,7 +16,7 @@ export default function HomePage() {
     - Move the below code to a writeBlog component
     */
     return (
-        <div className={styles.container}>
+        <div className={styles.landingContainer}>
             <h1>Blog content goes here</h1>
             <h2>Write a blog</h2>
             <Logout reroute={'/'}/>
