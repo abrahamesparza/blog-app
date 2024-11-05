@@ -1,5 +1,13 @@
 .container {
+    /* light mode */
+    background-color: whitesmoke;
+    color: #404040;
+
+    /* darkmode */
+    /* background-color: #404040;
+    color: whitesmoke; */
     width: 100vw;
+    height: 100vh;
     padding-left: 10px;
     padding-right: 10px;
 }
