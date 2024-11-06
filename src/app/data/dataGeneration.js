@@ -1,14 +1,24 @@
 // generate unique data below and tie them together to store into the database
-import { uniqueNamesGenerator, names } from "unique-names-generator";
+import { uniqueNamesGenerator, adjectives, animals, colors, names } from "unique-names-generator";
 import { LoremIpsum } from "lorem-ipsum";
 
 const generateUniqueName = () => {
     const config = {
         dictionaries: [names]
     }
-    const name = uniqueNamesGenerator(config);
-    return name;
+    const firstName = uniqueNamesGenerator(config);
+    const lastName = uniqueNamesGenerator(config);
+    return `${firstName} ${lastName}`;
 };
+
+const generateUniqueUsername = () => {
+    const usernameConfig = {
+        dictionaries: [adjectives, colors, animals],
+        separator: '-',
+    }
+    const username = uniqueNamesGenerator(usernameConfig);
+    return username;
+}
 
 const lorem = new LoremIpsum({
     sentencesPerParagraph: {
@@ -32,7 +42,8 @@ const generateUserData = () => {
     const suffix = lorem.generateWords(1);
     const loremPassword = lorem.generateWords(1).concat(Math.floor(Math.random() * 900) + 100);
     const data = {
-        user: generateUniqueName(),
+        name: generateUniqueName(),
+        username: generateUniqueUsername(),
         email: `${prefix}@${suffix}.com`,
         password: loremPassword
     }
