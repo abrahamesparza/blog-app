@@ -30,7 +30,7 @@ export default function HomePage() {
         },
         {
         'name': 'meowdas',
-        'title': 'the mewodiest'
+        'title': 'the meowdiest'
         },
         {
         'name': 'snoop',
