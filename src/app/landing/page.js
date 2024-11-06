@@ -1,13 +1,15 @@
 'use client'
 import React, {useState, useEffect } from 'react';
 import styles from './landingPage.module.css';
+import { generateUserData } from '../data/dataGeneration';
 
 import Logout from '../logout/page';
 
 export default function HomePage() {
 
     useEffect(() => {
-        console.log('temporary placeholder')
+        let generatedData = generateUserData();
+        console.log(generatedData)
     }, []);
 
 
