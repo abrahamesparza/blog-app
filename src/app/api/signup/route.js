@@ -1,10 +1,9 @@
-import { generateSessionId, validateSession } from '../lib/session';
+import { NextResponse } from 'next/server';
+import { generateSessionId, storeSession } from '../lib/session';
 const { v4: uuidv4 } = require('uuid');
 import bcrypt from 'bcryptjs';
 
 import dynamoDB from '../lib/dynamodb';
-import { NextResponse } from 'next/server';
-import { generateSessionId, validateSession } from '../lib/session';
 
 
 export async function POST(request) {
@@ -36,6 +35,7 @@ export async function POST(request) {
 
         const response = NextResponse.json({ message: 'Success' })
         response.cookies.set('sessionId', sessionId, {httpOnly: true, maxAge: 3600});
+        return response;
     }
     catch(error) {
         console.error(`Error storing data', ${error}`)
