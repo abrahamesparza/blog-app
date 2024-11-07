@@ -1,4 +1,3 @@
-// generate unique data below and tie them together to store into the database
 import { uniqueNamesGenerator, adjectives, animals, colors, names } from "unique-names-generator";
 const { v4: uuidv4 } = require('uuid');
 import { LoremIpsum } from "lorem-ipsum";
@@ -68,6 +67,7 @@ const generateBlogData = async () => {
 };
 
 const generateUserData = () => {
+    //modify function to generate 500 users and seed to database
     const prefix = lorem.generateWords(1);
     const suffix = lorem.generateWords(1);
     const loremPassword = lorem.generateWords(1).concat(Math.floor(Math.random() * 900) + 100);
@@ -80,13 +80,9 @@ const generateUserData = () => {
     return data;
 };
 
-// todo: write below scripts and connect them through a unique id
-// on the server (will research best approach) so each user has 2 random blogs
-
-// write function to generate 1000 blogs for seeding database
+// todo: identify a way to assign two random blogs to each user
 
 
-//write function to generate 500 users and seed to database
 
 
 module.exports = {
