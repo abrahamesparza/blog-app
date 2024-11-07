@@ -7,11 +7,14 @@ import SignupForm from "./signup/page";
 import LoginForm from "./login/page";
 import FormTypes from "./components/formTypes";
 
+import { generateBlogData } from './data/dataGeneration.js';
+
 
 export default function Home() {
 
   // use to generate data in console for testing
   useEffect(() => {
+    // generateBlogData();
     console.log('HI :D');
   }, [])
 
