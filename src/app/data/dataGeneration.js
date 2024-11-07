@@ -1,6 +1,10 @@
 // generate unique data below and tie them together to store into the database
 import { uniqueNamesGenerator, adjectives, animals, colors, names } from "unique-names-generator";
+const { v4: uuidv4 } = require('uuid');
 import { LoremIpsum } from "lorem-ipsum";
+
+import dynamoDB from '../api/lib/dynamodb.js';
+
 
 const generateUniqueName = () => {
     const config = {
@@ -31,10 +35,36 @@ const lorem = new LoremIpsum({
     }
 });
 
-const generateBlogData = () => {
+const generateUniqueId = () => {
+    const uniqueId = uuidv4();
+    return uniqueId
+}
+
+const generateBlogData = async () => {
     const paragraphAmount = Math.floor((Math.random() * 5) + 1);
-    const blogData = lorem.generateParagraphs(paragraphAmount);
-    return blogData;
+    const titleAmount = Math.floor((Math.random() * 10) + 1);
+
+    for (let i = 0; i < 1000; i++) {
+        const uniqueId = generateUniqueId();
+        const blogTitle = lorem.generateWords(titleAmount);
+        const blogContent = lorem.generateParagraphs(paragraphAmount);
+        const blogData = {
+            id: uniqueId,
+            title: blogTitle,
+            content: blogContent,
+        };
+        
+        try {
+            await dynamoDB.put({
+                TableName: 'blog-data',
+                Item: blogData,
+            }).promise();
+
+            console.log(`Successfully wrote item ${i + 1}: ${blogData}`);
+        } catch (error) {
+            console.error(`Error writing item ${i + 1}: ${error}`)
+        }
+    };
 };
 
 const generateUserData = () => {
@@ -46,7 +76,7 @@ const generateUserData = () => {
         username: generateUniqueUsername(),
         email: `${prefix}@${suffix}.com`,
         password: loremPassword
-    }
+    };
     return data;
 };
 
@@ -55,9 +85,11 @@ const generateUserData = () => {
 
 // write function to generate 1000 blogs for seeding database
 
+
 //write function to generate 500 users and seed to database
 
 
 module.exports = {
-    generateUserData,
+    // generateUserData,
+    generateBlogData,
 };
