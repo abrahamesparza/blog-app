@@ -7,7 +7,7 @@ import Logout from '../logout/page';
 export default function HomePage() {
 
     useEffect(() => {
-        console.log('hi')
+        console.log('hi :D');
     }, []);
 
 
@@ -71,7 +71,7 @@ export default function HomePage() {
             </div>
             <div className={styles.feedContainer}>
                 {fakeBlogs.map((item, index) => (
-                    <div>
+                    <div className={styles.blogItemContainer}>
                         <p
                         className={styles.blogItem}
                         key={index}>
