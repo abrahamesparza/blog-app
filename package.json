@@ -20,5 +20,6 @@
     "react-icons": "^5.2.1",
     "unique-names-generator": "^4.7.1",
     "uuid": "^10.0.0"
-  }
+  },
+  "type": "module"
 }
