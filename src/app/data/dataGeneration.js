@@ -114,6 +114,8 @@ const batchWriteUserData = (data) => {
             })),
         },
     };
+    // current issue: ValidationException
+    // need to identify why this is happening, and resolve it
     dynamoDB.batchWrite(input, (err, data) => {
         if (err) console.error('Error:', err);
         else return 'Sucess';
@@ -123,7 +125,7 @@ const batchWriteUserData = (data) => {
 let data = generateUserData();
 console.log(`data: ${JSON.stringify(data)}`);
 
-//comment out when running script in terminal
+// comment out when running script in terminal
 // module.exports = {
 //     generateUserData,
 // };
