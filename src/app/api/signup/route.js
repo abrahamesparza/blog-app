@@ -14,7 +14,6 @@ export async function POST(request) {
         }
 
         const hashedPassword = await bcrypt.hash(data.password, 10);
-        console.log(`hashed password: ${hashedPassword}`)
     
         const uniqueId = uuidv4();
         const params = {
