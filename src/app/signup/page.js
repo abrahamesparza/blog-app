@@ -11,6 +11,7 @@ export default function SignupForm() {
         firstName: '',
         lastName: '',
         email: '',
+        username: '',
         password: '',
     }  
     const [formData, setFormData] = useState(initialFormData);
@@ -103,6 +104,15 @@ export default function SignupForm() {
                 className={styles.input}
                 name="email"
                 value={formData.email}
+                />
+
+                <label>Username</label>
+                <input
+                onChange={onChange}
+                type="text"
+                className={styles.input}
+                name="username"
+                value={formData.username}
                 />
 
                 <label>Password</label>

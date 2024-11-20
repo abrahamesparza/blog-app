@@ -24,6 +24,7 @@ export async function POST(request) {
                 firstName: data.firstName,
                 lastName: data.lastName,
                 email: data.email,
+                username: data.username,
                 password: hashedPassword,
             },
         };
@@ -31,10 +32,14 @@ export async function POST(request) {
         await dynamoDB.put(params).promise();
 
         const sessionId = generateSessionId();
-        storeSession(sessionId, { id: uniqueId, email: data.email });
+        storeSession(sessionId, {
+            id: uniqueId,
+            email: data.email,
+            username: data.username
+        });
 
         const response = NextResponse.json({ message: 'Success' })
-        response.cookies.set('sessionId', sessionId, {httpOnly: true, maxAge: 3600});
+        response.cookies.set('sessionId', sessionId, { httpOnly: true, maxAge: 3600 });
         return response;
     }
     catch(error) {
