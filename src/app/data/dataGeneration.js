@@ -112,4 +112,5 @@ const batchWriteUserData = (data) => {
     });
 }
 
+// "type": "module" required in package.json to generateUserData
 // generateUserData(); // generates user data
