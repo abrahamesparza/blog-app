@@ -1,5 +1,4 @@
 import { uniqueNamesGenerator, adjectives, animals, colors, names } from "unique-names-generator";
-
 import { v4 } from "uuid";
 import { LoremIpsum } from "lorem-ipsum";
 
@@ -61,7 +60,6 @@ const generateBlogData = () => {
 
 const generateUserData = () => {
     let maxUsers = 100;
-    let count = 0;
     let userData = []
 
     while (maxUsers > 0) {
@@ -77,16 +75,14 @@ const generateUserData = () => {
             password: loremPassword
         };
         data['blogs'] = generateBlogData();
-
-        if (count < 25) {
-            userData.push(data);
-        }
-        else if (count === 25) {
+        userData.push(data);
+        
+        if (userData.length === 25) {
             batchWriteUserData(userData);
-        }
-        count++;
+            userData = [];
+        }; 
         maxUsers--;
-    }
+    };
 };
 
 const batchWriteUserData = (data) => {
@@ -95,37 +91,25 @@ const batchWriteUserData = (data) => {
             "users": data.map((item) => ({
                 PutRequest: {
                     Item: {
-                        id: { S: item.id },
-                        name: { S: item.name },
-                        username: { S: item.username },
-                        email: { S: item.email },
-                        password: { S: item.password },
-                        blogs: {
-                            L: item.blogs.map((blog) => ({
-                                M: {
-                                    id: { S: blog.id.toString() },
-                                    title: { S: blog.title },
-                                    content: { S: blog.content },
-                                },
-                            })),
-                        },
+                        id: item.id,
+                        name: item.name,
+                        username: item.username,
+                        email: item.email,
+                        password: item.password,
+                        blogs: item.blogs.map((blog) => ({
+                            id: blog.id.toString(),
+                            title: blog.title,
+                            content: blog.content,
+                        })),
                     },
                 },
             })),
         },
     };
-    // current issue: ValidationException
-    // need to identify why this is happening, and resolve it
     dynamoDB.batchWrite(input, (err, data) => {
         if (err) console.error('Error:', err);
         else return 'Sucess';
     });
 }
 
-let data = generateUserData();
-console.log(`data: ${JSON.stringify(data)}`);
-
-// comment out when running script in terminal
-// module.exports = {
-//     generateUserData,
-// };
+// generateUserData(); // generates user data
