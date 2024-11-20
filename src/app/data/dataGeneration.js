@@ -1,9 +1,9 @@
 import { uniqueNamesGenerator, adjectives, animals, colors, names } from "unique-names-generator";
 import { v4 } from "uuid";
 import { LoremIpsum } from "lorem-ipsum";
+import bcrypt from 'bcryptjs';
 
 import dynamoDB from '../api/lib/dynamodb.js';
-
 
 const generateUniqueName = () => {
     const config = {
@@ -58,7 +58,7 @@ const generateBlogData = () => {
     return userBlogs;
 };
 
-const generateUserData = () => {
+const generateUserData = async () => {
     let maxUsers = 100;
     let userData = []
 
@@ -66,13 +66,14 @@ const generateUserData = () => {
         const prefix = lorem.generateWords(1);
         const suffix = lorem.generateWords(1);
         const loremPassword = lorem.generateWords(1).concat(Math.floor(Math.random() * 900) + 100);
-        
+        const hashedPassword = await bcrypt.hash(loremPassword, 10);
+
         const data = {
             id: generateUniqueId(),
             name: generateUniqueName(),
             username: generateUniqueUsername(),
             email: `${prefix}@${suffix}.com`,
-            password: loremPassword
+            password: hashedPassword
         };
         data['blogs'] = generateBlogData();
         userData.push(data);
@@ -92,7 +93,8 @@ const batchWriteUserData = (data) => {
                 PutRequest: {
                     Item: {
                         id: item.id,
-                        name: item.name,
+                        firstName: item.name.split(' ')[0],
+                        lastName: item.name.split(' ')[1],
                         username: item.username,
                         email: item.email,
                         password: item.password,
