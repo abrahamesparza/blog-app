@@ -6,9 +6,10 @@ export async function GET() {
         'TableName': 'users',
         'ProjectionExpression': 'id, username, blogs',
     };
+
     try {
         const data = await dynamoDB.scan(params).promise();
-        return NextResponse.json(data);
+        return NextResponse.json({ items: data.Items });
     } catch (err) {
         console.error(err);
         return NextResponse.json({ error: 'Failed to fetch data' })
