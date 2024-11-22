@@ -3,60 +3,48 @@ import React, {useState, useEffect } from 'react';
 import styles from './landingPage.module.css';
 
 import Logout from '../logout/page';
+import Card from '../components/card';
 
 export default function HomePage() {
+    const [blogData, setBlogData] = useState([]);
+    const [currentPage, setCurrentPage] = useState(0);
 
     useEffect(() => {
-        console.log('hi :D');
+        getBlogData();
     }, []);
 
+    const getBlogData = async () => {
+        const url = 'api/get-blog-data';
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`Response status: ${response.status}`);
+            }
+            const data = await response.json();
+            console.log('data:', data);
+            setBlogData(data.items);
+        } catch (error) {
+            console.error(`Error: ${error}`);
+        }
+    };
 
-    /*
-    - Rewrite landing page to show generated blog data
-    - Move the below code to a writeBlog component
-    */
-   let fakeBlogs = [
-        {
-        'name': 'bob',
-        'title': 'the builder'
-        },
-        {
-        'name': 'cookie',
-        'title': 'the monster'
-        },
-        {
-        'name': 'oscar',
-        'title': 'the grouch'
-        },
-        {
-        'name': 'meowdas',
-        'title': 'the meowdiest'
-        },
-        {
-        'name': 'snoop',
-        'title': 'the d o double g'
-        },
-        {
-        'name': 'juice',
-        'title': 'the world'
-        },
-        {
-        'name': 'buzz',
-        'title': 'the lightyear'
-        },
-        {
-        'name': 'midas',
-        'title': 'the rex'
-        },
-        {
-        'name': 'rick',
-        'title': 'the morty'
-        },
-        {
-        'name': 'woody',
-        'title': 'the cowboy'
-        },
-];
+    const pageViewLimit = 10;
+    const currentBlogs = blogData.slice(currentPage * pageViewLimit, (currentPage + 1) * pageViewLimit);
+
+    const handleNext = () => {
+        if ((currentPage + 1) * pageViewLimit < blogData.length) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    const handlePrev = () => {
+        if (currentPage > 0) {
+            setCurrentPage(currentPage - 1); // Move to the previous page
+        }
+    };
+
+    console.log('currentBlogs', currentBlogs)
+
     return (
         <div className={styles.landingContainer}>
             <div className={styles.navigation}>
@@ -70,16 +58,24 @@ export default function HomePage() {
                 <Logout reroute={'/'}/>
             </div>
             <div className={styles.feedContainer}>
-                {fakeBlogs.map((item, index) => (
-                    <div className={styles.blogItemContainer}>
-                        <p
-                        className={styles.blogItem}
-                        key={index}>
-                            {item.name}<br/>
-                            {item.title}
-                        </p>
-                    </div>
-                ))} 
+                <h1 className={styles.headingText}>Blogs</h1>
+                <div className={styles.cardContainer}>
+                    {currentBlogs.map((blog, index) => (
+                        <div className={styles.card}>
+                            <Card
+                            key={index}
+                            username={blog.username}
+                            blogs={blog.blogs?.length}
+                            />
+                        </div>
+                    ))}
+                </div>
+                {currentPage > 0 && (
+                        <button className={styles.buttonNp} onClick={handlePrev}>Previous</button>
+                    )}
+                {currentBlogs.length > 0 && (currentPage + 1) * pageViewLimit < blogData.length && (
+                    <button className={styles.buttonNp} onClick={handleNext}>Next</button>
+                )}
             </div>
         </div>
     )
