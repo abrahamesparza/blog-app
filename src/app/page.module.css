@@ -77,3 +77,9 @@
     cursor: pointer;
     color: #887efa;
 }
+
+
+.navItem {
+    padding-left: 30px;
+    padding-right: 30px;
+}
