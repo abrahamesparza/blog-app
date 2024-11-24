@@ -28,7 +28,7 @@ export default function Logout({ reroute }) {
             { activeStatus ?
             <p 
             onClick={handleLogout}
-            className={styles.logoutText}>Logout</p> :
+            className={styles.navItem}>Logout</p> :
             <p
             className={styles.logoutText}></p>
             }
