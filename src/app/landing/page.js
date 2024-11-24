@@ -4,7 +4,6 @@ import React, {useState, useEffect } from 'react';
 import styles from './landingPage.module.css';
 import Logout from '../logout/page';
 import Card from '../components/card';
-import { hasAccess } from '../helpers/authHelper';
 
 export default function HomePage() {
     const [blogData, setBlogData] = useState([]);
