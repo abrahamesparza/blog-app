@@ -15,6 +15,27 @@ export default function LoginForm() {
     const [formData, setFormData] = useState(initialFormData);
     const [loginResult, setLoginResult] = useState('');
     const [nextPage, setNextPage] = useState(false);
+    const [checkLogin, setCheckLogin] = useState(false);
+
+    useEffect(() => {
+        if (loginResult) {
+            validateLoginResult()
+        }
+    }, [checkLogin]);
+
+    const validateLoginResult = () => {
+        if (loginResult === 'Success') {
+            router.push('/landing');
+            setNextPage(true);
+        }
+        else {
+            alert('We couldn\'t find an account with those details. Please recheck and try again!');
+            setNextPage(false);
+            return; // some sort of try again modal or
+                    // refresh the page with all the
+                    // fields filled besides the password
+        }
+    }
 
     async function onChange(event) {
         const { name, value } = event.target
@@ -22,21 +43,7 @@ export default function LoginForm() {
             ...prevData,
             [name]: value
         }))
-    }
-
-    async function checkLoginResult() {
-        if (loginResult) {
-            router.push('/landing')
-
-            setNextPage(true);
-        }
-        else {
-            setNextPage(false);
-            return; // some sort of try again modal or
-                    // refresh the page with all the
-                    // fields filled besides the password
-        }
-    }
+    };
 
     async function onSubmit(event) {
         event.preventDefault();
@@ -51,12 +58,10 @@ export default function LoginForm() {
         });
 
         const result = await response.json();
-        console.log(`result: ${result.message}`);
-
+        console.log('setting loginResult', result.message)
         setLoginResult(result.message);
         setFormData(initialFormData);
-
-        checkLoginResult();
+        setCheckLogin(true)
     }
 
     function handleRouting(e) {
