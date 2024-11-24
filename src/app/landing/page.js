@@ -1,9 +1,10 @@
 'use client'
 import React, {useState, useEffect } from 'react';
-import styles from './landingPage.module.css';
 
+import styles from './landingPage.module.css';
 import Logout from '../logout/page';
 import Card from '../components/card';
+import { hasAccess } from '../helpers/authHelper';
 
 export default function HomePage() {
     const [blogData, setBlogData] = useState([]);
@@ -58,7 +59,7 @@ export default function HomePage() {
                 <h1 className={styles.headingText}>Blogs</h1>
                 <div className={styles.cardContainer}>
                     {currentBlogs.map((blog, index) => (
-                        <div className={styles.card}>
+                        <div key={index} className={styles.card}>
                             <Card
                             key={index}
                             username={blog.username}
