@@ -21,7 +21,6 @@ export default function HomePage() {
                 throw new Error(`Response status: ${response.status}`);
             }
             const data = await response.json();
-            console.log('data:', data);
             setBlogData(data.items);
         } catch (error) {
             console.error(`Error: ${error}`);
@@ -39,11 +38,9 @@ export default function HomePage() {
 
     const handlePrev = () => {
         if (currentPage > 0) {
-            setCurrentPage(currentPage - 1); // Move to the previous page
+            setCurrentPage(currentPage - 1);
         }
     };
-
-    console.log('currentBlogs', currentBlogs)
 
     return (
         <div className={styles.landingContainer}>
@@ -52,9 +49,9 @@ export default function HomePage() {
                     create a modal to display below items
                     stacked one above the other
                 */}
-                <p>Write</p>
-                <p>Explore</p>
-                <p>Profile</p>
+                <p className={styles.navItem}>Write</p>
+                <p className={styles.navItem}>Explore</p>
+                <p className={styles.navItem}>Profile</p>
                 <Logout reroute={'/'}/>
             </div>
             <div className={styles.feedContainer}>
@@ -70,12 +67,14 @@ export default function HomePage() {
                         </div>
                     ))}
                 </div>
-                {currentPage > 0 && (
-                        <button className={styles.buttonNp} onClick={handlePrev}>Previous</button>
+                <div className={styles.buttons}>
+                    {currentPage > 0 && (
+                            <button className={styles.buttonNp} onClick={handlePrev}>Previous</button>
+                        )}
+                    {currentBlogs.length > 0 && (currentPage + 1) * pageViewLimit < blogData.length && (
+                        <button className={styles.buttonNp} onClick={handleNext}>Next</button>
                     )}
-                {currentBlogs.length > 0 && (currentPage + 1) * pageViewLimit < blogData.length && (
-                    <button className={styles.buttonNp} onClick={handleNext}>Next</button>
-                )}
+                </div>
             </div>
         </div>
     )
