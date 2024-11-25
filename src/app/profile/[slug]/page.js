@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 import styles from '../profile.module.css';
 import Navigation from "@/app/components/navigation";
