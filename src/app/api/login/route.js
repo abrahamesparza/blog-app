@@ -22,7 +22,7 @@ export async function POST(request) {
         };
 
         const result = await dynamoDB.scan(params).promise();
-        console.log(`result items: ${result.Items}`)
+
         if (!result.Items) {
             return NextResponse.json({ message: 'User not found' })
         }
@@ -35,14 +35,21 @@ export async function POST(request) {
         }
 
         const sessionId = generateSessionId();
-        storeSession(sessionId, { id: user.id, email: user.email });
+        storeSession(sessionId, {
+            id: user.id,
+            email: user.email,
+            username: user.username
+        });
 
         const response = NextResponse.json({ message: 'Success' })
-        response.cookies.set('sessionId', sessionId, {httpOnly: true, maxAge: 3600});
+        response.cookies.set('sessionId', `${sessionId};username=${user.username}`, {
+            httpOnly: true,
+            maxAge: 3600
+        });
         
         return response;
     } catch(error) {
-        console.error(`Error checking user: ${user}`);
+        console.error(`Error ${error}`);
         return NextResponse.error();
     }
 
