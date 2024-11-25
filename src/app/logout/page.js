@@ -4,18 +4,11 @@ import { useRouter } from "next/navigation";
 
 export default function Logout({ reroute }) {
     const router = useRouter();
-    const [activeStatus, setStatus] = useState(true);
 
     async function handleLogout() {
-        const response = await fetch('api/logout', {
+        await fetch('api/logout', {
             method: 'POST'
         });
-        const message = await response.json();
-        console.log(message);
-        if (message.message === 'Success') {
-            console.log('updating status to false')
-            setStatus(false)
-        }
         handleRouting();
     };
 
@@ -25,13 +18,9 @@ export default function Logout({ reroute }) {
 
     return (
         <div className={styles.logoutContainer}>
-            { activeStatus ?
             <p 
             onClick={handleLogout}
-            className={styles.navItem}>Logout</p> :
-            <p
-            className={styles.logoutText}></p>
-            }
+            className={styles.navItem}>Logout</p>
         </div>
     )
 };
