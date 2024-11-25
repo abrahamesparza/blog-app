@@ -52,13 +52,9 @@
     color: whitesmoke; */
 }
 .form {
-    /* margin-top: 12.5vh; */
     display: flex;
     justify-content: center;
     flex-direction: column;
-    /* border: 1px solid white;
-    border-radius: 5%;
-    padding: 100px; */
 }
 
 .input {
