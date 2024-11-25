@@ -18,8 +18,8 @@ export default function FormTypes() {
 
     return (
         <div className={styles.formOption}>
-            <h2 onClick={handleRouting}>Sign Up</h2>
-            <h2 onClick={handleRouting}>Log In</h2>
+            <h2 className={styles.formTypeText} onClick={handleRouting}>Sign Up</h2>
+            <h2 className={styles.formTypeText} onClick={handleRouting}>Log In</h2>
         </div>
     )
 }
