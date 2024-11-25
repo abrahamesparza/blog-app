@@ -17,7 +17,7 @@
     justify-content: space-between;
     height: 50px;
     align-items: center;
-    border-bottom: 1px solid #505050;
+    border-bottom: 1px solid rgb(223, 223, 223);
 }
 
 .navItem {
