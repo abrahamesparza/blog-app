@@ -2,7 +2,7 @@
 import React, {useState, useEffect } from 'react';
 
 import styles from './landingPage.module.css';
-import Logout from '../logout/page';
+import Navigation from '../components/navigation';
 import Card from '../components/card';
 
 export default function HomePage() {
@@ -44,16 +44,7 @@ export default function HomePage() {
 
     return (
         <div className={styles.landingContainer}>
-            <div className={styles.navigation}>
-                {/* improvement idea:
-                    create a modal to display below items
-                    stacked one above the other
-                */}
-                <p className={styles.navItem}>Write</p>
-                <p className={styles.navItem}>Explore</p>
-                <p className={styles.navItem}>Profile</p>
-                <Logout reroute={'/'}/>
-            </div>
+            <Navigation />
             <div className={styles.feedContainer}>
                 <h1 className={styles.headingText}>Blogs</h1>
                 <div className={styles.cardContainer}>
