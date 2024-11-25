@@ -1,5 +1,4 @@
 'use client';
-
 import { useRouter } from 'next/navigation';
 
 import styles from '../landing/landingPage.module.css';
@@ -14,11 +13,14 @@ export default function Navigation() {
         let page = e.target.innerText.toLowerCase();
         if (page === 'profile') {
             const slug = await getUsername();
-            console.log('slug', slug);
-            router.push(`${page}/${slug}`)
+            router.push(`/${page}/${slug}`);
         }
-        // else other path that doesn't have a slug
-        router.push(`/${page}`);
+        else if (page === 'home') {
+            router.push('/landing');
+        }
+        else {
+            router.push(`/${page}`)
+        }
     }
     
     return (
@@ -27,6 +29,7 @@ export default function Navigation() {
                 create a modal to display below items
                 stacked one above the other
             */}
+            <p onClick={handleRouting} className={styles.navItem}>Home</p>
             <p onClick={handleRouting} className={styles.navItem}>Write</p>
             <p onClick={handleRouting} className={styles.navItem}>Explore</p>
             <p onClick={handleRouting} className={styles.navItem}>Profile</p>
