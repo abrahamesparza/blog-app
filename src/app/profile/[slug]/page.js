@@ -1,4 +1,8 @@
+'use client';
+
 import { useState, useEffect } from "react";
+import styles from '../profile.module.css';
+import Navigation from "@/app/components/navigation";
 
 export default function Profile({ username, title, content, }) {
     return (
@@ -16,6 +20,7 @@ export default function Profile({ username, title, content, }) {
           - name
           - edit profile link
           - list of following (paginate to 5) */}
+          <Navigation />
       </div>
     );
   }
