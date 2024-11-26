@@ -26,3 +26,10 @@
     border-top: 1px solid rgb(223, 223, 223);
     margin-top: 25px;
 }
+.blogUl {
+    margin-top: 25px;
+    list-style: none;
+}
+.listItem {
+    display: flex;
+}

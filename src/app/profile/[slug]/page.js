@@ -39,10 +39,9 @@ export default function Profile() {
                 <p className={styles.aboutText}>About section for user.</p>
               </div>
               <div className={styles.blogList}>
-                {/* update so that each blog item is in a card */}
-                <ul>
+                <ul className={styles.blogUl}>
                   {blogs.map((item, index) => (
-                    <li key={index}>{item.title}</li>
+                    <li className={styles.listItem} key={index}>{item.title}</li>
                   ))}
                 </ul>
               </div>
