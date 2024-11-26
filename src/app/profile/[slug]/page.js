@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 
 import styles from '../profile.module.css';
 import Navigation from "@/app/components/navigation";
+import BlogItem from "@/app/components/blogItem";
 
 export default function Profile() {
   const pathName = usePathname();
@@ -49,7 +50,7 @@ export default function Profile() {
                 <h3 className={styles.blogHeader}>Blogs</h3>
                 <ul className={styles.blogUl}>
                   {blogs.map((item, index) => (
-                    <li className={styles.listItem} key={index}>{item.title}</li>
+                    <BlogItem key={index} title={item.title} content={item.content} />
                   ))}
                 </ul>
               </div>
