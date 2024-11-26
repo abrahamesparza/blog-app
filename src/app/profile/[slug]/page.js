@@ -8,9 +8,22 @@ import Navigation from "@/app/components/navigation";
 export default function Profile() {
   const pathName = usePathname();
   const username = pathName.split('/')[2];
+  const [blogs, setBlogs] = useState([]);
 
-  // write logic to get blog data for username
-  // displays in blogList container
+  useEffect(() => {
+    getBlogs();
+  }, []);
+
+  const getBlogs = async () => {
+    const response = await fetch(`/api/get-user-data?username=${username}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const data = await response.json();
+    setBlogs(data || []);
+  };
+
     return (
       <div className={styles.profile}>
           <Navigation />
@@ -26,7 +39,12 @@ export default function Profile() {
                 <p className={styles.aboutText}>About section for user.</p>
               </div>
               <div className={styles.blogList}>
-                <p>display a list of blogs here</p>
+                {/* update so that each blog item is in a card */}
+                <ul>
+                  {blogs.map((item, index) => (
+                    <li key={index}>{item.title}</li>
+                  ))}
+                </ul>
               </div>
             </div>
 
