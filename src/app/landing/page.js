@@ -8,12 +8,21 @@ import Card from '../components/card';
 export default function HomePage() {
     const [blogData, setBlogData] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         getBlogData();
     }, []);
 
     const getBlogData = async () => {
+        const storedBlogs = localStorage.getItem('blogData');
+        if (storedBlogs) {
+            const parsedBlogs = JSON.parse(storedBlogs);
+            setBlogData(parsedBlogs);
+            setLoading(false);
+            return;
+        }
+
         const url = 'api/get-blog-data';
         try {
             const response = await fetch(url);
@@ -21,14 +30,19 @@ export default function HomePage() {
                 throw new Error(`Response status: ${response.status}`);
             }
             const data = await response.json();
-            setBlogData(data.items);
+            setBlogData(data.items || []);
+            localStorage.setItem('blogData', JSON.stringify(data.items) || []);
+            setLoading(false);
         } catch (error) {
             console.error(`Error: ${error}`);
+            setLoading(false);
         }
     };
 
     const pageViewLimit = 10;
-    const currentBlogs = blogData.slice(currentPage * pageViewLimit, (currentPage + 1) * pageViewLimit);
+    const currentBlogs = blogData.length > 0
+    ? blogData.slice(currentPage * pageViewLimit, (currentPage + 1) * pageViewLimit)
+    : [];
 
     const handleNext = () => {
         if ((currentPage + 1) * pageViewLimit < blogData.length) {
@@ -48,15 +62,22 @@ export default function HomePage() {
             <div className={styles.feedContainer}>
                 <h1 className={styles.headingText}>Blogs</h1>
                 <div className={styles.cardContainer}>
-                    {currentBlogs.map((blog, index) => (
+                {blogData.length === 0 ? (
+                    loading ? (
+                        <p>Loading...</p> // Show loading when data is still being fetched
+                    ) : (
+                        <p>No blogs available</p> // Show this when there are no blogs in the data
+                    )
+                ) : (
+                    blogData.map((blog, index) => (
                         <div key={index} className={styles.card}>
                             <Card
-                            key={index}
-                            username={blog.username}
-                            blogs={blog.blogs?.length}
+                                username={blog.username}
+                                blogs={blog.blogs?.length}
                             />
                         </div>
-                    ))}
+                    ))
+                )}
                 </div>
                 <div className={styles.buttons}>
                     {currentPage > 0 && (
