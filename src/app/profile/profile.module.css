@@ -26,10 +26,26 @@
     border-top: 1px solid rgb(223, 223, 223);
     margin-top: 25px;
 }
+.blogHeader {
+    margin-top: 5px;
+}
 .blogUl {
     margin-top: 25px;
     list-style: none;
+    padding: 0;
+    gap: 15px;
+    display: flex;
+    flex-direction: column;
 }
 .listItem {
     display: flex;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.listItem:hover {
+    box-shadow: 0px 4px 10px #887efa;
+    border-radius: 5px;
 }

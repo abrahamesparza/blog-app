@@ -15,6 +15,12 @@ export default function Profile() {
   }, []);
 
   const getBlogs = async () => {
+    const storedBlogs = localStorage.getItem('blogs');
+    if (storedBlogs) {
+      setBlogs(JSON.parse(storedBlogs));
+      return;
+    }
+
     const response = await fetch(`/api/get-user-data?username=${username}`, {
       headers: {
         'Content-Type': 'application/json',
@@ -22,6 +28,7 @@ export default function Profile() {
     });
     const data = await response.json();
     setBlogs(data || []);
+    localStorage.setItem('blogs', JSON.stringify(data));
   };
 
     return (
@@ -39,6 +46,7 @@ export default function Profile() {
                 <p className={styles.aboutText}>About section for user.</p>
               </div>
               <div className={styles.blogList}>
+                <h3 className={styles.blogHeader}>Blogs</h3>
                 <ul className={styles.blogUl}>
                   {blogs.map((item, index) => (
                     <li className={styles.listItem} key={index}>{item.title}</li>
