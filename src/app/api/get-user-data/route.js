@@ -17,11 +17,11 @@ export async function GET(request) {
             ExpressionAttributeValues: {
                 ':username': username,
             },
-            ProjectionExpression: 'id, blogs'
+            ProjectionExpression: 'id, blogs, username'
         };
         const data = await dynamoDB.query(params).promise();
-        let blogs = data.Items[0].blogs;
-        console.log(blogs)
+        let blogs = data.Items[0];
+        console.log('BLOGS:', blogs)
         return NextResponse.json(blogs);
     } catch (error) {
         console.error(error)
