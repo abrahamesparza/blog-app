@@ -64,9 +64,9 @@ export default function HomePage() {
                 <div className={styles.cardContainer}>
                 {blogData.length === 0 ? (
                     loading ? (
-                        <p>Loading...</p> // Show loading when data is still being fetched
+                        <p>Loading...</p>
                     ) : (
-                        <p>No blogs available</p> // Show this when there are no blogs in the data
+                        <p>No blogs available</p>
                     )
                 ) : (
                     currentBlogs.map((blog, index) => (
