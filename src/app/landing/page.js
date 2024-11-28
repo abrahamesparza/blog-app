@@ -69,7 +69,7 @@ export default function HomePage() {
                         <p>No blogs available</p> // Show this when there are no blogs in the data
                     )
                 ) : (
-                    blogData.map((blog, index) => (
+                    currentBlogs.map((blog, index) => (
                         <div key={index} className={styles.card}>
                             <Card
                                 username={blog.username}
