@@ -23,7 +23,7 @@ export default function Profile() {
   }, []);
 
   const getBlogs = async () => {
-    const storedBlogs = JSON.parse(localStorage.getItem('blogs')) || {}; // Get all blogs or an empty object
+    const storedBlogs = JSON.parse(localStorage.getItem('blogs')) || {};
   
     if (storedBlogs[username]) {
       setBlogs(storedBlogs[username]);
