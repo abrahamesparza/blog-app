@@ -9,6 +9,9 @@ export default function Logout({ reroute }) {
         await fetch('api/logout', {
             method: 'POST'
         });
+        localStorage.removeItem('blogData');
+        localStorage.removeItem('blogs');
+        localStorage.removeItem('loggedInUser');
         handleRouting();
     };
 
