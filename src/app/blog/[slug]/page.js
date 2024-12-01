@@ -22,7 +22,7 @@ const Blog = () => {
     }, [username, slug]);
 
     const routeBack = () => {
-      router.push('/landing');
+      router.push(`/profile/${username}`);
     }
 
     return (
