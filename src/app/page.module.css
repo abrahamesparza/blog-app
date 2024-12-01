@@ -85,3 +85,8 @@
     cursor: pointer;
     color: #887efa;
 }
+
+.blogAuthor:hover {
+    cursor: pointer;
+    color: #887efa;
+}
