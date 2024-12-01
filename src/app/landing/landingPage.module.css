@@ -24,6 +24,10 @@
     padding-left: 30px;
     padding-right: 30px;
 }
+.navItem:hover {
+    cursor: pointer;
+    color: #887efa;
+}
 
 .feedContainer {
     padding-top: 25px;
