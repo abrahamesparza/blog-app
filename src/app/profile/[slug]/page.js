@@ -14,6 +14,7 @@ export default function Profile() {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loggedInUser, setLoggedInUser] = useState(null);
+  const [profileExists, setProfileExists] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
@@ -34,6 +35,9 @@ export default function Profile() {
       try {
         const response = await fetch(`/api/get-user-data?username=${username}`);
         const data = await response.json();
+        if (data.message === 404) {
+          setProfileExists(false);
+        }
         setBlogs(data.blogs || []);
         const updatedBlogs = { ...storedBlogs, [username]: data.blogs || [] };
         localStorage.setItem('blogs', JSON.stringify(updatedBlogs));
@@ -51,11 +55,18 @@ export default function Profile() {
   }
   
   return (
-    <div className={styles.profile}>
+  <div className={styles.profile}>
         <Navigation />
         <div className={styles.container}>
-
-          <div className={styles.profileChildOne}>
+          {profileExists === false ? (
+           <div className={styles.profileChildOne}>
+           <h3 className={styles.username}>@{username}</h3>
+           <div className={styles.blogList}>
+            <h1 className={styles.doesNotExist}>User does not exist.</h1>
+           </div>
+         </div>
+          ) : (
+            <div className={styles.profileChildOne}>
             <h3 className={styles.username}>@{username}</h3>
             <div className={styles.follows}>
               <p>700 Followers</p>
@@ -85,6 +96,8 @@ export default function Profile() {
               )}
             </div>
           </div>
+          )}
+          
 
           <div className={styles.profileChildTwo}>
             {loggedInUser === username ? <CiSettings size={25}/> : null}
