@@ -2,13 +2,13 @@
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { CiSettings } from 'react-icons/ci';
-import { IoIosArrowRoundBack } from "react-icons/io";
 import { useRouter } from 'next/navigation';
 
 
 import styles from '../profile.module.css';
 import Navigation from "@/app/components/navigation";
 import BlogItem from "@/app/components/blogItem";
+import BackButton from "@/app/components/backButton";
 
 export default function Profile() {
   const pathName = usePathname();
@@ -73,14 +73,15 @@ export default function Profile() {
           </div>
         ) : profileExists === false ? (
           <div className={styles.profileChildOne}>
-            <IoIosArrowRoundBack onClick={routeBack} size={28} />
+            <BackButton routeBack={routeBack}/>
             <h3 className={styles.username}>@{username}</h3>
             <div className={styles.blogList}>
-              <h1 className={styles.doesNotExist}>User does not exist.</h1>
+                <h1 className={styles.doesNotExist}>User does not exist.</h1>
             </div>
           </div>
         ) : (
           <div className={styles.profileChildOne}>
+            <BackButton routeBack={routeBack}/>
             <h3 className={styles.username}>@{username}</h3>
             <div className={styles.follows}>
               <p>700 Followers</p>
