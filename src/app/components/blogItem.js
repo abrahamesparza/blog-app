@@ -5,8 +5,8 @@ const BlogItem = ({ title, content, timestamp }) => {
   
     return (
       <div className={styles.listItem}>
-        <h4>{title}</h4>
-        <p>{content.substr(0, 40)}...</p>
+        <h4 className={styles.blogTitle}>{title}</h4>
+        <p>{content.substr(0, 100)}...</p>
         {/* <p className={styles.cardTimestamp}>{formattedTimestamp}</p> */}
       </div>
     );
