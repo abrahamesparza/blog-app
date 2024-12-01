@@ -10,10 +10,10 @@ export default function Navigation() {
     const router = useRouter();
    
     const handleRouting = async (e) => {
-        let user = localStorage.getItem('loggedInUser');
         let page = e.target.innerText.toLowerCase();
         if (page === 'profile') {
             const slug = await getUsername();
+            const user = localStorage.getItem('loggedInUser');
             router.push(`/${page}/${slug || user}`);
         }
         else if (page === 'home') {
