@@ -58,7 +58,6 @@ export default function LoginForm() {
         });
 
         const result = await response.json();
-        console.log('setting loginResult', result.message)
         setLoginResult(result.message);
         localStorage.setItem('loggedInUser', result.username);
         setFormData(initialFormData);
