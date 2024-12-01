@@ -38,7 +38,10 @@ export async function POST(request) {
         });
 
         const response = NextResponse.json({ message: 'Success' })
-        response.cookies.set('sessionId', sessionId, { httpOnly: true, maxAge: 3600 });
+        response.cookies.set('sessionId', sessionId, {
+            httpOnly: true,
+            maxAge: 24 * 60 * 60 * 1000
+        });
         return response;
     }
     catch(error) {
