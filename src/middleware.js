@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server";
 
-export function middleware(request) {
-    console.log('in middleware function');
-    
+export function middleware(request) {    
     const sessionId = request.cookies.get('sessionId')?.value;
 
     if (!sessionId) {
