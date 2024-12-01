@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { CiSettings } from 'react-icons/ci';
+import { useRouter } from 'next/navigation';
 
 import styles from '../profile.module.css';
 import Navigation from "@/app/components/navigation";
@@ -13,6 +14,7 @@ export default function Profile() {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loggedInUser, setLoggedInUser] = useState(null);
+  const router = useRouter();
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -42,6 +44,11 @@ export default function Profile() {
       }
     }
   };
+
+  const handleBlogRoute = async (e) => {
+    let blogTitle = e.target.innerText;
+    router.push(`/blog/${blogTitle}?username=${username}`);
+  }
   
   return (
     <div className={styles.profile}>
@@ -64,7 +71,13 @@ export default function Profile() {
               ) : blogs.length > 0 ? (
                 <ul className={styles.blogUl}>
                   {blogs.map((item, index) => (
-                    <BlogItem key={index} title={item.title} content={item.content} />
+                    <BlogItem
+                    key={index}
+                    title={item.title}
+                    content={item.content}
+                    handleBlogRoute={handleBlogRoute}
+                    username={username}
+                     />
                   ))}
                 </ul>
               ) : (
