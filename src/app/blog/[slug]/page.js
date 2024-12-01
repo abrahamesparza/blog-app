@@ -1,9 +1,10 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 
 import styles from '../blog.module.css';
 import Navigation from '../../components/navigation';
+import BackButton from '@/app/components/backButton';
 
 const Blog = () => {
     const [blogs, setBlogs] = useState([]);
@@ -11,6 +12,7 @@ const Blog = () => {
     const username = searchParams.get('username');
     const pathname = usePathname();
     const slug = decodeURIComponent(pathname.split('/').pop());
+    const router = useRouter();
 
     useEffect(() => {
         let storedBlogs = localStorage.getItem('blogs')
@@ -19,13 +21,16 @@ const Blog = () => {
         setBlogs([filteredBlogs]);
     }, [username, slug]);
 
+    const routeBack = () => {
+      router.push('/landing');
+    }
+
     return (
         <div>
             <Navigation />
             {blogs.map((blog, index) => (
-                <div
-                className={styles.blogContainer}
-                key={index}>
+                <div className={styles.blogContainer} key={index}>
+                    <BackButton routeBack={routeBack}/>
                     <h2>{blog.title}</h2>
                     <p>{blog.content}</p>
                 </div>
