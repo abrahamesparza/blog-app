@@ -2,7 +2,9 @@
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { CiSettings } from 'react-icons/ci';
+import { IoIosArrowRoundBack } from "react-icons/io";
 import { useRouter } from 'next/navigation';
+
 
 import styles from '../profile.module.css';
 import Navigation from "@/app/components/navigation";
@@ -14,7 +16,7 @@ export default function Profile() {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loggedInUser, setLoggedInUser] = useState(null);
-  const [profileExists, setProfileExists] = useState(true);
+  const [profileExists, setProfileExists] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -27,9 +29,10 @@ export default function Profile() {
 
   const getBlogs = async () => {
     const storedBlogs = JSON.parse(localStorage.getItem('blogs')) || {};
-  
+
     if (storedBlogs[username]) {
       setBlogs(storedBlogs[username]);
+      setProfileExists(true);
       setLoading(false);
     } else {
       try {
@@ -37,10 +40,12 @@ export default function Profile() {
         const data = await response.json();
         if (data.message === 404) {
           setProfileExists(false);
+        } else {
+          setBlogs(data.blogs || []);
+          const updatedBlogs = { ...storedBlogs, [username]: data.blogs || [] };
+          localStorage.setItem('blogs', JSON.stringify(updatedBlogs));
+          setProfileExists(true);
         }
-        setBlogs(data.blogs || []);
-        const updatedBlogs = { ...storedBlogs, [username]: data.blogs || [] };
-        localStorage.setItem('blogs', JSON.stringify(updatedBlogs));
         setLoading(false);
       } catch (error) {
         console.error(error);
@@ -52,21 +57,30 @@ export default function Profile() {
   const handleBlogRoute = async (e) => {
     let blogTitle = e.target.innerText;
     router.push(`/blog/${blogTitle}?username=${username}`);
+  };
+
+  const routeBack = () => {
+    router.push('/landing');
   }
-  
+
   return (
-  <div className={styles.profile}>
-        <Navigation />
-        <div className={styles.container}>
-          {profileExists === false ? (
-           <div className={styles.profileChildOne}>
-           <h3 className={styles.username}>@{username}</h3>
-           <div className={styles.blogList}>
-            <h1 className={styles.doesNotExist}>User does not exist.</h1>
-           </div>
-         </div>
-          ) : (
-            <div className={styles.profileChildOne}>
+    <div className={styles.profile}>
+      <Navigation />
+      <div className={styles.container}>
+        {loading ? (
+          <div className={styles.profileChildOne}>
+            <p>Loading...</p>
+          </div>
+        ) : profileExists === false ? (
+          <div className={styles.profileChildOne}>
+            <IoIosArrowRoundBack onClick={routeBack} size={28} />
+            <h3 className={styles.username}>@{username}</h3>
+            <div className={styles.blogList}>
+              <h1 className={styles.doesNotExist}>User does not exist.</h1>
+            </div>
+          </div>
+        ) : (
+          <div className={styles.profileChildOne}>
             <h3 className={styles.username}>@{username}</h3>
             <div className={styles.follows}>
               <p>700 Followers</p>
@@ -77,18 +91,16 @@ export default function Profile() {
             </div>
             <div className={styles.blogList}>
               <h3 className={styles.blogHeader}>Blogs</h3>
-              {loading ? (
-                <p>Loading...</p>
-              ) : blogs.length > 0 ? (
+              {blogs.length > 0 ? (
                 <ul className={styles.blogUl}>
                   {blogs.map((item, index) => (
                     <BlogItem
-                    key={index}
-                    title={item.title}
-                    content={item.content}
-                    handleBlogRoute={handleBlogRoute}
-                    username={username}
-                     />
+                      key={index}
+                      title={item.title}
+                      content={item.content}
+                      handleBlogRoute={handleBlogRoute}
+                      username={username}
+                    />
                   ))}
                 </ul>
               ) : (
@@ -96,14 +108,13 @@ export default function Profile() {
               )}
             </div>
           </div>
-          )}
-          
+        )}
 
-          <div className={styles.profileChildTwo}>
-            {loggedInUser === username ? <CiSettings size={25}/> : null}
-          </div>
-
+        <div className={styles.profileChildTwo}>
+          {loggedInUser === username ? <CiSettings size={25} /> : null}
         </div>
+
+      </div>
     </div>
   );
 }
