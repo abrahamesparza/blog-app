@@ -1,5 +1,6 @@
 'use client'
 import React, {useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 import styles from './landingPage.module.css';
 import Navigation from '../components/navigation';
@@ -9,6 +10,7 @@ export default function HomePage() {
     const [blogData, setBlogData] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
     const [loading, setLoading] = useState(true);
+    const router = useRouter();
 
     useEffect(() => {
         getBlogData();
@@ -38,6 +40,12 @@ export default function HomePage() {
             setLoading(false);
         }
     };
+
+    const handleProfileRoute = async (e) => {
+        console.log('in handle profile route')
+        let slug = e.target.innerText.trim();
+        router.push(`/profile/${slug}`)
+    }
 
     const pageViewLimit = 10;
     const currentBlogs = blogData.length > 0
@@ -74,6 +82,7 @@ export default function HomePage() {
                             <Card
                                 username={blog.username}
                                 blogs={blog.blogs?.length}
+                                handleProfileRoute={handleProfileRoute}
                             />
                         </div>
                     ))
