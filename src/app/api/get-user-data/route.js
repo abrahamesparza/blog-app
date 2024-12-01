@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import dynamoDB from "../lib/dynamodb";
 
 export async function GET(request) {
+    console.log('in get-user-data API')
     const { searchParams } = new URL(request.url);
     const username = searchParams.get('username');
     
@@ -21,6 +22,9 @@ export async function GET(request) {
         };
         const data = await dynamoDB.query(params).promise();
         let blogs = data.Items[0];
+        if (!blogs) {
+            return NextResponse.json({ message: 404 });
+        }
         console.log('BLOGS:', blogs)
         return NextResponse.json(blogs);
     } catch (error) {
