@@ -32,6 +32,7 @@ const Blog = () => {
                 <div className={styles.blogContainer} key={index}>
                     <BackButton routeBack={routeBack}/>
                     <h2>{blog.title}</h2>
+                    <p>@{username}</p>
                     <p>{blog.content}</p>
                 </div>
             ))}
