@@ -13,6 +13,14 @@ const Blog = () => {
     const pathname = usePathname();
     const slug = decodeURIComponent(pathname.split('/').pop());
     const router = useRouter();
+    const dateOptions = {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true
+    }
 
     useEffect(() => {
         let storedBlogs = localStorage.getItem('blogs')
@@ -33,6 +41,7 @@ const Blog = () => {
                     <BackButton routeBack={routeBack}/>
                     <h2>{blog.title}</h2>
                     <p>@{username}</p>
+                    <p>{new Date(blog.timestamp).toLocaleString('en-US', dateOptions)}</p>
                     <p>{blog.content}</p>
                 </div>
             ))}
