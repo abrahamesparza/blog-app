@@ -87,7 +87,6 @@ const generateUserData = async () => {
         };
         data['blogs'] = generateBlogData();
         userData.push(data);
-        
         if (userData.length === 25) {
             batchWriteUserData(userData);
             userData = [];
@@ -112,7 +111,7 @@ const batchWriteUserData = (data) => {
                             id: blog.id.toString(),
                             title: blog.title,
                             content: blog.content,
-                            timestamp: blog.timestamp,
+                            timestamp: blog.timestamp.toISOString(),
                         })),
                     },
                 },
