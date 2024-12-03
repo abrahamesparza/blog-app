@@ -17,10 +17,10 @@ Deployment: AWS (planned)
 
 ✅ Blog CRUD Operations
 
- Follow System Implementation
+🔨 Follow System Implementation
 
- Profile Picture/Avatar Feature
+🔨 Profile Picture/Avatar Feature
 
- Deployment on AWS
+🔨 Deployment on AWS
 
  #### For detailed developer steps and insights, checkout the [Development Guide](DEVELOPMENT.md).
