@@ -37,6 +37,11 @@ const lorem = new LoremIpsum({
 const generateUniqueId = () => {
     const uniqueId = v4();
     return uniqueId
+};
+
+const generateRandomDate = (start, end) => {
+    const randomTimestamp = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+    return randomTimestamp;
 }
 
 const generateBlogData = () => {
@@ -44,14 +49,19 @@ const generateBlogData = () => {
     const titleAmount = Math.floor((Math.random() * 10) + 1);
     const blogCount = Math.floor(Math.random() * 9 + 1);
     const userBlogs = [];
+    const startDate = new Date('2024-01-01T00:00:00');
+    const endDate = new Date();
 
     for (let i = 0; i < Math.max(blogCount, 1); i++) {
         const blogTitle = lorem.generateWords(titleAmount);
         const blogContent = lorem.generateParagraphs(paragraphAmount);
+        const timestamp = generateRandomDate(startDate, endDate);
+
         const blogData = {
             id: i + 1,
             title: blogTitle,
             content: blogContent,
+            timestamp: timestamp
         };
         userBlogs.push(blogData);
     };
@@ -60,7 +70,7 @@ const generateBlogData = () => {
 
 const generateUserData = async () => {
     let maxUsers = 100;
-    let userData = []
+    let userData = [];
 
     while (maxUsers > 0) {
         const prefix = lorem.generateWords(1);
@@ -73,7 +83,7 @@ const generateUserData = async () => {
             name: generateUniqueName(),
             username: generateUniqueUsername(),
             email: `${prefix}@${suffix}.com`,
-            password: hashedPassword
+            password: hashedPassword,
         };
         data['blogs'] = generateBlogData();
         userData.push(data);
