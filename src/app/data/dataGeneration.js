@@ -112,6 +112,7 @@ const batchWriteUserData = (data) => {
                             id: blog.id.toString(),
                             title: blog.title,
                             content: blog.content,
+                            timestamp: blog.timestamp,
                         })),
                     },
                 },
