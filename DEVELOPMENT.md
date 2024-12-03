@@ -2,7 +2,7 @@
 
 1. **User Authentication and Role Assignment**:
     - Implement a form to store user data. ✅
-    - Implement user authentication functionality
+    - Implement user authentication functionality ✅
         - Authentication ✅
         - Session management ✅
         - Cookies ✅
@@ -13,7 +13,7 @@
             - Handle auth to app pages/routes ✅
     - Develop the storage and retrieval of basic user information (username, full name, location). ✅
 2. **Handle Page Routing**
-    - Implement routing for the following components:
+    - Implement routing for the following components: ✅
         - Sign up (’/signup’) ✅
         - Log in (’/login’) ✅
         - Home (’/’) ✅
@@ -31,11 +31,11 @@
             - Username, followers, following, about ✅
             - A list of blogs ✅
                 - Each blog item should show the title, timestamp, and a brief peek of the content (20-25 words?) in a card component ✅
-        - Update the blogs field in the users table so that each blog contains a unique timestamp (random date and time in 2024, January 1 - present)
-        - Display timestamp as described above
+        - Update the blogs field in the users table so that each blog contains a unique timestamp (random date and time in 2024, January 1 - present) ✅
+            - Display timestamp as described above ✅
         - Bonus: include avatars/images for each user
     - Write logic so that profile/[slug]:
-        - Shows error if the username slug does not exist
+        - Shows error if the username slug does not exist ✅
             - if /profile/joe does not exist, then it should show an error on a blank page with Navigation stating `User doesn't exist` or similar ✅
         - Shows profile **without** the Edit icon if the logged in user does not match the slug username ✅
     - Write component to display blog content (blogs/[blog])
