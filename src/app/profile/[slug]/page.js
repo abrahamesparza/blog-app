@@ -99,6 +99,7 @@ export default function Profile() {
                       key={index}
                       title={item.title}
                       content={item.content}
+                      timestamp={item.timestamp}
                       handleBlogRoute={handleBlogRoute}
                       username={username}
                     />
