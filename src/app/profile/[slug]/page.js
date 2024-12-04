@@ -17,19 +17,21 @@ export default function Profile() {
   const [loading, setLoading] = useState(true);
   const [loggedInUser, setLoggedInUser] = useState(null);
   const [profileExists, setProfileExists] = useState(null);
+  const [profileImageUrl, setProfileImageUrl] = useState('');
   const router = useRouter();
-
-  // replace url with unique image for each user;
-  // s3 should only hold one image for each user, and return that image
-  const imageUrl = `https://users-pfp.s3.amazonaws.com/profiles/${username}/mikejones.jpg`;
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const storedUser = localStorage.getItem('loggedInUser');
       setLoggedInUser(storedUser);
     }
+    setProfileImageUrl(generateProfileImageUrl);
     getBlogs();
   }, []);
+
+  const generateProfileImageUrl = () => {
+    return `https://users-pfp.s3.amazonaws.com/profiles/${username}/profile.jpg?timestamp=${Date.now()}`;
+  };
 
   const getBlogs = async () => {
     const storedBlogs = JSON.parse(localStorage.getItem('blogs')) || {};
@@ -92,7 +94,7 @@ export default function Profile() {
             <BackButton routeBack={routeBack}/>
             <div className={styles.profileImageContaier}>
               <Image
-                src={imageUrl}
+                src={profileImageUrl}
                 alt={`${username}'s profile`}
                 width={100}
                 height={100}
