@@ -77,7 +77,7 @@ export default function UploadPhoto() {
                     <p>Your profile picture was uploaded successfully 😎✨</p>
                     <p>Redirecting to your profile ⏳</p>
                 </div>
-            )};
+            )}
         </div>
     )
 };
