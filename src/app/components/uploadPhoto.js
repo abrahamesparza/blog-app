@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 
 import styles from '../profile/profile.module.css';
-import BackButton from "./backButton";
 
 export default function UploadPhoto() {
     const [uploadStatus, setUploadStatus] = useState('');
@@ -57,7 +56,6 @@ export default function UploadPhoto() {
 
     return (
         <div className={styles.editContainer}>
-            <BackButton />
             <h3>Upload Profile Picture</h3>
             <div className={styles.uploadContainer}>
                 <input type="file" accept="image/*" onChange={handleFileChange} />
