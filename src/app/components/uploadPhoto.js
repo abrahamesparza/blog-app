@@ -1,11 +1,15 @@
+'use client';
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 import styles from '../profile/profile.module.css';
 
 export default function UploadPhoto() {
-    const [uploadStatus, setUploadStatus] = useState('');
     const [file, setFile] = useState(null);
-    const [username, setUsername] = useState(null)
+    const [username, setUsername] = useState(null);
+    const [uploading, setUploading] = useState(false);
+    const [uploadComplete, setUploadComplete] = useState(false);
+    const router = useRouter();
 
     useEffect(() => {
         const user = localStorage.getItem('loggedInUser');
@@ -19,9 +23,10 @@ export default function UploadPhoto() {
 
     const handleUpload = async () => {
         if (!file) {
-            setUploadStatus('Select a file first');
+            alert('File required to upload!');
             return;
         }
+        setUploading(true);
         try {
             const response = await fetch('/api/upload-pfp', {
                 method: 'POST',
@@ -42,15 +47,18 @@ export default function UploadPhoto() {
             });
 
             if (response.error) {
-                setUploadStatus('Upload failed');
-                console.log('Upload failed');
+                console.error('Upload failed');
             }
             else {
-                setUploadStatus('File uploaded successfully');
+                setUploadComplete(true);
+                setTimeout(() => router.push(`/profile/${username}`), 3000);
             }
         }
         catch (error) {
             console.error('Error uploading file:', error)
+        }
+        finally {
+            setUploading(false);
         }
     }
 
@@ -58,10 +66,18 @@ export default function UploadPhoto() {
         <div className={styles.editContainer}>
             <h3>Upload Profile Picture</h3>
             <div className={styles.uploadContainer}>
-                <input type="file" accept="image/*" onChange={handleFileChange} />
-                <button onClick={handleUpload}>Upload</button>
-                {uploadStatus && <p>{uploadStatus}</p>}
+                <input type="file" accept="image/*" onChange={handleFileChange} disabled={uploading}/>
+                <button onClick={handleUpload}>
+                    {uploading ? 'Uploading..' : 'Upload'}
+                </button>
             </div>
+            {uploadComplete && (
+                <div className={styles.successMessage}>
+                    <div className={styles.successAnimation}></div>
+                    <p>Your profile picture was uploaded successfully 😎✨</p>
+                    <p>Redirecting to your profile ⏳</p>
+                </div>
+            )};
         </div>
     )
 };
