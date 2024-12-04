@@ -130,7 +130,7 @@ export default function Profile() {
         )}
 
         <div className={styles.profileChildTwo}>
-          {loggedInUser === username ? <CiSettings onClick={handleEditRoute} size={25} /> : null}
+          {loggedInUser === username ? <CiSettings className={styles.settingsIcon} onClick={handleEditRoute} size={25} /> : null}
         </div>
 
       </div>

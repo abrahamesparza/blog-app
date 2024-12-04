@@ -102,3 +102,8 @@
     height: 100px;
     margin-top: 10px;
 }
+
+.settingsIcon:hover {
+    cursor: pointer;
+    color: #887efa;
+}
