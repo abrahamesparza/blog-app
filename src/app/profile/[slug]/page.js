@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { CiSettings } from 'react-icons/ci';
 import { useRouter } from 'next/navigation';
-
+import Image from "next/image";
 
 import styles from '../profile.module.css';
 import Navigation from "@/app/components/navigation";
@@ -18,6 +18,7 @@ export default function Profile() {
   const [loggedInUser, setLoggedInUser] = useState(null);
   const [profileExists, setProfileExists] = useState(null);
   const router = useRouter();
+  const imageUrl = `https://users-pfp.s3.amazonaws.com/profiles/${username}/mikejones.jpg`;
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -86,6 +87,15 @@ export default function Profile() {
         ) : (
           <div className={styles.profileChildOne}>
             <BackButton routeBack={routeBack}/>
+            <div className={styles.profileImageContaier}>
+              <Image
+                src={imageUrl}
+                alt={`${username}'s profile`}
+                width={100}
+                height={100}
+                className={styles.profileImage}
+              />
+            </div>
             <h3 className={styles.username}>@{username}</h3>
             <div className={styles.follows}>
               <p>700 Followers</p>

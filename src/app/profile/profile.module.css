@@ -94,3 +94,11 @@
     cursor: pointer;
     color: #887efa;
 }
+
+.profileImage {
+    border-radius: 50%;
+    object-fit: cover;
+    width: 100px;
+    height: 100px;
+    margin-top: 10px;
+}
