@@ -18,6 +18,9 @@ export default function Profile() {
   const [loggedInUser, setLoggedInUser] = useState(null);
   const [profileExists, setProfileExists] = useState(null);
   const router = useRouter();
+
+  // replace url with unique image for each user;
+  // s3 should only hold one image for each user, and return that image
   const imageUrl = `https://users-pfp.s3.amazonaws.com/profiles/${username}/mikejones.jpg`;
 
   useEffect(() => {
