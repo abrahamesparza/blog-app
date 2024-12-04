@@ -59,6 +59,10 @@ export default function Profile() {
     router.push(`/blog/${blogTitle}?username=${username}`);
   };
 
+  const handleEditRoute = () => {
+    router.push(`/profile/${username}/edit`);
+  }
+
   const routeBack = () => {
     router.push('/landing');
   }
@@ -113,7 +117,7 @@ export default function Profile() {
         )}
 
         <div className={styles.profileChildTwo}>
-          {loggedInUser === username ? <CiSettings size={25} /> : null}
+          {loggedInUser === username ? <CiSettings onClick={handleEditRoute} size={25} /> : null}
         </div>
 
       </div>
