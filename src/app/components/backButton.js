@@ -1,8 +1,10 @@
 import { IoIosArrowRoundBack } from "react-icons/io";
 
+import styles from '../page.module.css';
+
 const BackButton = ({ routeBack }) => {
     return (
-        <IoIosArrowRoundBack onClick={routeBack} size={28} />
+        <IoIosArrowRoundBack className={styles.backButton} onClick={routeBack} size={28} />
     )
 }
 
