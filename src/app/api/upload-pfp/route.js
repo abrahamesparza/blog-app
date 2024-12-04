@@ -5,8 +5,8 @@ const BUCKET = 'users-pfp';
 
 export async function POST(request) {
     try {
-        const { username, fileName } = await request.json();
-        const key = `profiles/${username}/${fileName}`;
+        const { username } = await request.json();
+        const key = `profiles/${username}/profile.jpg`;
         const params = {
             Bucket: BUCKET,
             Key: key,
