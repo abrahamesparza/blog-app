@@ -33,7 +33,7 @@
                 - Each blog item should show the title, timestamp, and a brief peek of the content (20-25 words?) in a card component ✅
         - Update the blogs field in the users table so that each blog contains a unique timestamp (random date and time in 2024, January 1 - present) ✅
             - Display timestamp as described above ✅
-        - Bonus: include avatars/images for each user
+        - Bonus: include avatars/images for each user ⌛
     - Write logic so that profile/[slug]:
         - Shows error if the username slug does not exist ✅
             - if /profile/joe does not exist, then it should show an error on a blank page with Navigation stating `User doesn't exist` or similar ✅
@@ -42,7 +42,7 @@
         - When a user clicks on a blog item, it should open up page that displays that blog:
             - Title ✅
             - username ✅
-            - timestamp
+            - timestamp ✅
             - content ✅
         - Bonus: show a carousel at the bottom of the blog content that displays other blogs by this user
 5. **Additional APIs**
