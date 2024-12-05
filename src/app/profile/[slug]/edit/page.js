@@ -6,6 +6,9 @@ import { useRouter } from 'next/navigation';
 import Navigation from '@/app/components/navigation';
 import UploadPhoto from '@/app/components/uploadPhoto';
 import styles from '../../profile.module.css';
+import Bio from '@/app/components/bio';
+import Username from '../../../components/username';
+import Password from '../../../components/password';
 
 export default function Edit() {
     const [option, setOption] = useState(null);
@@ -16,22 +19,23 @@ export default function Edit() {
     useEffect(() => {
         let user = localStorage.getItem('loggedInUser');
         setUsername(user);
-    })
+    }, []);
 
     const editList = [
-        'Upload a photo',
-        'Add a note about yourself',
+        'Upload profile photo',
+        'Add bio',
         'Update username',
         'Update password',
     ]
 
     const handleEditOption = (e) => {
         let text = e.target.innerText;
+        console.log('text', text)
         if (text === 'Upload a photo') {
             setOption('Photo');
         }
-        else if (text === 'Add a note aout yourself') {
-            setOption('About');
+        else if (text === 'Add bio') {
+            setOption('Bio');
         }
         else if (text === 'Update username') {
             setOption('Username');
@@ -43,11 +47,18 @@ export default function Edit() {
     };
 
     const renderComponent = () => {
+        console.log('option', option)
         switch(option) {
             case 'Photo':
                 return <UploadPhoto />
+            case 'Bio':
+                return <Bio />
+            case 'Username':
+                return <Username />
+                case 'Password':
+                    return <Password />
             default:
-                return;
+                return null;
         }
     }
 
@@ -71,6 +82,7 @@ export default function Edit() {
                 <div className={styles.selectOptionText}>
                     <h3>Select an option to edit</h3>
                 </div>
+
                 <div className={styles.editList}>
                     <ul>
                         {editList.map((item, index) => (
@@ -85,6 +97,7 @@ export default function Edit() {
                     </ul>
                 </div>
             </div>
+
             {renderComponent()}
         </div>
     )
