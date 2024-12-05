@@ -162,9 +162,17 @@
     box-shadow: 0 0 5px rgba(97, 69, 198, 0.5);
 }
 
+.bioButtonContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
 
 .submitButton {
     display: inline-block;
+    align-items: center;
     margin-top: 10px;
     padding: 10px 20px;
     font-size: 16px;
@@ -178,6 +186,7 @@
 
 .submitButton:hover {
     background-color: #685fc6;
+    transform: scale(1.05);
 }
 
 .submitButton:active {
@@ -222,6 +231,7 @@
 
 .submitButtonUP:hover {
     background-color: #685fc6;
+    transform: scale(1.05);
 }
 
 .submitButtonUP:active {
@@ -231,4 +241,52 @@
 .editPageText {
     text-align: center;
     margin-bottom: 10px;
+}
+
+/* Upload Container for input and button */
+.uploadContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 15px 0;
+}
+
+/* File input styling */
+.uploadContainer input[type="file"] {
+    margin-bottom: 10px;
+    padding: 25px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.uploadContainer input[type="file"]:hover {
+    border-color: #887efa;
+    box-shadow: 0 0 8px rgba(136, 126, 250, 0.5);
+}
+
+/* Upload button styling */
+.uploadContainer button {
+    background-color: #887efa;
+    color: #fff;
+    font-size: 16px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.uploadContainer button:hover {
+    background-color: #685fc6;
+    transform: scale(1.05);
+}
+
+.uploadContainer button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
 }

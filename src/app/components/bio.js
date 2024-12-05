@@ -20,7 +20,9 @@ const Bio = () => {
         <div className={styles.editContainer}>
             <p className={styles.editPageText}>Add a bio about yourself.</p>
             <textarea className={styles.bioTextarea} onChange={handleChange} value={bio} />
-            <button className={styles.submitButton} onClick={handleSubmit} >Submit</button>
+            <div className={styles.bioButtonContainer}>
+                <button className={styles.submitButton} onClick={handleSubmit} >Submit</button>
+            </div>
         </div>
     )
 }
