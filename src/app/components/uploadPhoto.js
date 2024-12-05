@@ -64,13 +64,20 @@ export default function UploadPhoto() {
 
     return (
         <div className={styles.editContainer}>
-            <h3>Upload Profile Picture</h3>
-            <div className={styles.uploadContainer}>
-                <input type="file" accept="image/*" onChange={handleFileChange} disabled={uploading}/>
-                <button onClick={handleUpload}>
-                    {uploading ? 'Uploading..' : 'Upload'}
-                </button>
-            </div>
+            <p className={styles.editPageText}>Upload Profile Picture</p>
+            {!uploadComplete && (
+                <div className={styles.uploadContainer}>
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleFileChange}
+                        disabled={uploading}
+                    />
+                    <button onClick={handleUpload}>
+                        {uploading ? 'Uploading...' : 'Upload'}
+                    </button>
+                </div>
+            )}
             {uploadComplete && (
                 <div className={styles.successMessage}>
                     <div className={styles.successAnimation}></div>
