@@ -31,7 +31,7 @@ export default function Edit() {
     const handleEditOption = (e) => {
         let text = e.target.innerText;
         console.log('text', text)
-        if (text === 'Upload a photo') {
+        if (text === 'Upload profile photo') {
             setOption('Photo');
         }
         else if (text === 'Add bio') {

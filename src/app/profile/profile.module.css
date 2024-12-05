@@ -148,7 +148,6 @@
     height: 150px;
     padding: 10px;
     font-size: 16px;
-    font-family: 'Arial', sans-serif;
     border: 1px solid #ccc;
     border-radius: 8px;
     resize: none;
@@ -169,7 +168,6 @@
     margin-top: 10px;
     padding: 10px 20px;
     font-size: 16px;
-    font-family: 'Arial', sans-serif;
     color: #fff;
     background-color: #887efa;
     border: none;
@@ -186,12 +184,18 @@
     background-color: #564fa5;
 }
 
+.centerContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .updateInput {
     width: 100%;
     max-width: 400px;
     padding: 10px;
     font-size: 16px;
-    font-family: 'Arial', sans-serif;
     border: 1px solid #ccc;
     border-radius: 8px;
     outline: none;
@@ -222,4 +226,9 @@
 
 .submitButtonUP:active {
     background-color: #564fa5;
+}
+
+.editPageText {
+    text-align: center;
+    margin-bottom: 10px;
 }
