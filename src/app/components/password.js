@@ -20,9 +20,11 @@ const Password = () => {
 
     return (
         <div className={styles.editContainer}>
-            <p>Update password</p>
-            <input className={styles.updateInput} onChange={handleChange} value={password} type="password"/>
-            <button className={styles.submitButton} onClick={handleSubmit} >Submit</button>
+            <p className={styles.editPageText}>Update password</p>
+            <div className={styles.centerContainer}>
+                <input className={styles.updateInput} onChange={handleChange} value={password} type="password"/>
+                <button className={styles.submitButton} onClick={handleSubmit} >Submit</button>
+            </div>
         </div>
     )
 }

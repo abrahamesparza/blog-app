@@ -22,9 +22,11 @@ const Username = () => {
 
     return (
         <div className={styles.editContainer}>
-            <p>Update username</p>
-            <input className={styles.updateInput} onChange={handleChange} type="text"/>
-            <button className={styles.submitButton} onClick={handleSubmit} >Submit</button>
+            <p className={styles.editPageText}>Update username</p>
+            <div className={styles.centerContainer}>
+                <input className={styles.updateInput} onChange={handleChange} type="text"/>
+                <button className={styles.submitButton} onClick={handleSubmit} >Submit</button>
+            </div>
         </div>
     )
 }
