@@ -4,9 +4,25 @@ import styles from '../profile/profile.module.css';
 
 const Bio = () => {
     const [bio, setBio] = useState('');
+    const [page, setPage] = useState(null);
+    const [username, setUsername] = useState('');
 
-    const handleSubmit = (e) => {
+    useEffect(() => {
+        const user = localStorage.getItem('loggedInUser');
+        setPage('bio');
+        setUsername(user)
+    }, []);
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        const url = '/api/edit-profile';
+        const data = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ data: bio, page: page, username: username })
+        });
+        const response = await data.json();
+        console.log('response:', response)
     }
 
     const handleChange = (e) => {
