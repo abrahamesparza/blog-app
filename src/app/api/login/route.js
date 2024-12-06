@@ -22,6 +22,7 @@ export async function POST(request) {
         };
 
         const result = await dynamoDB.scan(params).promise();
+        const userId = result.Items[0].id;
 
         if (!result.Items) {
             return NextResponse.json({ message: 'User not found' })
@@ -41,7 +42,7 @@ export async function POST(request) {
             username: user.username
         });
 
-        const response = NextResponse.json({ message: 'Success', username: user.username })
+        const response = NextResponse.json({ message: 'Success', username: user.username, userId: userId });
         response.cookies.set('sessionId', `${sessionId};username=${user.username}`,  {
             httpOnly: true,
             maxAge: 86400

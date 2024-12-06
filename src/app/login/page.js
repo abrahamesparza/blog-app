@@ -60,6 +60,7 @@ export default function LoginForm() {
         const result = await response.json();
         setLoginResult(result.message);
         localStorage.setItem('loggedInUser', result.username);
+        localStorage.setItem('userId', result.userId);
         setFormData(initialFormData);
         setCheckLogin(true)
     }

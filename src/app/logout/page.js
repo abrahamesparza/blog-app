@@ -12,6 +12,8 @@ export default function Logout({ reroute }) {
         localStorage.removeItem('blogData');
         localStorage.removeItem('blogs');
         localStorage.removeItem('loggedInUser');
+        localStorage.removeItem('bio');
+        localStorage.removeItem('userId');
         handleRouting();
     };
 
