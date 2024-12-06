@@ -52,6 +52,7 @@ export default function SignupForm() {
         });
 
         const result = await response.json();
+        localStorage.setItem('loggedInUser', result.username);
         console.log(`Result: ${result.message}`); // logs result
        
         checkNextStep(result.message)
