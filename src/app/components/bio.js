@@ -22,6 +22,7 @@ const Bio = () => {
             body: JSON.stringify({ data: bio, page: page, username: username })
         });
         const response = await data.json();
+        localStorage.setItem('bio', response.updatedField);
         console.log('response:', response)
     }
 
