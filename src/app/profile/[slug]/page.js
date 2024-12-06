@@ -36,9 +36,11 @@ export default function Profile() {
 
   const getBlogs = async () => {
     const storedBlogs = JSON.parse(localStorage.getItem('blogs')) || {};
+    const storedBio = localStorage.getItem('bio');
 
     if (storedBlogs[username]) {
       setBlogs(storedBlogs[username]);
+      setBio(storedBio);
       setProfileExists(true);
       setLoading(false);
     } else {
@@ -53,6 +55,7 @@ export default function Profile() {
           setBio(data.bio);
           const updatedBlogs = { ...storedBlogs, [username]: data.blogs || [] };
           localStorage.setItem('blogs', JSON.stringify(updatedBlogs));
+          localStorage.setItem('bio', data.bio);
           setProfileExists(true);
         }
         setLoading(false);
