@@ -68,7 +68,7 @@ export async function POST(request) {
             console.log("Item updated.", updateResult);
             return NextResponse.json({
                 message: "Success",
-                updatedField: updateResult.Attributes.bio
+                updatedField: updateResult.Attributes.bio || updateResult.Attributes.username || updateResult.Attributes.password
             });
         }
     }
