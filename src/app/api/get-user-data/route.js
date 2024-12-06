@@ -13,19 +13,18 @@ export async function GET(request) {
     try {
         const params = {
             TableName: 'users',
-            IndexName: 'username-index',
+            IndexName: 'profile-index',
             KeyConditionExpression: 'username = :username',
             ExpressionAttributeValues: {
                 ':username': username,
             },
-            ProjectionExpression: 'id, blogs, username'
+            ProjectionExpression: 'id, blogs, username, bio'
         };
         const data = await dynamoDB.query(params).promise();
         let blogs = data.Items[0];
         if (!blogs) {
             return NextResponse.json({ message: 404 });
         }
-        console.log('BLOGS:', blogs)
         return NextResponse.json(blogs);
     } catch (error) {
         console.error(error)

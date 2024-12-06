@@ -14,6 +14,7 @@ export default function Profile() {
   const pathName = usePathname();
   const username = pathName.split('/')[2];
   const [blogs, setBlogs] = useState([]);
+  const [bio, setBio] = useState('');
   const [loading, setLoading] = useState(true);
   const [loggedInUser, setLoggedInUser] = useState(null);
   const [profileExists, setProfileExists] = useState(null);
@@ -44,10 +45,12 @@ export default function Profile() {
       try {
         const response = await fetch(`/api/get-user-data?username=${username}`);
         const data = await response.json();
+        console.log(data)
         if (data.message === 404) {
           setProfileExists(false);
         } else {
           setBlogs(data.blogs || []);
+          setBio(data.bio);
           const updatedBlogs = { ...storedBlogs, [username]: data.blogs || [] };
           localStorage.setItem('blogs', JSON.stringify(updatedBlogs));
           setProfileExists(true);
@@ -107,7 +110,7 @@ export default function Profile() {
               <p>300 Following</p>
             </div>
             <div className={styles.aboutContainer}>
-              <p className={styles.aboutText}>About section for user.</p>
+              <p className={styles.aboutText}>{bio}</p>
             </div>
             <div className={styles.blogList}>
               <h3 className={styles.blogHeader}>Blogs</h3>
