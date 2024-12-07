@@ -19,19 +19,26 @@ export default function Profile() {
   const [loggedInUser, setLoggedInUser] = useState(null);
   const [profileExists, setProfileExists] = useState(null);
   const [profileImageUrl, setProfileImageUrl] = useState('');
+  const [userId, setUserId] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const storedUser = localStorage.getItem('loggedInUser');
+      const id = localStorage.getItem('userId');
+      setUserId(id)
       setLoggedInUser(storedUser);
     }
-    setProfileImageUrl(generateProfileImageUrl);
+    setProfileImageUrl(generateProfileImageUrl());
     getBlogs();
-  }, []);
+  }, [userId]);
 
   const generateProfileImageUrl = () => {
-    return `https://users-pfp.s3.amazonaws.com/profiles/${username}/profile.jpg?timestamp=${Date.now()}`;
+    if (!userId) {
+      console.error('User ID is undefined');
+      return;
+    }
+    return `https://users-pfp.s3.amazonaws.com/profiles/${userId}/profile.jpg?timestamp=${Date.now()}`;
   };
 
   const getBlogs = async () => {
@@ -43,24 +50,27 @@ export default function Profile() {
       setBio(storedBio);
       setProfileExists(true);
       setLoading(false);
-    } else {
+    }
+    else {
       try {
         const response = await fetch(`/api/get-user-data?username=${username}`);
         const data = await response.json();
-        console.log(data)
+
         if (data.message === 404) {
           setProfileExists(false);
-        } else {
+        }
+        else {
           setBlogs(data.blogs || []);
           setBio(data.bio);
           const updatedBlogs = { ...storedBlogs, [username]: data.blogs || [] };
           localStorage.setItem('blogs', JSON.stringify(updatedBlogs));
-          localStorage.setItem('bio', data.bio);
+          localStorage.setItem('bio', bio);
           setProfileExists(true);
         }
         setLoading(false);
-      } catch (error) {
-        console.error(error);
+      }
+      catch (error) {
+        console.error('Error', error);
         setLoading(false);
       }
     }
@@ -99,13 +109,13 @@ export default function Profile() {
           <div className={styles.profileChildOne}>
             <BackButton routeBack={routeBack}/>
             <div className={styles.profileImageContaier}>
-              <Image
-                src={profileImageUrl}
-                alt={`${username}'s profile`}
-                width={100}
-                height={100}
-                className={styles.profileImage}
-              />
+                <Image
+                  src={profileImageUrl}
+                  alt={`${username}'s profile`}
+                  width={100}
+                  height={100}
+                  className={styles.profileImage}
+                />
             </div>
             <h3 className={styles.username}>@{username}</h3>
             <div className={styles.follows}>
