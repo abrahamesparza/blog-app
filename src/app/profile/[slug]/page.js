@@ -35,7 +35,6 @@ export default function Profile() {
 
   const generateProfileImageUrl = () => {
     if (!userId) {
-      console.error('User ID is undefined');
       return;
     }
     return `https://users-pfp.s3.amazonaws.com/profiles/${userId}/profile.jpg?timestamp=${Date.now()}`;
