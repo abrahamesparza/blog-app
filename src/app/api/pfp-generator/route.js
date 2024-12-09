@@ -3,20 +3,16 @@ import s3 from "../lib/s3";
 import dynamoDB from "../lib/dynamodb";
 
 export async function GET() {
-    //i want to scan my users table and return all usernames
-    //then i want to write a script to populate my s3 users-pfp 
-    //bucket to add a random photo for each username in the profiles/
-    //directory
     try {
         const params = {
             TableName: 'users',
-            ProjectionExpression: 'username'
+            ProjectionExpression: 'username, id'
         };
         const data = await dynamoDB.scan(params).promise();
         const results = [];
 
         for (const item of data.Items) {
-            const key = `profiles/${item.username}/profile.jpg`;
+            const key = `profiles/${item.id}/profile.jpg`;
             const s3Params = {
                 Bucket: 'users-pfp',
                 Key: key,
