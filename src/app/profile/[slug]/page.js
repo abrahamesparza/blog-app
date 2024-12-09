@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useId } from "react";
 import { usePathname } from "next/navigation";
 import { CiSettings } from 'react-icons/ci';
 import { useRouter } from 'next/navigation';
@@ -14,24 +14,25 @@ export default function Profile() {
   const pathName = usePathname();
   const username = pathName.split('/')[2];
   const [blogs, setBlogs] = useState([]);
+  const [userId, setUserId] = useState('');
   const [bio, setBio] = useState('');
   const [loading, setLoading] = useState(true);
   const [loggedInUser, setLoggedInUser] = useState(null);
   const [profileExists, setProfileExists] = useState(null);
   const [profileImageUrl, setProfileImageUrl] = useState('');
-  const [userId, setUserId] = useState(null);
+  const [loggedInUserId, setloggedInUserId] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const storedUser = localStorage.getItem('loggedInUser');
-      const id = localStorage.getItem('userId');
-      setUserId(id)
+      const id = localStorage.getItem('loggedInUserId');
+      setloggedInUserId(id)
       setLoggedInUser(storedUser);
     }
     setProfileImageUrl(generateProfileImageUrl());
     getBlogs();
-  }, [userId]);
+  }, [loggedInUserId, userId]);
 
   const generateProfileImageUrl = () => {
     if (!userId) {
@@ -41,37 +42,25 @@ export default function Profile() {
   };
 
   const getBlogs = async () => {
-    const storedBlogs = JSON.parse(localStorage.getItem('blogs')) || {};
-    const storedBio = localStorage.getItem('bio');
+    try {
+      const response = await fetch(`/api/get-user-data?username=${username}`);
+      const data = await response.json();
 
-    if (storedBlogs[username]) {
-      setBlogs(storedBlogs[username]);
-      setBio(storedBio);
-      setProfileExists(true);
+      if (data.message === 404) {
+        setProfileExists(false);
+      }
+      else {
+        console.log('data', data)
+        setBlogs(data.blogs || []);
+        setBio(data.bio);
+        setUserId(data.id);
+        setProfileExists(true);
+      }
       setLoading(false);
     }
-    else {
-      try {
-        const response = await fetch(`/api/get-user-data?username=${username}`);
-        const data = await response.json();
-
-        if (data.message === 404) {
-          setProfileExists(false);
-        }
-        else {
-          setBlogs(data.blogs || []);
-          setBio(data.bio);
-          const updatedBlogs = { ...storedBlogs, [username]: data.blogs || [] };
-          localStorage.setItem('blogs', JSON.stringify(updatedBlogs));
-          localStorage.setItem('bio', bio);
-          setProfileExists(true);
-        }
-        setLoading(false);
-      }
-      catch (error) {
-        console.error('Error', error);
-        setLoading(false);
-      }
+    catch (error) {
+      console.error('Error', error);
+      setLoading(false);
     }
   };
 
