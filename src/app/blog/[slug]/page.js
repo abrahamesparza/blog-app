@@ -21,17 +21,21 @@ const Blog = () => {
         minute: 'numeric',
         hour12: true
     }
-    /*
-    Todo: figure out how to call the api when the system detects
-          an update since localStorage doesn't do that at the moment.
-          OR simply call the api to get this data for each blog page
-    */
+    
     useEffect(() => {
-        let storedBlogs = localStorage.getItem('blogs')
-        storedBlogs = JSON.parse(storedBlogs);
-        const filteredBlogs = storedBlogs[username].find(blog => blog.title === slug);
-        setBlogs([filteredBlogs]);
+        getBlogData();
+
     }, [username, slug]);
+
+    const getBlogData = async () => {
+        const response = await fetch(`/api/get-user-data?username=${username}`);
+        const data = await response.json()
+        if (data.error || data.message === 404) {
+            console.error('Error fetching blog data');
+        }
+        console.log(data);
+        setBlogs(data.blogs);
+    }
 
     const routeBack = () => {
       router.push(`/profile/${username}`);
@@ -40,15 +44,19 @@ const Blog = () => {
     return (
         <div>
             <Navigation />
-            {blogs.map((blog, index) => (
-                <div className={styles.blogContainer} key={index}>
-                    <BackButton routeBack={routeBack}/>
+            {blogs.map((blog, index) => 
+                blog.title === slug ? ( 
+                    <div className={styles.blogContainer} key={index}>
+                    <BackButton routeBack={routeBack} />
                     <h2>{blog.title}</h2>
                     <p>@{username}</p>
                     <p>{new Date(blog.timestamp).toLocaleString('en-US', dateOptions)}</p>
                     <p>{blog.content}</p>
-                </div>
-            ))}
+                    </div>
+                ) : (
+                    ''
+                )
+                )}
         </div>
     )
 };
