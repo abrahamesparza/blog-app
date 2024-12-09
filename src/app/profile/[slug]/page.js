@@ -39,36 +39,25 @@ export default function Profile() {
   };
 
   const getBlogs = async () => {
-    const storedBlogs = JSON.parse(localStorage.getItem('blogs')) || {};
+    try {
+      const response = await fetch(`/api/get-user-data?username=${username}`);
+      const data = await response.json();
 
-    if (storedBlogs[username]) {
-      setBlogs(storedBlogs[username]);
-      setProfileExists(true);
+      if (data.message === 404) {
+        setProfileExists(false);
+      }
+
+      else {
+        setBlogs(data.blogs || []);
+        setBio(data.bio);
+        setUserId(data.id);
+        setProfileExists(true);
+      }
       setLoading(false);
     }
-    else {
-      try {
-        const response = await fetch(`/api/get-user-data?username=${username}`);
-        const data = await response.json();
-
-        if (data.message === 404) {
-          setProfileExists(false);
-        }
-        else {
-          console.log('data', data)
-          setBlogs(data.blogs || []);
-          setBio(data.bio);
-          setUserId(data.id);
-          const updatedBlogs = { ...storedBlogs, [username]: data.blogs || [] };
-          localStorage.setItem('blogs', JSON.stringify(updatedBlogs));
-          setProfileExists(true);
-        }
-        setLoading(false);
-      }
-      catch (error) {
-        console.error('Error', error);
-        setLoading(false);
-      }
+    catch (error) {
+      console.error('Error', error);
+      setLoading(false);
     }
   };
 
