@@ -21,7 +21,11 @@ const Blog = () => {
         minute: 'numeric',
         hour12: true
     }
-
+    /*
+    Todo: figure out how to call the api when the system detects
+          an update since localStorage doesn't do that at the moment.
+          OR simply call the api to get this data for each blog page
+    */
     useEffect(() => {
         let storedBlogs = localStorage.getItem('blogs')
         storedBlogs = JSON.parse(storedBlogs);
