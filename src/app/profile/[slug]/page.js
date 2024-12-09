@@ -14,25 +14,22 @@ export default function Profile() {
   const pathName = usePathname();
   const username = pathName.split('/')[2];
   const [blogs, setBlogs] = useState([]);
-  const [userId, setUserId] = useState('');
   const [bio, setBio] = useState('');
+  const [userId, setUserId] = useState('');
   const [loading, setLoading] = useState(true);
   const [loggedInUser, setLoggedInUser] = useState(null);
   const [profileExists, setProfileExists] = useState(null);
   const [profileImageUrl, setProfileImageUrl] = useState('');
-  const [loggedInUserId, setloggedInUserId] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const storedUser = localStorage.getItem('loggedInUser');
-      const id = localStorage.getItem('loggedInUserId');
-      setloggedInUserId(id)
       setLoggedInUser(storedUser);
     }
     setProfileImageUrl(generateProfileImageUrl());
     getBlogs();
-  }, [loggedInUserId, userId]);
+  }, [userId]);
 
   const generateProfileImageUrl = () => {
     if (!userId) {
@@ -42,25 +39,36 @@ export default function Profile() {
   };
 
   const getBlogs = async () => {
-    try {
-      const response = await fetch(`/api/get-user-data?username=${username}`);
-      const data = await response.json();
+    const storedBlogs = JSON.parse(localStorage.getItem('blogs')) || {};
 
-      if (data.message === 404) {
-        setProfileExists(false);
-      }
-      else {
-        console.log('data', data)
-        setBlogs(data.blogs || []);
-        setBio(data.bio);
-        setUserId(data.id);
-        setProfileExists(true);
-      }
+    if (storedBlogs[username]) {
+      setBlogs(storedBlogs[username]);
+      setProfileExists(true);
       setLoading(false);
     }
-    catch (error) {
-      console.error('Error', error);
-      setLoading(false);
+    else {
+      try {
+        const response = await fetch(`/api/get-user-data?username=${username}`);
+        const data = await response.json();
+
+        if (data.message === 404) {
+          setProfileExists(false);
+        }
+        else {
+          console.log('data', data)
+          setBlogs(data.blogs || []);
+          setBio(data.bio);
+          setUserId(data.id);
+          const updatedBlogs = { ...storedBlogs, [username]: data.blogs || [] };
+          localStorage.setItem('blogs', JSON.stringify(updatedBlogs));
+          setProfileExists(true);
+        }
+        setLoading(false);
+      }
+      catch (error) {
+        console.error('Error', error);
+        setLoading(false);
+      }
     }
   };
 
