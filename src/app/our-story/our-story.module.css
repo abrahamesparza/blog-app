@@ -1,0 +1,26 @@
+.storyContainer {
+    /* display: flex;
+    flex-direction: column; */
+    margin-top: 50px;
+    margin-left: 30px;
+    margin-right: 30px;
+}
+.backButton:hover {
+    cursor: pointer;
+    color: #887efa;
+}
+
+.storyText {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.storyP {
+    line-height: 1.8;
+}
+
+.backButtonContainer {
+    margin-top: 15px;
+    margin-left: 10px;
+}
