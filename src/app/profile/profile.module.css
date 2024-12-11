@@ -5,6 +5,9 @@
     margin-top: 50px;
     /* border-bottom: 1px solid rgb(223, 223, 223); */
 }
+.profile {
+    margin-bottom: 25px;
+}
 .profileChildOne {
     margin-left: 50px;
     /* border-right: 1px solid rgb(223, 223, 223); */
@@ -15,19 +18,12 @@
     margin-right: 50px;
 }
 
-.follows {
-    margin-top: 5px;
-    /* border-bottom: 1px solid rgb(223, 223, 223); */
-}
 .aboutContainer {
-    margin-top: 5px;
+    margin-top: 15px;
 }
 .blogList {
     border-top: 1px solid rgb(223, 223, 223);
-    margin-top: 25px;
-}
-.blogHeader {
-    margin-top: 5px;
+    margin-top: 10px;
 }
 .blogUl {
     margin-top: 25px;
@@ -143,8 +139,8 @@
 
 
 .bioTextarea {
-    width: 100%; /* Occupy full width of the container */
-    max-width: calc(100% - 50px); /* Ensure at least 50px space on the right */
+    width: 100%;
+    max-width: calc(100% - 50px);
     height: 150px;
     padding: 10px;
     font-size: 16px;
@@ -153,8 +149,8 @@
     resize: none;
     outline: none;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    box-sizing: border-box; /* Include padding and borders in width calculation */
-    margin-right: auto; /* Center properly if needed */
+    box-sizing: border-box;
+    margin-right: auto;
 }
 
 .bioTextarea:focus {
@@ -243,7 +239,6 @@
     margin-bottom: 10px;
 }
 
-/* Upload Container for input and button */
 .uploadContainer {
     display: flex;
     flex-direction: column;
@@ -251,7 +246,6 @@
     margin: 15px 0;
 }
 
-/* File input styling */
 .uploadContainer input[type="file"] {
     margin-bottom: 10px;
     padding: 25px;
@@ -269,7 +263,6 @@
     box-shadow: 0 0 8px rgba(136, 126, 250, 0.5);
 }
 
-/* Upload button styling */
 .uploadContainer button {
     background-color: #887efa;
     color: #fff;
@@ -289,4 +282,24 @@
 .uploadContainer button:disabled {
     background-color: #ccc;
     cursor: not-allowed;
+}
+
+.blogHeaderContainer {
+    margin-top: 5px;
+    width: 100%;
+    gap: 50px;
+}
+
+.privateTab:hover {
+    cursor: pointer;
+    color: #887efa;
+}
+
+.entriesList {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: flex-start;
+    gap: 100px;
+    margin-top: 10px;
 }

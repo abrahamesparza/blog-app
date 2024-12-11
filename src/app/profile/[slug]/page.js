@@ -20,6 +20,7 @@ export default function Profile() {
   const [loggedInUser, setLoggedInUser] = useState(null);
   const [profileExists, setProfileExists] = useState(null);
   const [profileImageUrl, setProfileImageUrl] = useState('');
+  const [showView, setShowView] = useState('public');
   const router = useRouter();
 
   useEffect(() => {
@@ -37,6 +38,16 @@ export default function Profile() {
     }
     return `https://users-pfp.s3.amazonaws.com/profiles/${userId}/profile.jpg?timestamp=${Date.now()}`;
   };
+
+  const togglePrivateBlogs = (e) => {
+    let view = e.target.innerText;
+    if (view === 'Public') setShowView('public');
+    else setShowView('private');
+  };
+
+  const filteredBlogs = blogs.filter(item => 
+    showView === 'private' ? item.privacy === 'private' : item.privacy === 'public' || !item.privacy
+  );
 
   const getBlogs = async () => {
     try {
@@ -74,6 +85,8 @@ export default function Profile() {
     router.push('/landing');
   }
 
+  console.log('blogs', blogs)
+
   return (
     <div className={styles.profile}>
       <Navigation />
@@ -103,18 +116,30 @@ export default function Profile() {
                 />
             </div>
             <h3 className={styles.username}>@{username}</h3>
+            {/* 
+            // Update to display friends instead //
             <div className={styles.follows}>
               <p>700 Followers</p>
               <p>300 Following</p>
-            </div>
+            </div> */}
             <div className={styles.aboutContainer}>
               <p className={styles.aboutText}>{bio}</p>
             </div>
             <div className={styles.blogList}>
-              <h3 className={styles.blogHeader}>Blogs</h3>
-              {blogs.length > 0 ? (
+              <div className={styles.blogHeaderContainer}>
+                <h3 className={styles.blogHeader}>Blogs</h3>
+
+                  <div className={styles.entriesList}>
+                    <p className={styles.privateTab} onClick={togglePrivateBlogs}>Public</p>
+                    {username === loggedInUser && (
+                      <p className={styles.privateTab} onClick={togglePrivateBlogs}>Private</p>
+                    )}
+                  </div>
+              </div>
+
+              {filteredBlogs.length > 0 ? (
                 <ul className={styles.blogUl}>
-                  {blogs.map((item, index) => (
+                  {filteredBlogs.map((item, index) => (
                     <BlogItem
                       key={index}
                       title={item.title}
