@@ -47,11 +47,11 @@ const Blog = () => {
             {blogs.map((blog, index) => 
                 blog.title === slug ? ( 
                     <div className={styles.blogContainer} key={index}>
-                    <BackButton routeBack={routeBack} />
-                    <h2>{blog.title}</h2>
+                    <BackButton className={styles.backButton} routeBack={routeBack} />
+                    <h2 className={styles.blogTitle}>{blog.title}</h2>
                     <p>@{username}</p>
                     <p>{new Date(blog.timestamp).toLocaleString('en-US', dateOptions)}</p>
-                    <p>{blog.content}</p>
+                    <p className={styles.blogContent}>{blog.content}</p>
                     </div>
                 ) : (
                     ''

@@ -1,9 +1,26 @@
 .blogContainer {
     display: flex;
     flex-direction: column;
-    margin-top: 50px;
-    margin-bottom: 50px;
-    margin-left: 30px;
-    margin-right: 30px;
     gap: 25px;
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 12px;
 }
+
+.blogTitle {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #222;
+    margin-bottom: 20px;
+}
+
+.blogContent {
+    line-height: 1.8;
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+
