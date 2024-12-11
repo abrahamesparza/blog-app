@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 import styles from "./page.module.css";
 import SignupForm from "./signup/page";
@@ -10,16 +11,10 @@ import OurStory from "./our-story/page";
 
 
 export default function Home() {
-
-  useEffect(() => {
-    console.log('HI :D');
-  }, [])
-
   const [form, setForm] = useState('');
 
   function handleForm(e) {
     let formType = e.target.innerText;
-    console.log('form type', formType)
     setForm(formType)
   }
 
