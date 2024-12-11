@@ -9,6 +9,7 @@ export default function Write() {
     const [author, setAuthor] = useState('');
     const [content, setContent] = useState('');
     const [title, setTitle] = useState('');
+    const [privacyOption, setPrivacyOption] = useState('private');
     const [submitting, setSubmitting] = useState(false);
     const [uploadComplete, setUploadComplete] = useState(false);
     const router = useRouter();
@@ -26,6 +27,11 @@ export default function Write() {
         setContent(e.target.value);
     };
 
+    const handleOption = (e) => {
+        console.log(e.target.value);
+        setPrivacyOption(privacyOption);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -36,6 +42,7 @@ export default function Write() {
                 content: content,
                 title: title,
                 timestamp: timestamp,
+                privacy: privacyOption,
             };
             const response = await fetch('/api/write-blog-post', {
                 method: 'POST',
@@ -68,7 +75,16 @@ export default function Write() {
                 {!uploadComplete && (
                     <div>
                         <h3 className={styles.blogText}>Write a blog</h3>
-                        <p className={styles.blogTitle}>Title</p>
+                        <div className={styles.selectContainer}>
+                            <p className={styles.blogTitle}>Title</p>
+                            <div className={styles.selectDropDown}>
+                                <select onChange={handleOption} required className={styles.select}>
+                                    <option value="" disabled>Select an option</option>
+                                    <option value="private">Private</option>
+                                    <option value="public">Public</option>
+                                </select>
+                            </div>
+                        </div>
                         <div className={styles.centerContainer}>
                             <input className={styles.updateInput} onChange={changeTitle} type="text" disabled={submitting}/>
                             <p className={styles.blogContent}>Content</p>
