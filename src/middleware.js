@@ -5,11 +5,16 @@ export function middleware(request) {
 
     if (!sessionId) {
         return NextResponse.redirect(new URL('/', request.url));
-    };
+    }
+    if (request.nextUrl.pathname === '/') {
+        const url = request.nextUrl.clone();
+        url.pathname = '/landing';
+        return NextResponse.redirect(url);
+    }
 
     return NextResponse.next();
 };
 
 export const config = {
-    matcher: ['/landing', '/write', '/explore', '/profile/:path*'],
+    matcher: ['/', '/landing', '/write', '/explore', '/profile/:path*'],
 };
