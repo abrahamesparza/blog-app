@@ -96,7 +96,7 @@
 }
 
 .updateInput {
-    width: 100%;
+    width: calc(100% - 50px);
     max-width: 400px;
     padding: 10px;
     font-size: 16px;
@@ -106,6 +106,7 @@
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
     box-sizing: border-box;
     margin: 10px 0;
+    margin-right: 50px;
 }
 
 .updateInput:focus {
@@ -117,10 +118,71 @@
     text-align: start;
     margin-bottom: 10px;
 }
-.blogTitle {
-    text-align: start;
-    padding-top: 10px;
-}
+
 .blogContent {
     margin: 10px 0;
+}
+
+.selectContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 20px;
+}
+
+.blogTitle {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+    margin: 0;
+    margin-bottom: -60px;
+}
+
+.selectDropDown {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-right: 50px;
+}
+
+.select {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #333;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    appearance: none;
+    background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23887efa" class="bi bi-chevron-down" viewBox="0 0 16 16"%3E%3Cpath fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"%3E%3C/path%3E%3C/svg%3E');
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px 16px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.select:focus {
+    border-color: #887efa;
+    box-shadow: 0 0 5px rgba(97, 69, 198, 0.5);
+}
+
+.select:hover {
+    border-color: #887efa;
+}
+
+.select option {
+    color: #333;
+    font-size: 16px;
+    background-color: #fff;
+}
+
+.select:disabled {
+    background-color: #f5f5f5;
+    color: #aaa;
+    cursor: not-allowed;
 }
