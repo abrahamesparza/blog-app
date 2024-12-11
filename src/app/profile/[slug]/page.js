@@ -22,6 +22,8 @@ export default function Profile() {
   const [profileExists, setProfileExists] = useState(null);
   const [profileImageUrl, setProfileImageUrl] = useState('');
   const [showView, setShowView] = useState('public');
+  const [friendRequests, setFriendRequests] = useState([]);
+  const [iconVisibility, setIconVisibility] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
@@ -31,6 +33,7 @@ export default function Profile() {
     }
     setProfileImageUrl(generateProfileImageUrl());
     getBlogs();
+    getFriendRequests();
   }, [userId]);
 
   const generateProfileImageUrl = () => {
@@ -80,13 +83,32 @@ export default function Profile() {
 
   const handleEditRoute = () => {
     router.push(`/profile/${username}/edit`);
-  }
+  };
 
   const routeBack = () => {
     router.push('/landing');
-  }
+  };
 
-  console.log('blogs', blogs)
+  const addFriend = async () => {
+    const data = {
+      username: username,
+      loggedInUser: loggedInUser,
+    }
+    const response = await fetch('/api/add-friend', {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    });
+    const result = await response.json();
+    console.log('API Respone:', result);
+  };
+
+  const getFriendRequests = async () => {
+    //fetch the friendRequests field from the username's record
+    //in the users table, and store the data in state
+  }
 
   return (
     <div className={styles.profile}>
@@ -121,7 +143,11 @@ export default function Profile() {
             <div className={styles.addFriendBlock}>
               <h3 className={styles.username}>@{username}</h3>
               {username !== loggedInUser ? (
-                <IoPersonAdd size={22} className={styles.addIcon}/>
+                <IoPersonAdd
+                size={22}
+                className={styles.addIcon}
+                onClick={addFriend}
+                />
               ) : (
                 ''
               )}
