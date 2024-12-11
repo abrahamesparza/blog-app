@@ -1,7 +1,7 @@
 'use client';
 import { useRouter } from 'next/navigation';
 
-import styles from '../landing/landingPage.module.css';
+import styles from '../page.module.css';
 import Logout from '../logout/page';
 import getUsername from '../helpers/getSessionUsername';
 
