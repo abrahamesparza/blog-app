@@ -17,4 +17,5 @@
     grid-template-rows: repeat(auto, 1fr);
     justify-items: start;
     align-items: center;
+    margin-left: 50px;
 }

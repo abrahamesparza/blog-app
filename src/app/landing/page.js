@@ -4,7 +4,6 @@ import { useRouter } from 'next/navigation';
 
 import styles from './landingPage.module.css';
 import Navigation from '../components/navigation';
-import Card from '../components/card';
 
 export default function HomePage() {
 
