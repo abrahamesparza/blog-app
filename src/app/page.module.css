@@ -31,10 +31,20 @@
 .formOption {
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
-    text-align: center;
-    margin-top: 15%;
+    justify-content: flex-end;
+    gap: 50px;
+    font-size: 16px;
+    margin-top: 10px;
+    margin-right: 20px;
 }
+
+.formOptionLine {
+    border-bottom: 1px solid #404040;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
 
 /* form body */
 .formBody {
@@ -94,4 +104,16 @@
 .backButton:hover {
     cursor: pointer;
     color: #887efa;
+}
+
+.descriptionContainer {
+    margin-top: 25vh;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+    
+.descriptionText {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 20px;
 }
