@@ -90,3 +90,8 @@
     cursor: pointer;
     color: #887efa;
 }
+
+.backButton:hover {
+    cursor: pointer;
+    color: #887efa;
+}
