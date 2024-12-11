@@ -13,13 +13,16 @@ export default function FormTypes() {
         else if (page === 'Log In') {
             page = 'login'
         }
+        else if (page === 'Our Story') {
+            page = 'our-story';
+        }
         router.push(`/${page}`);
       };
 
     return (
         <div>
         <div className={styles.formOption}>
-            <p className={styles.formTypeText}>Our Story</p>
+            <p className={styles.formTypeText} onClick={handleRouting}>Our Story</p>
             <p className={styles.formTypeText} onClick={handleRouting}>Sign Up</p>
             <p className={styles.formTypeText} onClick={handleRouting}>Log In</p>
         </div>

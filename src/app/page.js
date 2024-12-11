@@ -6,6 +6,7 @@ import styles from "./page.module.css";
 import SignupForm from "./signup/page";
 import LoginForm from "./login/page";
 import FormTypes from "./components/formTypes";
+import OurStory from "./our-story/page";
 
 
 export default function Home() {
@@ -18,6 +19,7 @@ export default function Home() {
 
   function handleForm(e) {
     let formType = e.target.innerText;
+    console.log('form type', formType)
     setForm(formType)
   }
 
@@ -28,6 +30,7 @@ export default function Home() {
           {
             form === 'Sign Up' ? <SignupForm />
             : form === 'Log In' ? <LoginForm />
+            : form === 'Our Story' ? <OurStory />
             : <FormTypes formType={handleForm}/>
           }
         </div>
