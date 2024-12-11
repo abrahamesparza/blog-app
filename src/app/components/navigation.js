@@ -25,16 +25,15 @@ export default function Navigation() {
     }
     
     return (
-        <div className={styles.navigation}>
-            {/* improvement idea:
-                create a modal to display below items
-                stacked one above the other
-            */}
-            <p onClick={handleRouting} className={styles.navItem}>Home</p>
-            <p onClick={handleRouting} className={styles.navItem}>Write</p>
-            <p onClick={handleRouting} className={styles.navItem}>Explore</p>
-            <p onClick={handleRouting} className={styles.navItem}>Profile</p>
-            <Logout reroute={'/'}/>
+        <div>
+            <div className={styles.navigation}>
+                <p onClick={handleRouting} className={styles.navItem}>Home</p>
+                <p onClick={handleRouting} className={styles.navItem}>Write</p>
+                <p onClick={handleRouting} className={styles.navItem}>Explore</p>
+                <p onClick={handleRouting} className={styles.navItem}>Profile</p>
+                <Logout reroute={'/'}/>
+            </div>
+            <div className={styles.navigationLine}></div>
         </div>
     )
 }
