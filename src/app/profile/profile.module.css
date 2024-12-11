@@ -12,6 +12,21 @@
     margin-left: 50px;
     /* border-right: 1px solid rgb(223, 223, 223); */
 }
+
+.addFriendBlock {
+    display: flex;
+    flex-direction: row;
+    gap: 25px;
+}
+.addIcon {
+    color: #887efa;
+}
+  
+.addIcon:hover {
+    cursor: pointer;
+    color: #564fa5
+}
+
 .profileChildTwo {
     display: flex;
     justify-content: flex-end;
@@ -292,6 +307,11 @@
 
 .privateTab:hover {
     cursor: pointer;
+    color: #887efa;
+}
+
+.activeTab {
+    border-bottom: 3px solid #887efa;
     color: #887efa;
 }
 

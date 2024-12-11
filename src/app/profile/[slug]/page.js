@@ -3,6 +3,7 @@ import { useState, useEffect, useId } from "react";
 import { usePathname } from "next/navigation";
 import { CiSettings } from 'react-icons/ci';
 import { useRouter } from 'next/navigation';
+import { IoPersonAdd } from "react-icons/io5";
 import Image from "next/image";
 
 import styles from '../profile.module.css';
@@ -98,7 +99,9 @@ export default function Profile() {
         ) : profileExists === false ? (
           <div className={styles.profileChildOne}>
             <BackButton routeBack={routeBack}/>
-            <h3 className={styles.username}>@{username}</h3>
+            <div className={styles.addFriendBlock}>
+              <h3 className={styles.username}>@{username}</h3>
+            </div>
             <div className={styles.blogList}>
                 <h1 className={styles.doesNotExist}>User does not exist.</h1>
             </div>
@@ -115,7 +118,14 @@ export default function Profile() {
                   className={styles.profileImage}
                 />
             </div>
-            <h3 className={styles.username}>@{username}</h3>
+            <div className={styles.addFriendBlock}>
+              <h3 className={styles.username}>@{username}</h3>
+              {username !== loggedInUser ? (
+                <IoPersonAdd size={22} className={styles.addIcon}/>
+              ) : (
+                ''
+              )}
+            </div>
             {/* 
             // Update to display friends instead //
             <div className={styles.follows}>
@@ -128,11 +138,20 @@ export default function Profile() {
             <div className={styles.blogList}>
               <div className={styles.blogHeaderContainer}>
                 <h3 className={styles.blogHeader}>Blogs</h3>
-
                   <div className={styles.entriesList}>
-                    <p className={styles.privateTab} onClick={togglePrivateBlogs}>Public</p>
+                    <p
+                    className={`${styles.privateTab} ${showView === 'public' ? styles.activeTab : ''}`}
+                    onClick={togglePrivateBlogs}
+                    >
+                      Public
+                    </p>
                     {username === loggedInUser && (
-                      <p className={styles.privateTab} onClick={togglePrivateBlogs}>Private</p>
+                      <p
+                      className={`${styles.privateTab} ${showView === 'private' ? styles.activeTab : ''}`}
+                      onClick={togglePrivateBlogs}
+                      >
+                        Private
+                      </p>
                     )}
                   </div>
               </div>
