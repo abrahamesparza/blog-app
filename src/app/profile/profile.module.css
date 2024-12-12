@@ -331,3 +331,9 @@
     gap: 5px;
     color: #887efa;
 }
+
+.iconsList {
+    display: flex;
+    flex-direction: row;
+    gap: 25px;
+}
