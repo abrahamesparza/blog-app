@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { CiSettings } from 'react-icons/ci';
 import { useRouter } from 'next/navigation';
 import { IoPersonAdd } from "react-icons/io5";
+import { AiOutlineCheckCircle } from 'react-icons/ai';
 import Image from "next/image";
 
 import styles from '../profile.module.css';
@@ -34,8 +35,6 @@ export default function Profile() {
     setProfileImageUrl(generateProfileImageUrl());
     getBlogs();
     getFriendRequests();
-    // need to run useEffect when a new friend is added to friendRequests
-    // or when iconVisibility changes  to remove iconVisibility
   }, [userId, iconVisibility]);
 
   const generateProfileImageUrl = () => {
@@ -122,6 +121,8 @@ export default function Profile() {
     }
   };
 
+  console.log('friend requests', friendRequests);
+
   return (
     <div className={styles.profile}>
       <Navigation />
@@ -161,7 +162,10 @@ export default function Profile() {
                 onClick={addFriend}
                 />
               ) : (
-                ''
+                <div className={styles.requestSentContainer}>
+                  <AiOutlineCheckCircle size={22} className={styles.requestSentIcon} />
+                  <p>Request Sent</p>
+                </div>
               )}
             </div>
             {/* 
