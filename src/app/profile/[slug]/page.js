@@ -34,7 +34,9 @@ export default function Profile() {
     setProfileImageUrl(generateProfileImageUrl());
     getBlogs();
     getFriendRequests();
-  }, [userId]);
+    // need to run useEffect when a new friend is added to friendRequests
+    // or when iconVisibility changes  to remove iconVisibility
+  }, [userId, iconVisibility]);
 
   const generateProfileImageUrl = () => {
     if (!userId) {
@@ -106,8 +108,18 @@ export default function Profile() {
   };
 
   const getFriendRequests = async () => {
-    //fetch the friendRequests field from the username's record
-    //in the users table, and store the data in state
+    try {
+      const response = await fetch(`/api/get-friend-requests?username=${username}`);
+      const data = await response.json();
+
+      if (data.error) console.error('Error fetching friend requets');
+      if (data.friendRequests.includes(loggedInUser)) setIconVisibility(false);
+
+      setFriendRequests(data.friendRequests);
+    }
+    catch (error) {
+      console.error('Error fetching friend requests.');
+    }
   }
 
   return (
@@ -142,7 +154,7 @@ export default function Profile() {
             </div>
             <div className={styles.addFriendBlock}>
               <h3 className={styles.username}>@{username}</h3>
-              {username !== loggedInUser ? (
+              {!friendRequests.includes(loggedInUser) ? (
                 <IoPersonAdd
                 size={22}
                 className={styles.addIcon}
