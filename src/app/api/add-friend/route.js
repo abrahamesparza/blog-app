@@ -36,8 +36,8 @@ export async function POST(request) {
             ReturnValues: 'UPDATED_NEW'
         };
 
-        await dynamoDB.update(updateParams).promise();
-        return NextResponse.json({ message: 'Success' });
+        const updatedResult = await dynamoDB.update(updateParams).promise();
+        return NextResponse.json({ message: 'Success', data: updatedResult.Attributes.friendRequests });
     }
     catch (error) {
         console.error('Error sending reqeuest');
