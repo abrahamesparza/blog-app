@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { CiSettings } from 'react-icons/ci';
 import { useRouter } from 'next/navigation';
 import { IoPersonAdd } from "react-icons/io5";
+import { IoMdNotificationsOutline } from "react-icons/io";
 import { AiOutlineCheckCircle } from 'react-icons/ai';
 import Image from "next/image";
 
@@ -121,7 +122,6 @@ export default function Profile() {
     }
   };
 
-  console.log('friend requests', friendRequests);
 
   return (
     <div className={styles.profile}>
@@ -155,17 +155,19 @@ export default function Profile() {
             </div>
             <div className={styles.addFriendBlock}>
               <h3 className={styles.username}>@{username}</h3>
-              {!friendRequests.includes(loggedInUser) ? (
-                <IoPersonAdd
-                size={22}
-                className={styles.addIcon}
-                onClick={addFriend}
-                />
-              ) : (
-                <div className={styles.requestSentContainer}>
-                  <AiOutlineCheckCircle size={22} className={styles.requestSentIcon} />
-                  <p>Request Sent</p>
-                </div>
+              {loggedInUser !== username && (
+                !friendRequests.includes(loggedInUser) ? (
+                  <IoPersonAdd
+                    size={22}
+                    className={styles.addIcon}
+                    onClick={addFriend}
+                  />
+                ) : (
+                  <div className={styles.requestSentContainer}>
+                    <AiOutlineCheckCircle size={22} className={styles.requestSentIcon} />
+                    <p>Request Sent</p>
+                  </div>
+                )
               )}
             </div>
             {/* 
@@ -219,7 +221,11 @@ export default function Profile() {
         )}
 
         <div className={styles.profileChildTwo}>
-          {loggedInUser === username ? <CiSettings className={styles.settingsIcon} onClick={handleEditRoute} size={25} /> : null}
+          {loggedInUser === username ? (
+            <div className={styles.iconsList}>
+              <CiSettings className={styles.settingsIcon} onClick={handleEditRoute} size={25} /> 
+              </div>
+          ) : null}
         </div>
 
       </div>
