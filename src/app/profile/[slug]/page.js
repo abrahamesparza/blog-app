@@ -104,7 +104,7 @@ export default function Profile() {
       },
     });
     const result = await response.json();
-    console.log('API Respone:', result);
+    setFriendRequests(prevRequests => [...prevRequests, ...result.data]);
   };
 
   const getFriendRequests = async () => {
@@ -120,7 +120,7 @@ export default function Profile() {
     catch (error) {
       console.error('Error fetching friend requests.');
     }
-  }
+  };
 
   return (
     <div className={styles.profile}>
@@ -173,6 +173,7 @@ export default function Profile() {
             <div className={styles.aboutContainer}>
               <p className={styles.aboutText}>{bio}</p>
             </div>
+            
             <div className={styles.blogList}>
               <div className={styles.blogHeaderContainer}>
                 <h3 className={styles.blogHeader}>Blogs</h3>
@@ -193,7 +194,6 @@ export default function Profile() {
                     )}
                   </div>
               </div>
-
               {filteredBlogs.length > 0 ? (
                 <ul className={styles.blogUl}>
                   {filteredBlogs.map((item, index) => (
@@ -221,4 +221,4 @@ export default function Profile() {
       </div>
     </div>
   );
-}
+};
