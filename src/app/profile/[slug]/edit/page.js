@@ -9,6 +9,7 @@ import styles from '../../profile.module.css';
 import Bio from '@/app/components/bio';
 import Username from '../../../components/username';
 import Password from '../../../components/password';
+import FriendRequests from '@/app/components/friendRequests';
 
 export default function Edit() {
     const [option, setOption] = useState(null);
@@ -26,6 +27,7 @@ export default function Edit() {
         'Add bio',
         'Update username',
         'Update password',
+        'Friend requests',
     ]
 
     const handleEditOption = (e) => {
@@ -43,6 +45,9 @@ export default function Edit() {
         else if (text === 'Update password') {
             setOption('Password');
         }
+        else if (text === 'Friend requests') {
+            setOption('FR');
+        }
         setIsEditing(true);
     };
 
@@ -57,6 +62,8 @@ export default function Edit() {
                 return <Username />
                 case 'Password':
                     return <Password />
+                case 'FR':
+                    return <FriendRequests />
             default:
                 return null;
         }
