@@ -4,7 +4,6 @@ import { usePathname } from "next/navigation";
 import { CiSettings } from 'react-icons/ci';
 import { useRouter } from 'next/navigation';
 import { IoPersonAdd } from "react-icons/io5";
-import { IoMdNotificationsOutline } from "react-icons/io";
 import { AiOutlineCheckCircle } from 'react-icons/ai';
 import Image from "next/image";
 
@@ -12,6 +11,7 @@ import styles from '../profile.module.css';
 import Navigation from "@/app/components/navigation";
 import BlogItem from "@/app/components/blogItem";
 import BackButton from "@/app/components/backButton";
+import { generateProfileImageUrl } from "@/app/helpers/sharedFunctions";
 
 export default function Profile() {
   const pathName = usePathname();
@@ -33,17 +33,10 @@ export default function Profile() {
       const storedUser = localStorage.getItem('loggedInUser');
       setLoggedInUser(storedUser);
     }
-    setProfileImageUrl(generateProfileImageUrl());
+    setProfileImageUrl(generateProfileImageUrl(userId));
     getBlogs();
     getFriendRequests();
   }, [userId, iconVisibility]);
-
-  const generateProfileImageUrl = () => {
-    if (!userId) {
-      return;
-    }
-    return `https://users-pfp.s3.amazonaws.com/profiles/${userId}/profile.jpg?timestamp=${Date.now()}`;
-  };
 
   const togglePrivateBlogs = (e) => {
     let view = e.target.innerText;
