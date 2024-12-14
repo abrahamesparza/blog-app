@@ -19,7 +19,7 @@ export async function GET(request) {
         
         const response = await dynamoDB.query(params).promise();
         const data = response.Items[0];
-        return NextResponse.json({ message: 'Success', friendRequests: data.friendRequests });
+        return NextResponse.json({ message: 'Success', friendRequests: data.friendRequests});
     }
     catch (error) {
         console.error('Error retrieving friend reqeuests', error);
