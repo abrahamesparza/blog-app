@@ -28,8 +28,8 @@ export default function Write() {
     };
 
     const handleOption = (e) => {
-        console.log(e.target.value);
-        setPrivacyOption(privacyOption);
+        let option = e.target.value;
+        setPrivacyOption(option);
     };
 
     const handleSubmit = async (e) => {
