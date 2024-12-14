@@ -8,35 +8,46 @@ export async function POST(request) {
     const loggedInUser = data.loggedInUser;
 
     try {
-        const queryParams = {
+        const recipientQueryParams = {
             TableName: 'users',
             IndexName: 'username-index',
             KeyConditionExpression: 'username = :username',
             ExpressionAttributeValues: {
                 ':username': username,
             },
-        }
+        };
+        const recipientQueryResult = await dynamoDB.query(recipientQueryParams).promise();
+        if (!recipientQueryResult.Items) return NextResponse.json({ Error: 'Username not found'});
 
-        const queryResut = await dynamoDB.query(queryParams).promise();
+        const senderQueryParams = {
+            TableName: 'users',
+            IndexName: 'username-index',
+            KeyConditionExpression: 'username = :username',
+            ExpressionAttributeValues: {
+                ':username': loggedInUser,
+            },
+        };
+        const senderQueryResult = await dynamoDB.query(senderQueryParams).promise();
+        if (!senderQueryResult.Items) return NextResponse.json({ Error: 'Username not found'});
+        const senderUserId = senderQueryResult.Items[0].id;
 
-        if (!queryResut.Items) return NextResponse.json({ Error: 'Username not found'});
-
-        const userId = await queryResut.Items[0].id;
-
+        const requestData = { id: senderUserId, username: loggedInUser }
+        const userIdToAdd = await recipientQueryResult.Items[0].id;
         const updateParams = {
             TableName: 'users',
-            Key: { id: userId },
+            Key: { id: userIdToAdd },
             UpdateExpression: `
                 SET friendRequests =  list_append(if_not_exists(friendRequests, :empty_list), :new_friend_request)
             `,
             ExpressionAttributeValues: {
-                ':new_friend_request': [loggedInUser],
+                ':new_friend_request': [requestData],
                 ':empty_list': []
             },
             ReturnValues: 'UPDATED_NEW'
         };
 
         const updatedResult = await dynamoDB.update(updateParams).promise();
+        console.log(updatedResult.Attributes);
         return NextResponse.json({ message: 'Success', data: updatedResult.Attributes.friendRequests });
     }
     catch (error) {
