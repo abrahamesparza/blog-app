@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 
 import styles from './write.module.css';
 import Navigation from "../components/navigation";
+import PrivacyOption from "../components/privacyOption";
 
 export default function Write() {
     const [author, setAuthor] = useState('');
@@ -77,13 +78,7 @@ export default function Write() {
                         <h3 className={styles.blogText}>Write a blog</h3>
                         <div className={styles.selectContainer}>
                             <p className={styles.blogTitle}>Title</p>
-                            <div className={styles.selectDropDown}>
-                                <select onChange={handleOption} required className={styles.select}>
-                                    <option value="" disabled>Select an option</option>
-                                    <option value="private">Private</option>
-                                    <option value="public">Public</option>
-                                </select>
-                            </div>
+                            <PrivacyOption option={handleOption}/>
                         </div>
                         <div className={styles.centerContainer}>
                             <input className={styles.updateInput} onChange={changeTitle} type="text" disabled={submitting}/>
