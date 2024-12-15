@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { usePathname, useSearchParams, useRouter } from 'next/navigation';
+import { CiSettings } from 'react-icons/ci';
 
 import styles from '../blog.module.css';
 import Navigation from '../../components/navigation';
@@ -8,6 +9,7 @@ import BackButton from '@/app/components/backButton';
 
 const Blog = () => {
     const [blogs, setBlogs] = useState([]);
+    const [loggedInUser, setLoggedInUser] = useState('');
     const searchParams = useSearchParams();
     const username = searchParams.get('username');
     const pathname = usePathname();
@@ -24,7 +26,8 @@ const Blog = () => {
     
     useEffect(() => {
         getBlogData();
-
+        const user = localStorage.getItem('loggedInUser');
+        setLoggedInUser(user);
     }, [username, slug]);
 
     const getBlogData = async () => {
@@ -41,22 +44,45 @@ const Blog = () => {
       router.push(`/profile/${username}`);
     }
 
+    const handleEditRoute = () => {
+        router.push(`/blog/${slug}/edit`);
+    };
+
     return (
         <div>
             <Navigation />
-            {blogs.map((blog, index) => 
-                blog.title === slug ? ( 
-                    <div className={styles.blogContainer} key={index}>
-                    <BackButton className={styles.backButton} routeBack={routeBack} />
-                    <h2 className={styles.blogTitle}>{blog.title}</h2>
-                    <p>@{username}</p>
-                    <p>{new Date(blog.timestamp).toLocaleString('en-US', dateOptions)}</p>
-                    <p className={styles.blogContent}>{blog.content}</p>
-                    </div>
-                ) : (
-                    ''
-                )
+            <div  className={styles.blogLayout}>
+                {loggedInUser !== username ? ( 
+                    blogs
+                    .filter(blog => blog.title === slug)
+                    .map((blog, index) => (
+                        <div className={styles.layoutOne}>
+                            <div className={styles.blogContainer} key={index}>
+                            <BackButton className={styles.backButton} routeBack={routeBack} />
+                            <h2 className={styles.blogTitle}>{blog.title}</h2>
+                            <p>@{username}</p>
+                            <p>{new Date(blog.timestamp).toLocaleString('en-US', dateOptions)}</p>
+                            <p className={styles.blogContent}>{blog.content}</p>
+                            </div>
+                        </div>
+                    ))
+                    ) : (
+                    <div className={styles.layoutTwo}>
+                        {blogs
+                        .filter(blog => blog.title === slug)
+                        .map((blog, index) => (
+                                <div className={styles.blogContainer} key={index}>
+                                    <BackButton className={styles.backButton} routeBack={routeBack} />
+                                    <CiSettings className={styles.settingsPosition} onClick={handleEditRoute} size={25} /> 
+                                    <h2 className={styles.blogTitle}>{blog.title}</h2>
+                                    <p>@{username}</p>
+                                    <p>{new Date(blog.timestamp).toLocaleString('en-US', dateOptions)}</p>
+                                    <p className={styles.blogContent}>{blog.content}</p>
+                                </div>
+                            ))}
+                    </div>  
                 )}
+            </div>
         </div>
     )
 };
