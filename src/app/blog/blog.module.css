@@ -1,9 +1,10 @@
 .blogContainer {
     display: flex;
     flex-direction: column;
-    gap: 25px;
-    max-width: 800px;
-    margin: 50px auto;
+    justify-content: center;
+    gap: 5px;
+    max-width: 100%;
+    margin: 50px;
     padding: 30px;
     background-color: #ffffff;
     border-radius: 12px;
@@ -27,4 +28,51 @@
     align-self: self-end;
 }
 
+.editIcons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
 
+.deleteIcon:hover {
+    cursor: pointer;
+    color: #564fa5
+}
+
+.privacyContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+  
+.iconWrapper {
+    position: relative;
+    display: inline-block;
+    margin-left: 10px; /* Space between the icons */
+}
+
+.tooltip {
+    visibility: hidden;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 4px;
+    padding: 5px 8px;
+    position: absolute;
+    bottom: 110%; 
+    left: 50%; 
+    transform: translateX(-50%);
+    white-space: nowrap;
+    z-index: 1;
+    font-size: 12px;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.iconWrapper:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+  
