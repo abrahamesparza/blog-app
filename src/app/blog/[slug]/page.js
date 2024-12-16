@@ -1,7 +1,10 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { usePathname, useSearchParams, useRouter } from 'next/navigation';
-import { CiSettings } from 'react-icons/ci';
+import { MdDeleteOutline } from "react-icons/md";
+import { MdOutlinePublic } from "react-icons/md";
+import { RiGitRepositoryPrivateFill } from "react-icons/ri";
+//use the two icons above to display whether a blog is public or private
 
 import styles from '../blog.module.css';
 import Navigation from '../../components/navigation';
@@ -44,8 +47,9 @@ const Blog = () => {
       router.push(`/profile/${username}`);
     }
 
-    const handleEditRoute = () => {
-        router.push(`/blog/${slug}/edit`);
+    const handleOption = (e) => {
+        let option = e.target.value;
+        setPrivacyOption(option);
     };
 
     return (
@@ -60,7 +64,7 @@ const Blog = () => {
                             <div className={styles.blogContainer} key={index}>
                             <BackButton className={styles.backButton} routeBack={routeBack} />
                             <h2 className={styles.blogTitle}>{blog.title}</h2>
-                            <p>@{username}</p>
+                            <p className='3'>@{username}</p>
                             <p>{new Date(blog.timestamp).toLocaleString('en-US', dateOptions)}</p>
                             <p className={styles.blogContent}>{blog.content}</p>
                             </div>
@@ -73,9 +77,35 @@ const Blog = () => {
                         .map((blog, index) => (
                                 <div className={styles.blogContainer} key={index}>
                                     <BackButton className={styles.backButton} routeBack={routeBack} />
-                                    <CiSettings className={styles.settingsPosition} onClick={handleEditRoute} size={25} /> 
+                                    <div className={styles.editIcons}>
+                                        {blog.privacy === 'public' ? (
+                                            <div className={styles.privacyContainer}>
+                                                <div className={styles.iconWrapper}>
+                                                    <MdOutlinePublic size={24} />
+                                                    <span className={styles.tooltip}>Public</span>
+                                                </div>
+                                            
+                                                <div className={styles.iconWrapper}>
+                                                    <MdDeleteOutline className={styles.deleteIcon} size={28} />
+                                                    <span className={styles.tooltip}>Delete</span>
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            <div className={styles.privacyContainer}>
+                                                <div className={styles.iconWrapper}>
+                                                    <RiGitRepositoryPrivateFill size={24} />
+                                                    <span className={styles.tooltip}>Private</span>
+                                                </div>
+                                            
+                                                <div className={styles.iconWrapper}>
+                                                    <MdDeleteOutline className={styles.deleteIcon} size={28} />
+                                                    <span className={styles.tooltip}>Delete</span>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
                                     <h2 className={styles.blogTitle}>{blog.title}</h2>
-                                    <p>@{username}</p>
+                                    <p className='3'>@{username}</p>
                                     <p>{new Date(blog.timestamp).toLocaleString('en-US', dateOptions)}</p>
                                     <p className={styles.blogContent}>{blog.content}</p>
                                 </div>
