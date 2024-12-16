@@ -22,5 +22,5 @@ export function middleware(request) {
 }
 
 export const config = {
-    matcher: ['/', '/landing', '/write', '/explore', '/profile/:path*'], 
+    matcher: ['/', '/landing', '/write', '/explore', '/profile/:path*', '/blog/:path*'], 
 };
