@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 5px;
+    gap: 15px;
     max-width: 100%;
     margin: 50px;
     padding: 30px;
@@ -34,7 +34,7 @@
     align-items: center;
 }
 
-.deleteIcon:hover {
+.deleteIcon:hover, .privateIcon:hover, .publicIcon:hover {
     cursor: pointer;
     color: #564fa5
 }
