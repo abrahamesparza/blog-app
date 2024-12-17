@@ -41,12 +41,14 @@ export default function FriendRequests() {
         }
     };
 
-    const handleApprove = async (e) => {
+    const handleApprove = async (username) => {
         //handle approve logic here
+        console.log('approve username:', username)
     };
 
-    const handleDeny = async (e) => {
+    const handleDeny = async (username) => {
         //handle deny logic here
+        console.log('deny username:', username)
     };
 
     return (
@@ -64,8 +66,8 @@ export default function FriendRequests() {
                         className={styles.profileImage}
                     />
                     <p className={styles.frP}>{username}</p>
-                    <IoCheckmark size={22} color="green" onClick={handleApprove} className={styles.approve}/>
-                    <IoClose size={22} color="red" onClick={handleDeny} className={styles.deny}/>
+                    <IoCheckmark size={22} color="green" onClick={() => handleApprove(friendRequests[index])} className={styles.approve}/>
+                    <IoClose size={22} color="red" onClick={() => handleDeny(friendRequests[index])} className={styles.deny}/>
                 </div>
             ))}
         </div>
