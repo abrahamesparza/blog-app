@@ -1,10 +1,9 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import { MdDeleteOutline } from "react-icons/md";
 import { MdOutlinePublic } from "react-icons/md";
 import { RiGitRepositoryPrivateFill } from "react-icons/ri";
-//use the two icons above to display whether a blog is public or private
 
 import styles from '../blog.module.css';
 import Navigation from '../../components/navigation';
@@ -13,6 +12,7 @@ import BackButton from '@/app/components/backButton';
 const Blog = () => {
     const [blogs, setBlogs] = useState([]);
     const [loggedInUser, setLoggedInUser] = useState('');
+    const [loggedInUserId, setLoggedInUserId] = useState('');
     const searchParams = useSearchParams();
     const username = searchParams.get('username');
     const pathname = usePathname();
@@ -26,11 +26,19 @@ const Blog = () => {
         minute: 'numeric',
         hour12: true
     }
-    
+
+    const dataFetchedRef = useRef(false);
     useEffect(() => {
+        if (dataFetchedRef.current) return;
+        dataFetchedRef.current === true;
+
         getBlogData();
-        const user = localStorage.getItem('loggedInUser');
+
+        const user = localStorage.getItem('loggedInUser' || '');
+        const userId = localStorage.getItem('userId' || '');
+
         setLoggedInUser(user);
+        setLoggedInUserId(userId);
     }, [username, slug]);
 
     const getBlogData = async () => {
@@ -38,19 +46,61 @@ const Blog = () => {
         const data = await response.json()
         if (data.error || data.message === 404) {
             console.error('Error fetching blog data');
+            return;
         }
-        console.log(data);
         setBlogs(data.blogs);
-    }
+    };
+
+    const updateBlog = async (blogId, updatedPrivacy) => {
+        try {
+            const formData = {
+                updatedPrivacy,
+                userId: loggedInUserId,
+                blogId: blogId
+            };
+            const response = await fetch('/api/update-blog-privacy', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            });
+    
+            const data = await response.json();
+            if (data.message === 'Success') {
+                setBlogs(prevBlogs => 
+                    prevBlogs.map(blog => 
+                        blog.id === blogId ? data.updatedBlog : blog
+                    )
+                );
+            } else {
+                console.error('Failed to update blog privacy:', data.error);
+            }
+        } catch (error) {
+            console.error('Error updating blog privacy:', error);
+        }
+    };
+    
 
     const routeBack = () => {
       router.push(`/profile/${username}`);
-    }
-
-    const handleOption = (e) => {
-        let option = e.target.value;
-        setPrivacyOption(option);
     };
+
+    const handlePrivacyUpdate = (currentPrivacy, blogId) => {
+        const newPrivacy = currentPrivacy === 'public' ? 'private' : 'public';
+    
+        setBlogs(prevBlogs => 
+            prevBlogs.map(blog =>
+                blog.id === blogId ? { ...blog, privacy: newPrivacy } : blog
+            )
+        );
+        updateBlog(blogId, newPrivacy);
+    };
+
+    const handleDelete = async (blogId) => {
+        //handle logic to delete blog here
+    } 
+    
 
     return (
         <div>
@@ -75,41 +125,55 @@ const Blog = () => {
                         {blogs
                         .filter(blog => blog.title === slug)
                         .map((blog, index) => (
-                                <div className={styles.blogContainer} key={index}>
-                                    <BackButton className={styles.backButton} routeBack={routeBack} />
-                                    <div className={styles.editIcons}>
-                                        {blog.privacy === 'public' ? (
-                                            <div className={styles.privacyContainer}>
-                                                <div className={styles.iconWrapper}>
-                                                    <MdOutlinePublic size={24} />
-                                                    <span className={styles.tooltip}>Public</span>
-                                                </div>
-                                            
-                                                <div className={styles.iconWrapper}>
-                                                    <MdDeleteOutline className={styles.deleteIcon} size={28} />
-                                                    <span className={styles.tooltip}>Delete</span>
-                                                </div>
+                            <div className={styles.blogContainer} key={index}>
+                                <BackButton className={styles.backButton} routeBack={routeBack} />
+                                <div className={styles.editIcons}>
+                                    {blog.privacy === 'public' ? (
+                                        <div className={styles.privacyContainer}>
+                                            <div className={styles.iconWrapper}>
+                                                <MdOutlinePublic 
+                                                    className={styles.publicIcon} 
+                                                    onClick={() => handlePrivacyUpdate('public', blog.id)} 
+                                                    size={24} 
+                                                />
+                                                <span className={styles.tooltip}>Public</span>
                                             </div>
-                                        ) : (
-                                            <div className={styles.privacyContainer}>
-                                                <div className={styles.iconWrapper}>
-                                                    <RiGitRepositoryPrivateFill size={24} />
-                                                    <span className={styles.tooltip}>Private</span>
-                                                </div>
-                                            
-                                                <div className={styles.iconWrapper}>
-                                                    <MdDeleteOutline className={styles.deleteIcon} size={28} />
-                                                    <span className={styles.tooltip}>Delete</span>
-                                                </div>
+                                            <div className={styles.iconWrapper}>
+                                                <MdDeleteOutline 
+                                                    onClick={() => handleDelete(blog.id)} 
+                                                    className={styles.deleteIcon} 
+                                                    size={28} 
+                                                />
+                                                <span className={styles.tooltip}>Delete</span>
                                             </div>
-                                        )}
-                                    </div>
-                                    <h2 className={styles.blogTitle}>{blog.title}</h2>
-                                    <p className='3'>@{username}</p>
-                                    <p>{new Date(blog.timestamp).toLocaleString('en-US', dateOptions)}</p>
-                                    <p className={styles.blogContent}>{blog.content}</p>
+                                        </div>
+                                    ) : (
+                                        <div className={styles.privacyContainer}>
+                                            <div className={styles.iconWrapper}>
+                                                <RiGitRepositoryPrivateFill 
+                                                    className={styles.privateIcon} 
+                                                    onClick={() => handlePrivacyUpdate('private', blog.id)} 
+                                                    size={24} 
+                                                />
+                                                <span className={styles.tooltip}>Private</span>
+                                            </div>
+                                            <div className={styles.iconWrapper}>
+                                                <MdDeleteOutline 
+                                                    onClick={() => handleDelete(blog.id)} 
+                                                    className={styles.deleteIcon} 
+                                                    size={28} 
+                                                />
+                                                <span className={styles.tooltip}>Delete</span>
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
-                            ))}
+                                <h2 className={styles.blogTitle}>{blog.title}</h2>
+                                <p>@{username}</p>
+                                <p>{new Date(blog.timestamp).toLocaleString('en-US', dateOptions)}</p>
+                                <p className={styles.blogContent}>{blog.content}</p>
+                            </div>
+                        ))}
                     </div>  
                 )}
             </div>
