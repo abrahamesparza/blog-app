@@ -13,6 +13,7 @@ const Blog = () => {
     const [blogs, setBlogs] = useState([]);
     const [loggedInUser, setLoggedInUser] = useState('');
     const [loggedInUserId, setLoggedInUserId] = useState('');
+    const [deleteComplete, setDeleteComplete] = useState(false);
     const searchParams = useSearchParams();
     const username = searchParams.get('username');
     const pathname = usePathname();
@@ -111,9 +112,9 @@ const Blog = () => {
                 body: JSON.stringify(formData),
             });
             const data = await response.json();
-            console.log('data', data);
             if (data.message === 'Success') {
-                router.push(`/profile/${username}`);
+                setDeleteComplete(true);
+                setTimeout(() => router.push(`/profile/${username}`), 3000);
             } else {
                 console.log('Unable to route back to profile.');
             }
@@ -126,7 +127,15 @@ const Blog = () => {
         <div>
             <Navigation />
             <div  className={styles.blogLayout}>
-                {loggedInUser !== username ? ( 
+                {deleteComplete && (
+                    <div className={styles.successMessage}>
+                        <div className={styles.successAnimation}></div>
+                        <p>Your blog has been deleted 🗑️</p>
+                        <p>Redirecting to your profile ⏳</p>
+                    </div>
+                )}
+                {!deleteComplete && (
+                loggedInUser !== username ? ( 
                     blogs
                     .filter(blog => blog.title === slug)
                     .map((blog, index) => (
@@ -195,7 +204,7 @@ const Blog = () => {
                             </div>
                         ))}
                     </div>  
-                )}
+                ))}
             </div>
         </div>
     )
