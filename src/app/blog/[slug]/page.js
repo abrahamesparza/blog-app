@@ -98,9 +98,29 @@ const Blog = () => {
     };
 
     const handleDelete = async (blogId) => {
-        //handle logic to delete blog here
-    } 
-    
+        const formData = {
+            userId: loggedInUserId,
+            blogId,
+        };
+        try {
+            const response = await fetch('/api/delete-blog', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+            const data = await response.json();
+            console.log('data', data);
+            if (data.message === 'Success') {
+                router.push(`/profile/${username}`);
+            } else {
+                console.log('Unable to route back to profile.');
+            }
+        } catch (error) {
+            console.error('Error deleting blog', error);
+        }
+    };
 
     return (
         <div>
