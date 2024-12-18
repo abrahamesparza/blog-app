@@ -21,11 +21,12 @@ export async function GET(request) {
             ProjectionExpression: 'id, blogs, username, bio'
         };
         const data = await dynamoDB.query(params).promise();
-        let blogs = data.Items[0];
-        if (!blogs) {
+        let userData = data.Items[0];
+        userData.blogs.reverse();
+        if (!userData) {
             return NextResponse.json({ message: 404 });
         }
-        return NextResponse.json(blogs);
+        return NextResponse.json(userData);
     } catch (error) {
         console.error(error)
         return NextResponse.json({ error: 'Failed to fetch data' })
