@@ -62,7 +62,15 @@
     box-shadow: 0px 4px 10px #887efa;
     border-radius: 5px;
 }
-
+.titleTime {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.cardTimestamp {
+    font-size: 14px;
+    color: #a7a7a7;
+}
 .blogTitle:hover {
     cursor: pointer;
     color: #887efa;
