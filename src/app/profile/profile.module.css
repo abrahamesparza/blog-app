@@ -114,11 +114,35 @@
     color: #887efa;
 }
 
+.profileImageContaier {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 25px;
+    margin-top: 10px;
+}
+
+.friends {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.friends:hover {
+    cursor: pointer;
+    color: #887efa;
+}
+
 .profileImage {
     border-radius: 50%;
     object-fit: cover;
     width: 100px;
     height: 100px;
+}
+
+.username {
     margin-top: 10px;
 }
 
