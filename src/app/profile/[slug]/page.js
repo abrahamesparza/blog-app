@@ -101,20 +101,6 @@ export default function Profile() {
     setFriendRequests(prevRequests => [...prevRequests, ...result.data]);
   };
 
-  // const getFriendRequests = async () => {
-  //   try {
-  //     const response = await fetch(`/api/get-friend-requests?username=${username}`);
-  //     const data = await response.json();
-  //     if (data.error) console.error('Error fetching friend requets');
-  //     if (data.friendRequests.includes(loggedInUser) || data.friends.username === loggedInUser) setIconVisibility(false);
-
-  //     setFriendRequests(data.friendRequests);
-  //     setFriends(data.friends)
-  //   }
-  //   catch (error) {
-  //     console.error('Error fetching friend requests.');
-  //   }
-  // };
   const getFriendRequests = async () => {
     try {
       const response = await fetch(`/api/get-friend-requests?username=${username}`);
@@ -125,24 +111,21 @@ export default function Profile() {
         return;
       }
   
-      // If loggedInUser is visiting their own profile, the friends should be correctly set
       if (loggedInUser === username) {
-        setFriends(data.friends); // Set friends correctly for own profile
+        setFriends(data.friends);
       } else {
-        setFriends(data.friends); // Set friends correctly for other user's profile
+        setFriends(data.friends);
       }
   
-      // Check if the loggedInUser is in friendRequests or friends
-      const isFriend = data.friends.some(friend => friend.username === loggedInUser); // or use friend.id === loggedInUserId if using id
+      const isFriend = data.friends.some(friend => friend.username === loggedInUser);
       const hasSentRequest = data.friendRequests.includes(loggedInUser);
   
       if (isFriend || hasSentRequest) {
-        setIconVisibility(false); // Hide the icon if already a friend or request is sent
+        setIconVisibility(false);
       } else {
-        setIconVisibility(true); // Show the icon if not yet a friend
+        setIconVisibility(true);
       }
   
-      // Update friend requests
       setFriendRequests(data.friendRequests);
   
     } catch (error) {
@@ -152,10 +135,7 @@ export default function Profile() {
 
   const showFriendsList = () => {
     router.push(`/profile/${username}/friends`);
-  }
-
-  console.log('FRIENDS', friends);
-  console.log('FRIEND REQUESTS', friendRequests);
+  };
 
   return (
     <div className={styles.profile}>
