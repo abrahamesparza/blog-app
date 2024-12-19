@@ -24,6 +24,7 @@ export default function Profile() {
   const [profileExists, setProfileExists] = useState(null);
   const [profileImageUrl, setProfileImageUrl] = useState('');
   const [showView, setShowView] = useState('public');
+  const [friends, setFriends] = useState([]);
   const [friendRequests, setFriendRequests] = useState([]);
   const [iconVisibility, setIconVisibility] = useState(true);
   const router = useRouter();
@@ -104,17 +105,21 @@ export default function Profile() {
     try {
       const response = await fetch(`/api/get-friend-requests?username=${username}`);
       const data = await response.json();
-
+      console.log('data', data);
       if (data.error) console.error('Error fetching friend requets');
       if (data.friendRequests.includes(loggedInUser)) setIconVisibility(false);
 
       setFriendRequests(data.friendRequests);
+      setFriends(data.friends)
     }
     catch (error) {
       console.error('Error fetching friend requests.');
     }
   };
 
+  const showFriendsList = () => {
+    router.push(`/profile/${username}/friends`);
+  }
 
   return (
     <div className={styles.profile}>
@@ -145,6 +150,10 @@ export default function Profile() {
                   height={100}
                   className={styles.profileImage}
                 />
+                <div onClick={showFriendsList} className={styles.friends}>
+                  <p>{friends.length}</p>
+                  <p>Friends</p>
+                </div>
             </div>
             <div className={styles.addFriendBlock}>
               <h3 className={styles.username}>@{username}</h3>
@@ -163,12 +172,6 @@ export default function Profile() {
                 )
               )}
             </div>
-            {/* 
-            // Update to display friends instead //
-            <div className={styles.follows}>
-              <p>700 Followers</p>
-              <p>300 Following</p>
-            </div> */}
             <div className={styles.aboutContainer}>
               <p className={styles.aboutText}>{bio}</p>
             </div>
