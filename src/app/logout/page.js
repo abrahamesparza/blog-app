@@ -6,15 +6,21 @@ export default function Logout({ reroute }) {
     const router = useRouter();
 
     async function handleLogout() {
-        await fetch('api/logout', {
-            method: 'POST'
+        const response = await fetch('/api/logout', {
+            method: 'POST',
         });
-        localStorage.removeItem('blogData');
-        localStorage.removeItem('blogs');
-        localStorage.removeItem('loggedInUser');
-        localStorage.removeItem('bio');
-        localStorage.removeItem('userId');
-        handleRouting();
+
+        const data = await response.json();
+        if (data.message === 'Success') {
+            localStorage.removeItem('loggedInUser');
+            localStorage.removeItem('userId');
+
+            setTimeout(() => {
+                handleRouting();
+            }, 100);
+        } else {
+            console.error('Logout failed:', data.message);
+        }
     };
 
     function handleRouting() {
@@ -24,8 +30,10 @@ export default function Logout({ reroute }) {
     return (
         <div className={styles.logoutContainer}>
             <p 
-            onClick={handleLogout}
-            className={styles.navItem}>Logout</p>
+                onClick={handleLogout}
+                className={styles.navItem}>
+                Logout
+            </p>
         </div>
-    )
+    );
 };

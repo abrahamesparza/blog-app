@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 export async function POST(request) {
-    let sessionId = request.cookies._parsed.get('sessionId');
+    let sessionId = request.cookies.get('sessionId');
     console.log(`sessionId: ${sessionId}`);
 
     if (sessionId) {
@@ -9,9 +9,9 @@ export async function POST(request) {
         response.cookies.set(
             'sessionId', '', {
                 httpOnly: true,
-                maxAge: 0
+                expires: new Date(0),
+                path: '/'
             });
-        console.log(`response: ${response}`)
         return response;
     } else {
         return NextResponse.json({ message: 'No active session' });
