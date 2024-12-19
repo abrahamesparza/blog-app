@@ -37,7 +37,7 @@ export default function Profile() {
     setProfileImageUrl(generateProfileImageUrl(userId));
     getBlogs();
     getFriendRequests();
-  }, [userId, iconVisibility]);
+  }, [userId, username, iconVisibility]);
 
   const togglePrivateBlogs = (e) => {
     let view = e.target.innerText;
@@ -101,25 +101,61 @@ export default function Profile() {
     setFriendRequests(prevRequests => [...prevRequests, ...result.data]);
   };
 
+  // const getFriendRequests = async () => {
+  //   try {
+  //     const response = await fetch(`/api/get-friend-requests?username=${username}`);
+  //     const data = await response.json();
+  //     if (data.error) console.error('Error fetching friend requets');
+  //     if (data.friendRequests.includes(loggedInUser) || data.friends.username === loggedInUser) setIconVisibility(false);
+
+  //     setFriendRequests(data.friendRequests);
+  //     setFriends(data.friends)
+  //   }
+  //   catch (error) {
+  //     console.error('Error fetching friend requests.');
+  //   }
+  // };
   const getFriendRequests = async () => {
     try {
       const response = await fetch(`/api/get-friend-requests?username=${username}`);
       const data = await response.json();
-      console.log('data', data);
-      if (data.error) console.error('Error fetching friend requets');
-      if (data.friendRequests.includes(loggedInUser)) setIconVisibility(false);
-
+  
+      if (data.error) {
+        console.error('Error fetching friend requests');
+        return;
+      }
+  
+      // If loggedInUser is visiting their own profile, the friends should be correctly set
+      if (loggedInUser === username) {
+        setFriends(data.friends); // Set friends correctly for own profile
+      } else {
+        setFriends(data.friends); // Set friends correctly for other user's profile
+      }
+  
+      // Check if the loggedInUser is in friendRequests or friends
+      const isFriend = data.friends.some(friend => friend.username === loggedInUser); // or use friend.id === loggedInUserId if using id
+      const hasSentRequest = data.friendRequests.includes(loggedInUser);
+  
+      if (isFriend || hasSentRequest) {
+        setIconVisibility(false); // Hide the icon if already a friend or request is sent
+      } else {
+        setIconVisibility(true); // Show the icon if not yet a friend
+      }
+  
+      // Update friend requests
       setFriendRequests(data.friendRequests);
-      setFriends(data.friends)
-    }
-    catch (error) {
-      console.error('Error fetching friend requests.');
+  
+    } catch (error) {
+      console.error('Error fetching friend requests:', error);
     }
   };
 
   const showFriendsList = () => {
     router.push(`/profile/${username}/friends`);
   }
+
+  console.log('FRIENDS', friends);
+  console.log('FRIEND REQUESTS', friendRequests);
 
   return (
     <div className={styles.profile}>
@@ -169,18 +205,20 @@ export default function Profile() {
             <div className={styles.addFriendBlock}>
               <h3 className={styles.username}>@{username}</h3>
               {loggedInUser !== username && (
-                !friendRequests.includes(loggedInUser) ? (
-                  <IoPersonAdd
-                    size={22}
-                    className={styles.addIcon}
-                    onClick={addFriend}
-                  />
-                ) : (
-                  <div className={styles.requestSentContainer}>
-                    <AiOutlineCheckCircle size={22} className={styles.requestSentIcon} />
-                    <p>Request Sent</p>
-                  </div>
-                )
+                !friends.some(friend => friend.username === loggedInUser) ? (
+                  !friendRequests.some(friend => friend.username === loggedInUser) ? (
+                    <IoPersonAdd
+                      size={22}
+                      className={styles.addIcon}
+                      onClick={addFriend}
+                    />
+                  ) : (
+                    <div className={styles.requestSentContainer}>
+                      <AiOutlineCheckCircle size={22} className={styles.requestSentIcon} />
+                      <p>Request Sent</p>
+                    </div>
+                  )
+                ) : null
               )}
             </div>
             <div className={styles.aboutContainer}>
