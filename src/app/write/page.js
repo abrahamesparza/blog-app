@@ -10,7 +10,7 @@ export default function Write() {
     const [author, setAuthor] = useState('');
     const [content, setContent] = useState('');
     const [title, setTitle] = useState('');
-    const [privacyOption, setPrivacyOption] = useState('private');
+    const [privacyOption, setPrivacyOption] = useState('public');
     const [submitting, setSubmitting] = useState(false);
     const [uploadComplete, setUploadComplete] = useState(false);
     const router = useRouter();
