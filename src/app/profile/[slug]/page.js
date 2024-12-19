@@ -150,9 +150,20 @@ export default function Profile() {
                   height={100}
                   className={styles.profileImage}
                 />
-                <div onClick={showFriendsList} className={styles.friends}>
-                  <p>{friends.length}</p>
-                  <p>Friends</p>
+                <div className={styles.countContainer}>
+                  {!friends.length ? (
+                    ''
+                  ) : (
+                    <div onClick={showFriendsList} className={styles.friends}>
+                      <p>{friends.length}</p>
+                      <p>Friends</p>
+                    </div>
+                  )
+                }
+                  <div className={styles.blogs}>
+                    <p>{filteredBlogs.length}</p>
+                    <p>Blogs</p>
+                  </div>
                 </div>
             </div>
             <div className={styles.addFriendBlock}>
