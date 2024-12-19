@@ -14,12 +14,12 @@ export async function GET(request) {
             ExpressionAttributeValues: {
                 ':username': username,
             },
-            ProjectionExpression: 'id, friendRequests',
+            ProjectionExpression: 'id, friendRequests, friends',
         };
         
         const response = await dynamoDB.query(params).promise();
         const data = response.Items[0];
-        return NextResponse.json({ message: 'Success', friendRequests: data.friendRequests});
+        return NextResponse.json({ message: 'Success', friendRequests: data.friendRequests, friends: data.friends || [] });
     }
     catch (error) {
         console.error('Error retrieving friend reqeuests', error);
