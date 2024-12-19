@@ -14,8 +14,12 @@ export default function FriendRequests() {
     const [friendRequests, setFriendRequests] = useState([]);
     const [userIds, setUserIds] = useState([]);
     const [profileImageUrls, setProfileImageUrls] = useState([]);
+    const [loggedInUserId, setLoggedInUserId] = useState('');
 
     useEffect(() => {
+        const userId = localStorage.getItem('userId');
+        setLoggedInUserId(userId);
+
         getFriendRequests();
     }, []);
 
@@ -41,14 +45,37 @@ export default function FriendRequests() {
         }
     };
 
-    const handleApprove = async (username) => {
-        //handle approve logic here
-        console.log('approve username:', username)
-    };
+    const handleFriendRequest = async (friendRequest, friendRequestId, requestType) => {
+        const formData = {
+            loggedInUserId,
+            friendRequest,
+            friendRequestId,
+            requestType,
+        };
+        try {
+            const response = await fetch('/api/handle-friend-request', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            });
 
-    const handleDeny = async (username) => {
-        //handle deny logic here
-        console.log('deny username:', username)
+            const data = await response.json();
+            if (data.message === 'Success') {
+                //on approve or deny (Success),
+                //remove the friendRequest name from the list
+                //and re-render on this page immediately
+                
+                friendRequests.splice(friendRequest, 1);
+            }
+            else {
+                console.log('Error handling friend request');
+            }
+        }
+        catch (error) {
+            console.error('Error handling friend request', error);
+        }
     };
 
     return (
@@ -56,6 +83,8 @@ export default function FriendRequests() {
             <p className={styles.frP}>Friend Requests</p>
             <div className={styles.frpLine}></div>
 
+            {/* //when there are no friend requests, show a 
+                //message indicating so. */}
             {friendRequests.map((username, index) => (
                 <div key={userIds[index]} className={styles.friendRequests}>
                     <Image
@@ -66,8 +95,8 @@ export default function FriendRequests() {
                         className={styles.profileImage}
                     />
                     <p className={styles.frP}>{username}</p>
-                    <IoCheckmark size={22} color="green" onClick={() => handleApprove(friendRequests[index])} className={styles.approve}/>
-                    <IoClose size={22} color="red" onClick={() => handleDeny(friendRequests[index])} className={styles.deny}/>
+                    <IoCheckmark size={22} color="green" onClick={() => handleFriendRequest(friendRequests[index], userIds[index], 'approve')} className={styles.approve}/>
+                    <IoClose size={22} color="red" onClick={() => handleFriendRequest(friendRequests[index], userIds[index], 'deny')} className={styles.deny}/>
                 </div>
             ))}
         </div>
