@@ -54,6 +54,7 @@ export default function Profile() {
       const response = await fetch(`/api/get-user-data?username=${username}`);
       const data = await response.json();
 
+      setUserId(data.id);
       if (data.message === 404) {
         setProfileExists(false);
       }
@@ -61,7 +62,6 @@ export default function Profile() {
       else {
         setBlogs(data.blogs || []);
         setBio(data.bio);
-        setUserId(data.id);
         setProfileExists(true);
       }
       setLoading(false);
