@@ -16,6 +16,7 @@ export default function LoginForm() {
     const [loginResult, setLoginResult] = useState('');
     const [nextPage, setNextPage] = useState(false);
     const [checkLogin, setCheckLogin] = useState(false);
+    const [username, setUsername] = useState('');
 
     useEffect(() => {
         if (loginResult) {
@@ -61,6 +62,7 @@ export default function LoginForm() {
         setLoginResult(result.message);
         localStorage.setItem('loggedInUser', result.username);
         localStorage.setItem('userId', result.userId);
+        setUsername(result.username);
         setFormData(initialFormData);
         setCheckLogin(true)
     }
@@ -81,7 +83,7 @@ export default function LoginForm() {
       };
 
     if (nextPage) {
-        return <HomePage />
+        router.push(`/profile/${username}`);
     }
 
     return (

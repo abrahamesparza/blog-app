@@ -16,6 +16,7 @@ export default function SignupForm() {
     }  
     const [formData, setFormData] = useState(initialFormData);
     const [nextPage, setNextPage] = useState(false);
+    const [username, setUsername] = useState('');
 
     async function onChange(event) {
         const { name, value } = event.target
@@ -53,10 +54,9 @@ export default function SignupForm() {
 
         const result = await response.json();
         localStorage.setItem('loggedInUser', result.username);
-        console.log(`Result: ${result.message}`); // logs result
-       
+        setUsername(result.username);
         checkNextStep(result.message)
-        setFormData(initialFormData) // clears form data after submission
+        setFormData(initialFormData)
     }
 
     function handleRouting(e) {
@@ -74,7 +74,7 @@ export default function SignupForm() {
       };
 
     if (nextPage) {
-        return <HomePage />
+        router.push(`/profile/${username}`);
     }
 
     return (
