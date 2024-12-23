@@ -5,6 +5,7 @@ import { CiSettings } from 'react-icons/ci';
 import { useRouter } from 'next/navigation';
 import { IoPersonAdd } from "react-icons/io5";
 import { AiOutlineCheckCircle } from 'react-icons/ai';
+import { HiPencilSquare } from "react-icons/hi2";
 import Image from "next/image";
 
 import styles from '../profile.module.css';
@@ -137,6 +138,10 @@ export default function Profile() {
     router.push(`/profile/${username}/friends`);
   };
 
+  const handleWrite = () => {
+    router.push(`/write`);
+  }
+
   return (
     <div className={styles.profile}>
       <Navigation />
@@ -157,7 +162,6 @@ export default function Profile() {
           </div>
         ) : (
           <div className={styles.profileChildOne}>
-            <BackButton routeBack={routeBack}/>
             <div className={styles.profileImageContaier}>
                 <Image
                   src={profileImageUrl}
@@ -248,6 +252,7 @@ export default function Profile() {
         <div className={styles.profileChildTwo}>
           {loggedInUser === username ? (
             <div className={styles.iconsList}>
+              <HiPencilSquare className={styles.settingsIcon} onClick={handleWrite} size={25}  />
               <CiSettings className={styles.settingsIcon} onClick={handleEditRoute} size={25} /> 
               </div>
           ) : null}
