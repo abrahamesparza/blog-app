@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import dynamoDB from "../lib/dynamodb";
+import { useDebugValue } from "react";
 
 export async function GET(request) {
     console.log('in get-user-data API')
@@ -22,10 +23,15 @@ export async function GET(request) {
         };
         const data = await dynamoDB.query(params).promise();
         let userData = data.Items[0];
-        userData.blogs.reverse();
+
         if (!userData) {
-            return NextResponse.json({ message: 404 });
+            return NextResponse.json({ message: 404 })
         }
+        if (userData.blogs) {
+            userData.blogs.reverse();
+            return NextResponse.json(userData);
+        }
+        
         return NextResponse.json(userData);
     } catch (error) {
         console.error(error)
