@@ -21,7 +21,7 @@ export default function FriendRequests() {
         setLoggedInUserId(userId);
 
         getFriendRequests();
-    }, [friendRequests]);
+    }, []);
 
     const getFriendRequests = async () => {
         try {
