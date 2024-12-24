@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { CiSettings } from 'react-icons/ci';
 import { useRouter } from 'next/navigation';
 import { IoPersonAdd } from "react-icons/io5";
+import { IoPerson } from "react-icons/io5";
 import { AiOutlineCheckCircle } from 'react-icons/ai';
 import { HiPencilSquare } from "react-icons/hi2";
 import Image from "next/image";
@@ -13,6 +14,7 @@ import Navigation from "@/app/components/navigation";
 import BlogItem from "@/app/components/blogItem";
 import BackButton from "@/app/components/backButton";
 import { generateProfileImageUrl } from "@/app/helpers/sharedFunctions";
+import FriendRequests from "@/app/components/friendRequests";
 
 export default function Profile() {
   const pathName = usePathname();
@@ -28,6 +30,7 @@ export default function Profile() {
   const [friends, setFriends] = useState([]);
   const [friendRequests, setFriendRequests] = useState([]);
   const [iconVisibility, setIconVisibility] = useState(true);
+  const [notifications, setNotifications] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -35,10 +38,25 @@ export default function Profile() {
       const storedUser = localStorage.getItem('loggedInUser');
       setLoggedInUser(storedUser);
     }
+    fetchNotifications();
     setProfileImageUrl(generateProfileImageUrl(userId));
     getBlogs();
     getFriendRequests();
   }, [userId, username, iconVisibility]);
+
+  const fetchNotifications = async () => {
+    try {
+      const response = await fetch(`/api/get-friend-requests?username=${username}`);
+      const data = await response.json();
+
+      if (data.friends) {
+        setNotifications(true);
+      }
+    }
+    catch (error) {
+      console.error('Error', error);
+    }
+  };
 
   const togglePrivateBlogs = (e) => {
     let view = e.target.innerText;
@@ -140,7 +158,7 @@ export default function Profile() {
 
   const handleWrite = () => {
     router.push(`/write`);
-  }
+  };
 
   return (
     <div className={styles.profile}>
@@ -250,11 +268,18 @@ export default function Profile() {
         )}
 
         <div className={styles.profileChildTwo}>
-          {loggedInUser === username ? (
+          {/* {loggedInUser === username ? (
             <div className={styles.iconsList}>
               <HiPencilSquare className={styles.settingsIcon} onClick={handleWrite} size={25}  />
               <CiSettings className={styles.settingsIcon} onClick={handleEditRoute} size={25} /> 
               </div>
+          ) : null} */}
+          {/* need to render notification icon on when true or the settings when false  */}
+          {loggedInUser === username && notifications ? (
+            <div className={styles.iconsList}>
+              <HiPencilSquare className={styles.settingsIcon} onClick={handleWrite} size={25}  />
+              <IoPerson size={25} className={styles.redUserIcon}/>
+            </div>
           ) : null}
         </div>
 
