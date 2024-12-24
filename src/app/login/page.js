@@ -1,10 +1,10 @@
 'use client';
 import React, { useState, useEffect } from "react";
-import styles from '../page.module.css';
+import { IoIosArrowRoundBack } from 'react-icons/io';
 
 import { useRouter } from "next/navigation";
-
-import HomePage from "../landing/page";
+import styles from '../page.module.css';
+import BackButton from "../components/backButton";
 
 export default function LoginForm() {  
     const router = useRouter();
@@ -17,6 +17,7 @@ export default function LoginForm() {
     const [nextPage, setNextPage] = useState(false);
     const [checkLogin, setCheckLogin] = useState(false);
     const [username, setUsername] = useState('');
+    const [forgotPasword, setForgotPassword] = useState(false);
 
     useEffect(() => {
         if (loginResult) {
@@ -68,7 +69,8 @@ export default function LoginForm() {
     }
 
     function handleRouting(e) {
-        let page = e.target.innerText;
+        let target = e.currentTarget;
+        let page = target.innerText || '/';
 
         if (page.includes('Sign Up')) {
             page = 'signup';
@@ -80,7 +82,17 @@ export default function LoginForm() {
             page = '/';
         }
         router.push(`/${page}`);
-      };
+    }
+
+    function handlePassword() {
+        setForgotPassword(true);
+
+        if (forgotPasword) {
+            router.push('/forgot-password');
+        }
+        return;
+
+    }
 
     if (nextPage) {
         router.push(`/profile/${username}`);
@@ -111,14 +123,16 @@ export default function LoginForm() {
                 <button
                 type="submit"
                 className={styles.formButton}>Submit</button>
+                <div className={styles.linksContainer}>
+                    {/* <p className={styles.forgotPassword} onClick={handlePassword}>Forgot password?</p> */}
 
-                <p
-                onClick={handleRouting}
-                className={styles.pText}
-                value='Sign Up'
-                >New User? Sign Up</p>
-                <p onClick={handleRouting}
-                className={styles.pText}>Home</p>
+                    <p
+                    onClick={handleRouting}
+                    className={styles.signUpText}
+                    value='Sign Up'
+                    >New User? Sign Up</p>
+                </div>
+                <IoIosArrowRoundBack className={styles.backButton} onClick={handleRouting} size={28}/>
             </form>
         </div>
     )
