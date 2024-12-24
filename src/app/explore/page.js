@@ -13,25 +13,19 @@ export default function Explore() {
     const router = useRouter();
 
     useEffect(() => {
-        getBlogData();
+        const userId = localStorage.getItem('userId');
+        getBlogData(userId);
     }, []);
 
-    const getBlogData = async () => {
-        const storedBlogs = localStorage.getItem('blogData');
-        if (storedBlogs) {
-            const parsedBlogs = JSON.parse(storedBlogs);
-            setBlogData(parsedBlogs);
-            setLoading(false);
-            return;
-        }
-
-        const url = 'api/get-blog-data';
+    const getBlogData = async (userId) => {
+        const url = `api/get-blog-data?userId=${userId}`;
         try {
             const response = await fetch(url);
             if (!response.ok) {
                 throw new Error(`Response status: ${response.status}`);
             }
             const data = await response.json();
+            console.log('DATA', data);
             setBlogData(data.items || []);
             localStorage.setItem('blogData', JSON.stringify(data.items) || []);
             setLoading(false);
