@@ -25,7 +25,6 @@ export default function Explore() {
                 throw new Error(`Response status: ${response.status}`);
             }
             const data = await response.json();
-            console.log('DATA', data);
             setBlogData(data.items || []);
             localStorage.setItem('blogData', JSON.stringify(data.items) || []);
             setLoading(false);
@@ -36,7 +35,6 @@ export default function Explore() {
     };
 
     const handleProfileRoute = async (e) => {
-        console.log('in handle profile route')
         let slug = e.target.innerText.trim();
         router.push(`/profile/${slug}`)
     }
