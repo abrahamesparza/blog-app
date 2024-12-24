@@ -69,7 +69,7 @@
 
 .input {
     margin-bottom: 25px;
-    width: 25vw;
+    width: 250px;
     background-color: whitesmoke;
     color: #404040;
 }
@@ -185,3 +185,24 @@
 }
 
 /* friendRequests css */
+
+.backButton {
+    margin-top: 5px;
+    margin-left: -5px;
+}
+
+.linksContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+   gap: 35px;
+}
+
+.forgotPassword, .signUpText {
+    margin-top: 10px;
+    font-size: 12px;
+}
+.forgotPassword:hover, .signUpText:hover {
+    cursor: pointer;
+    color: #887efa;
+}
