@@ -21,7 +21,7 @@ export default function FriendRequests() {
         setLoggedInUserId(userId);
 
         getFriendRequests();
-    }, []);
+    }, [friendRequests]);
 
     const getFriendRequests = async () => {
         try {
@@ -63,11 +63,9 @@ export default function FriendRequests() {
 
             const data = await response.json();
             if (data.message === 'Success') {
-                //on approve or deny (Success),
-                //remove the friendRequest name from the list
-                //and re-render on this page immediately
-                
-                friendRequests.splice(friendRequest, 1);
+                setFriendRequests(prevRequest =>
+                    prevRequest.filter(request => request !== friendRequest)
+                );
             }
             else {
                 console.log('Error handling friend request');
