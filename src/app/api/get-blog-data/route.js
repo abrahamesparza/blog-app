@@ -1,15 +1,59 @@
 import dynamoDB from "../lib/dynamodb";
 import { NextResponse } from 'next/server';
 
-export async function GET() {
+export async function GET(request) {
+    const { searchParams } = new URL(request.url)
+    const userId = searchParams.get('userId');
+    console.log('user id:', userId)
     const params = {
-        'TableName': 'users',
-        'ProjectionExpression': 'id, username, blogs',
+        TableName: 'users',
+        KeyConditionExpression: 'id = :userId',
+        ExpressionAttributeValues: {
+            ':userId': userId
+        },
+        ProjectionExpression: 'id, username, blogs, friends',
     };
 
     try {
-        const data = await dynamoDB.scan(params).promise();
-        return NextResponse.json({ items: data.Items });
+        const userDataResponse = await dynamoDB.query(params).promise();
+        const userData = userDataResponse.Items[0];
+        const data = [];
+
+        if (userData) {
+            data.push({
+                id: userData.id,
+                username: userData.username,
+                blogs: userData.blogs || [],
+            });
+
+            if (userData.friends) {
+                const friendDataPromises = userData.friends.map(async (item) => {
+                    const friendParams = {
+                        TableName: 'users',
+                        IndexName: 'profile-data-index',
+                        KeyConditionExpression: 'username = :username',
+                        ExpressionAttributeValues: {
+                            ':username': item.username
+                        },
+                        ProjectionExpression: 'id, username, blogs, friends',
+                    };
+                    const friendDataResponse = await dynamoDB.query(friendParams).promise();
+                    return friendDataResponse.Items[0];
+                });
+                
+                const friendData = await Promise.all(friendDataPromises);
+                friendData.forEach(friend => {
+                    if (friend) {
+                        data.push({
+                            id: friend.id,
+                            username: friend.username,
+                            blogs: friend.blogs || [],
+                        });
+                    }
+                });
+            }
+        }
+        return NextResponse.json({ items: data });
     } catch (err) {
         console.error(err);
         return NextResponse.json({ error: 'Failed to fetch data' })
