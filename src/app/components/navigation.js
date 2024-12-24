@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import styles from '../page.module.css';
 import Logout from '../logout/page';
 import getUsername from '../helpers/getSessionUsername';
+import Search from './search';
 
 
 export default function Navigation() {
@@ -27,7 +28,7 @@ export default function Navigation() {
     return (
         <div>
             <div className={styles.navigation}>
-                <p onClick={handleRouting} className={styles.navItem}>Home</p>
+                <Search />
                 <p onClick={handleRouting} className={styles.navItem}>Write</p>
                 <p onClick={handleRouting} className={styles.navItem}>Explore</p>
                 <p onClick={handleRouting} className={styles.navItem}>Profile</p>
