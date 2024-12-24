@@ -14,11 +14,14 @@ export async function POST(request) {
         const params = {
             TableName: 'users',
             Key: { id: loggedInUserId },
-            ProjectionExpression: 'friendRequests'
+            ProjectionExpression: 'username, friendRequests'
         };
         const dbResponse = await dynamoDB.get(params).promise();
         const friendRequests = dbResponse.Item.friendRequests;
+        const loggedInUsername = dbResponse.Item.username;
         const updatedFriendRequests = friendRequests.filter(item => item.id !== friendRequestId);
+
+        const recipientData = { id: loggedInUserId, username: loggedInUsername }
 
         const updateParams = {
             TableName: 'users',
@@ -32,7 +35,7 @@ export async function POST(request) {
         const updatedFriendRequestsResponse = await dynamoDB.update(updateParams).promise();
 
         if (requestType === 'approve') {
-            const params = {
+            const loggedInParams = {
                 TableName: 'users',
                 Key: { id: loggedInUserId },
                 UpdateExpression: `
@@ -44,9 +47,27 @@ export async function POST(request) {
                 },
                 ReturnValues: 'UPDATED_NEW'
             };
-            const updatedFriends = await dynamoDB.update(params).promise()
-            console.log(updatedFriends.Attributes);
-            return NextResponse.json({ message: 'Success', friendRequests: updatedFriendRequestsResponse.Attributes.friendRequests, friends: updatedFriends.Attributes.friends });
+            const loggedInFriends = await dynamoDB.update(loggedInParams).promise()
+
+            const senderParams = {
+                TableName: 'users',
+                Key: { id: friendRequestId },
+                UpdateExpression: `
+                SET friends = list_append(if_not_exists(friends, :empty_list), :new_friend)
+                `,
+                ExpressionAttributeValues: {
+                    ':new_friend': [recipientData],
+                    ':empty_list': [],
+                },
+                ReturnValues: 'UPDATED_NEW'
+            };
+            const senderFriends = await dynamoDB.update(senderParams).promise()
+
+            console.log('loggedInFriends', loggedInFriends);
+            console.log('senderFriends', senderFriends);
+
+
+            return NextResponse.json({ message: 'Success', friendRequests: updatedFriendRequestsResponse.Attributes.friendRequests, friends: loggedInFriends.Attributes.friends });
         }
         else if (requestType === 'deny') {
             return NextResponse.json({ message: 'Success', friendRequests: updatedFriendRequestsResponse.Attributes.friendRequests });
