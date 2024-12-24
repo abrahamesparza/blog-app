@@ -61,10 +61,7 @@ export async function POST(request) {
                 },
                 ReturnValues: 'UPDATED_NEW'
             };
-            const senderFriends = await dynamoDB.update(senderParams).promise()
-
-            console.log('loggedInFriends', loggedInFriends);
-            console.log('senderFriends', senderFriends);
+            await dynamoDB.update(senderParams).promise();
 
 
             return NextResponse.json({ message: 'Success', friendRequests: updatedFriendRequestsResponse.Attributes.friendRequests, friends: loggedInFriends.Attributes.friends });
