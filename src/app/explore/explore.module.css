@@ -30,7 +30,7 @@
 }
 
 .feedContainer {
-    padding-top: 25px;
+    padding-top: 10px;
     display: grid;
     grid-template-columns: auto;
     grid-template-rows: repeat(auto, 1fr);
@@ -47,6 +47,19 @@
     grid-template-columns: auto;
     margin: 25px auto;
 }
+
+.pencilContainer {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 30px;
+    margin-top: 25px;
+}
+
+.pencil:hover { 
+    cursor: pointer;
+    color: #887efa;
+}
+
 
 /* .card {
     border: 1px solid #ddd;
