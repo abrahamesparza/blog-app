@@ -1,6 +1,6 @@
 import styles from '../profile/profile.module.css';
 
-const BlogItem = ({ title, content, timestamp, handleBlogRoute }) => {
+const BlogItem = ({ author, title, content, timestamp, handleBlogRoute }) => {
     const formattedTimestamp = new Date(timestamp).toLocaleString('en-US', {
       year: 'numeric',
       month: '2-digit',
@@ -13,9 +13,10 @@ const BlogItem = ({ title, content, timestamp, handleBlogRoute }) => {
     return (
       <div className={styles.listItem}>
         <div className={styles.titleTime}>
-          <h3
-          className={styles.blogTitle}
-          onClick={handleBlogRoute}>{title}</h3>
+          <div className={styles.authorTitle}>
+            <h3 className={styles.blogTitle} onClick={handleBlogRoute}>{title}</h3>
+            <p className={styles.author}>@{author}</p>
+          </div>
           <p className={styles.cardTimestamp}>{formattedTimestamp}</p>
         </div>
         <p>{content.substr(0, 100)}...</p>
