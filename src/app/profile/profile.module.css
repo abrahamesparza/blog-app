@@ -430,3 +430,82 @@
     cursor: pointer;
     color: #887efa;
   }
+
+  .profile {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .editContainer {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .backButton {
+    cursor: pointer;
+    color: #555;
+    transition: color 0.3s ease;
+  }
+  
+  .backButton:hover {
+    color: #000;
+  }
+  
+  .friendsList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .friendItem {
+    display: flex;
+    align-items: center;
+    width: 50vw;
+    gap: 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+  }
+  
+  .friendItem:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-color: #887efa;
+  }
+  
+  .friendAvatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: #887efa;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 50%;
+  }
+  
+  .friendName {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+  }
+  
+.profileImage {
+    border-radius: 50%;
+    object-fit: cover;
+    width: 50px;
+    height: 50px;
+    margin-top: 10px;
+}
