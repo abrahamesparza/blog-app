@@ -239,7 +239,7 @@ export default function Profile() {
                       content={item.content}
                       timestamp={item.timestamp}
                       handleBlogRoute={handleBlogRoute}
-                      username={username}
+                      author={username}
                     />
                   ))}
                 </ul>
