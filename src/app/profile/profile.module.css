@@ -430,11 +430,6 @@
     cursor: pointer;
     color: #887efa;
   }
-
-  .profile {
-    padding: 20px;
-    font-family: Arial, sans-serif;
-  }
   
   .editContainer {
     display: flex;
