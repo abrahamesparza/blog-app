@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect } from "react";
-import { useRouter } from 'next/navigation';
+import { useRouter , useSearchParams} from 'next/navigation';
 
 import styles from './write.module.css';
 import Navigation from "../components/navigation";
@@ -14,6 +14,8 @@ export default function Write() {
     const [submitting, setSubmitting] = useState(false);
     const [uploadComplete, setUploadComplete] = useState(false);
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const origin = searchParams.get('origin');
 
     useEffect(() => {
         const loggedInUser = localStorage.getItem('loggedInUser');
@@ -54,11 +56,16 @@ export default function Write() {
             });
             const data = await response.json();
             console.log('data', data);
+            console.log('origin', origin);
 
             if (data.message === 'Success') {
                 setUploadComplete(true);
                 setSubmitting(false);
-                setTimeout(() => router.push(`/profile/${author}`), 3000);
+                if (origin === 'explore') {
+                    setTimeout(() => router.push(`/explore`), 3000);
+                } else {
+                    setTimeout(() => router.push(`/profile/${author}`), 3000);
+                }
             }
             else {
                 console.error('Error posting blog.');
@@ -97,7 +104,7 @@ export default function Write() {
                     <div className={styles.successMessage}>
                         <div className={styles.successAnimation}></div>
                         <p>Your blog has posted 🌀</p>
-                        <p>Redirecting to your profile ⏳</p>
+                        <p>Redirecting to your {origin === 'explore' ? 'feed' : 'profile'} ⏳</p>
                     </div>
                 )}
         </div>
