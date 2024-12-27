@@ -132,6 +132,10 @@ const Blog = () => {
         }
     };
 
+    const handleNavigation = (username) => {
+      router.push(`/profile/${username}`);
+    }
+
     return (
         <div>
             <Navigation />
@@ -152,7 +156,7 @@ const Blog = () => {
                             <div className={styles.blogContainer} key={index}>
                             <BackButton className={styles.backButton} routeBack={routeBack} />
                             <h2 className={styles.blogTitle}>{blog.title}</h2>
-                            <p className='3'>@{username}</p>
+                            <p onClick={() => handleNavigation(username)} className={styles.author}>@{username}</p>
                             <p>{new Date(blog.timestamp).toLocaleString('en-US', dateOptions)}</p>
                             <p className={styles.blogContent}>{blog.content}</p>
                             </div>

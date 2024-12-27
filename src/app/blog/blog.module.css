@@ -108,3 +108,11 @@
         transform: scale(1);
     }
 }
+
+.author {
+    color: #887efa;
+}
+.author:hover {
+    cursor: pointer;
+    color: #58b7ff;
+}
