@@ -60,7 +60,7 @@ export default function Friends() {
                         alt={`${username}'s profile`}
                         width={100}
                         height={100}
-                        className={styles.profileImage}
+                        className={styles.friendsProfileImage}
                         />
                         <span className={styles.friendName}>{item.username}</span>
                     </li>

@@ -502,7 +502,7 @@
     color: #333;
   }
   
-.profileImage {
+.friendsProfileImage {
     border-radius: 50%;
     object-fit: cover;
     width: 50px;
