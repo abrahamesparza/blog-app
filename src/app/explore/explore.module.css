@@ -51,8 +51,10 @@
 .pencilContainer {
     display: flex;
     justify-content: flex-end;
+    align-items: center;
     margin-right: 30px;
     margin-top: 25px;
+    gap: 5px;
 }
 
 .pencil:hover { 
@@ -60,6 +62,15 @@
     color: #887efa;
 }
 
+.writeText {
+    font-size: 14px;
+}
+
+.feedText {
+    margin-top: 10px;
+    text-align: center;
+    /* font-size: 24px; */
+}
 
 /* .card {
     border: 1px solid #ddd;

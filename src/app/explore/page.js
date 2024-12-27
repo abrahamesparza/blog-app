@@ -64,8 +64,10 @@ export default function Explore() {
     return (
         <div className={styles.landingContainer}>
             <Navigation />
+            <h1 className={styles.feedText}>Timeline</h1>
             <div className={styles.pencilContainer}>
                 <HiPencilSquare className={styles.pencil} size={28} onClick={handleWrite}/>
+                <p className={styles.writeText}>Write</p>
             </div>
             <div className={styles.feedContainer}>
                 <div className={styles.cardContainer}>
