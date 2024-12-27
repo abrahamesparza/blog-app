@@ -66,8 +66,10 @@ export default function Explore() {
             <Navigation />
             <h1 className={styles.feedText}>Timeline</h1>
             <div className={styles.pencilContainer}>
-                <HiPencilSquare className={styles.pencil} size={28} onClick={handleWrite}/>
-                <p className={styles.writeText}>Write</p>
+                <div className={styles.iconWrapper}>
+                    <HiPencilSquare className={styles.pencil} size={28} onClick={handleWrite}/>
+                    <span className={styles.tooltip}>Write</span>
+                </div>
             </div>
             <div className={styles.feedContainer}>
                 <div className={styles.cardContainer}>
