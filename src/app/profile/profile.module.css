@@ -431,11 +431,6 @@
     color: #887efa;
   }
   
-  .editContainer {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-  }
   
   .backButton {
     cursor: pointer;
