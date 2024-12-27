@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import styles from './explore.module.css';
 import Navigation from '../components/navigation';
 import Card from '../components/card';
+import BlogItem from "../components/blogItem";
 
 export default function Explore() {
     const [blogData, setBlogData] = useState([]);
@@ -25,6 +26,7 @@ export default function Explore() {
                 throw new Error(`Response status: ${response.status}`);
             }
             const data = await response.json();
+            console.log('data', data.items[0].blogs);
             setBlogData(data.items || []);
             localStorage.setItem('blogData', JSON.stringify(data.items) || []);
             setLoading(false);
@@ -56,6 +58,8 @@ export default function Explore() {
         }
     };
 
+    console.log('current blogs', currentBlogs)
+
     return (
         <div className={styles.landingContainer}>
             <Navigation />
@@ -69,14 +73,18 @@ export default function Explore() {
                         <p>No blogs available</p>
                     )
                 ) : (
-                    currentBlogs.map((blog, index) => (
-                        <div key={index} className={styles.card}>
-                            <Card
-                                username={blog.username}
-                                blogs={blog.blogs?.length}
-                                handleProfileRoute={handleProfileRoute}
-                            />
-                        </div>
+                    currentBlogs.map(user => (
+                        user.blogs.map((blog, index) => (
+                            <div key={index} className={styles.card}>
+                                <BlogItem
+                                    author={blog.author}
+                                    title={blog.title}
+                                    content={blog.content.slice(0, 100)}
+                                    timestamp={blog.timestamp}
+                                    handleProfileRoute={handleProfileRoute}
+                                />
+                            </div>
+                        ))
                     ))
                 )}
                 </div>
