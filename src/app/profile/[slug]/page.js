@@ -252,9 +252,15 @@ export default function Profile() {
         <div className={styles.profileChildTwo}>
           {loggedInUser === username ? (
             <div className={styles.iconsList}>
-              <HiPencilSquare className={styles.settingsIcon} onClick={handleWrite} size={25}  />
-              <CiSettings className={styles.settingsIcon} onClick={handleEditRoute} size={25} /> 
+              <div className={styles.iconWrapper}>
+                <HiPencilSquare className={styles.settingsIcon} onClick={handleWrite} size={25} />
+                <span className={styles.tooltip}>Write</span>
               </div>
+              <div className={styles.iconWrapper}>
+                <CiSettings className={styles.settingsIcon} onClick={handleEditRoute} size={25} />
+                <span className={styles.tooltip}>Settings</span>
+              </div>
+            </div>
           ) : null}
         </div>
 
