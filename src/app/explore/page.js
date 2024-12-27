@@ -54,7 +54,7 @@ export default function Explore() {
     };
 
     const handleBlogRoute = async (blogTitle, username) => {
-      router.push(`/blog/${blogTitle}?username=${username}`);
+      router.push(`/blog/${blogTitle}?username=${username}&origin=explore`);
     };
 
     const handleWrite = () => {
