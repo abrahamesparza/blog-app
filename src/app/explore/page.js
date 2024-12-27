@@ -71,9 +71,10 @@ export default function Explore() {
                         <p>No blogs available</p>
                     )
                 ) : (
-                    currentBlogs.map(user => (
-                        user.blogs
+                    currentBlogs
+                        .flatMap(user => user.blogs)
                         .filter(blog => blog.privacy === 'public')
+                        .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
                         .map((blog, index) => (
                             <div key={index} className={styles.card}>
                                 <BlogItem
@@ -85,8 +86,7 @@ export default function Explore() {
                                 />
                             </div>
                         ))
-                    ))
-                )}
+                    )}
                 </div>
                 <div className={styles.buttons}>
                     {currentPage > 0 && (
