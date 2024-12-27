@@ -33,6 +33,18 @@
     margin-right: 50px;
 }
 
+
+.authorTitle {
+    display: flex;
+    flex-direction: column;
+}
+
+.author {
+    margin-top: 3px;
+    font-size: 14px;
+    color: #887efa;
+}
+
 .aboutContainer {
     margin-top: 15px;
 }
