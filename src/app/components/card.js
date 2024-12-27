@@ -1,6 +1,6 @@
 import styles from '../page.module.css';
 
-const Card = ({ username, blogs, handleProfileRoute }) => {
+const Card = ({ username, title, content, timestamp, handleProfileRoute }) => {
     return (
         <div className={styles.cardContent}>
             {/* add a profile photo icon here */}
@@ -8,7 +8,19 @@ const Card = ({ username, blogs, handleProfileRoute }) => {
             className={styles.blogAuthor}
             onClick={handleProfileRoute}
             >{ username }</h2>
-            <p>blogs: { blogs }</p>
+            <h2
+            className={styles.blogAuthor}
+            onClick={handleProfileRoute}
+            >{ title }</h2>
+            <h2
+            className={styles.blogAuthor}
+            onClick={handleProfileRoute}
+            >{ content }</h2>
+            <h2
+            className={styles.blogAuthor}
+            onClick={handleProfileRoute}
+            >{ timestamp }</h2>
+            {/* <p>blogs: { blogs }</p> */}
         </div>
     );
 };
