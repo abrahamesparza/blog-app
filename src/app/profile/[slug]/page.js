@@ -182,7 +182,7 @@ export default function Profile() {
                 }
                   <div className={styles.blogs}>
                     <p>{filteredBlogs.length}</p>
-                    <p>Blogs</p>
+                    <p>Entries</p>
                   </div>
                 </div>
             </div>
@@ -211,7 +211,7 @@ export default function Profile() {
             
             <div className={styles.blogList}>
               <div className={styles.blogHeaderContainer}>
-                <h3 className={styles.blogHeader}>Blogs</h3>
+                <h3 className={styles.blogHeader}>Journal Entries</h3>
                   <div className={styles.entriesList}>
                     <p
                     className={`${styles.privateTab} ${showView === 'public' ? styles.activeTab : ''}`}
@@ -243,7 +243,7 @@ export default function Profile() {
                   ))}
                 </ul>
               ) : (
-                <p>No blogs available</p>
+                <p>No journals written</p>
               )}
             </div>
           </div>

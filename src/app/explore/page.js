@@ -77,7 +77,7 @@ export default function Explore() {
                     loading ? (
                         <p>Loading...</p>
                     ) : (
-                        <p>No blogs available</p>
+                        <p>No journals written</p>
                     )
                 ) : (
                     currentBlogs
