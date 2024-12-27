@@ -16,6 +16,7 @@ const Blog = () => {
     const [deleteComplete, setDeleteComplete] = useState(false);
     const searchParams = useSearchParams();
     const username = searchParams.get('username');
+    const origin = searchParams.get('origin') || '';
     const pathname = usePathname();
     const slug = decodeURIComponent(pathname.split('/').pop());
     const router = useRouter();
@@ -84,7 +85,11 @@ const Blog = () => {
     
 
     const routeBack = () => {
-      router.push(`/profile/${username}`);
+        if (origin === 'explore') {
+            router.push('/explore');
+        } else {
+            router.push(`/profile/${username}`);
+        }
     };
 
     const handlePrivacyUpdate = (currentPrivacy, blogId) => {
@@ -114,7 +119,11 @@ const Blog = () => {
             const data = await response.json();
             if (data.message === 'Success') {
                 setDeleteComplete(true);
-                setTimeout(() => router.push(`/profile/${username}`), 3000);
+                if (origin === 'explore') {
+                    setTimeout(() => router.push(`/explore`), 3000);
+                } else {
+                    setTimeout(() => router.push(`/profile/${username}`), 3000);
+                }
             } else {
                 console.log('Unable to route back to profile.');
             }
@@ -131,7 +140,7 @@ const Blog = () => {
                     <div className={styles.successMessage}>
                         <div className={styles.successAnimation}></div>
                         <p>Your blog has been deleted 🗑️</p>
-                        <p>Redirecting to your profile ⏳</p>
+                        <p>Redirecting to your {origin === 'explore' ? 'feed' : 'profile'} ⏳</p>
                     </div>
                 )}
                 {!deleteComplete && (
