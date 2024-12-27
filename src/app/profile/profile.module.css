@@ -44,10 +44,6 @@
     font-size: 14px;
     color: #887efa;
 }
-.author:hover {
-    cursor: pointer;
-    color: #58b7ff;
-}
 
 .aboutContainer {
     margin-top: 15px;
@@ -420,3 +416,12 @@
     opacity: 1;
   }
   
+  .reaction {
+    display: flex;
+    justify-content: flex-end;
+    align-self: flex-end;
+  }
+  .reaction:hover {
+    cursor: pointer;
+    color: #887efa;
+  }
