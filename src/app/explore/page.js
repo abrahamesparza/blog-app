@@ -1,10 +1,10 @@
 'use client';
 import { useState, useEffect } from "react";
 import { useRouter } from 'next/navigation';
+import { HiPencilSquare } from "react-icons/hi2";
 
 import styles from './explore.module.css';
 import Navigation from '../components/navigation';
-import Card from '../components/card';
 import BlogItem from "../components/blogItem";
 
 export default function Explore() {
@@ -54,15 +54,20 @@ export default function Explore() {
     };
 
     const handleBlogRoute = async (blogTitle, username) => {
-    //   let blogTitle = e.target.innerText;
       router.push(`/blog/${blogTitle}?username=${username}`);
     };
+
+    const handleWrite = () => {
+        router.push('/write?origin=explore');
+    }
 
     return (
         <div className={styles.landingContainer}>
             <Navigation />
+            <div className={styles.pencilContainer}>
+                <HiPencilSquare className={styles.pencil} size={28} onClick={handleWrite}/>
+            </div>
             <div className={styles.feedContainer}>
-                <h1 className={styles.headingText}>Blogs</h1>
                 <div className={styles.cardContainer}>
                 {blogData.length === 0 ? (
                     loading ? (
