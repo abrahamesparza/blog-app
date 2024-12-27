@@ -36,11 +36,6 @@ export default function Explore() {
         }
     };
 
-    const handleProfileRoute = async (e) => {
-        let slug = e.target.innerText.trim();
-        router.push(`/profile/${slug}`)
-    }
-
     const pageViewLimit = 10;
     const currentBlogs = blogData.length > 0
     ? blogData.slice(currentPage * pageViewLimit, (currentPage + 1) * pageViewLimit)
@@ -58,7 +53,10 @@ export default function Explore() {
         }
     };
 
-    console.log('current blogs', currentBlogs)
+    const handleBlogRoute = async (blogTitle, username) => {
+    //   let blogTitle = e.target.innerText;
+      router.push(`/blog/${blogTitle}?username=${username}`);
+    };
 
     return (
         <div className={styles.landingContainer}>
@@ -74,14 +72,16 @@ export default function Explore() {
                     )
                 ) : (
                     currentBlogs.map(user => (
-                        user.blogs.map((blog, index) => (
+                        user.blogs
+                        .filter(blog => blog.privacy === 'public')
+                        .map((blog, index) => (
                             <div key={index} className={styles.card}>
                                 <BlogItem
                                     author={blog.author}
                                     title={blog.title}
                                     content={blog.content.slice(0, 100)}
                                     timestamp={blog.timestamp}
-                                    handleProfileRoute={handleProfileRoute}
+                                    handleBlogRoute={() => handleBlogRoute(blog.title, blog.author)}
                                 />
                             </div>
                         ))
