@@ -14,11 +14,20 @@ const BlogItem = ({ author, title, content, timestamp, handleBlogRoute }) => {
       hour12: false
     });
 
-    const handleReaction = async (e) => {
-      e.stopPropagation();
-      //write api to store likes and retrieve
-      alert('reaction alert');
-    };
+    // const handleReaction = async (e) => {
+    //   e.stopPropagation();
+    //   //write api to store likes and retrieve
+    //  //figure out how to store likes in state
+    //  //and associate a like to a user
+
+    //   const response = await fetch('/api/reaction', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify(formData);
+    //   })
+    // };
 
     const handleNavigation = (e, username) => {
       e.stopPropagation();
@@ -35,7 +44,7 @@ const BlogItem = ({ author, title, content, timestamp, handleBlogRoute }) => {
           <p className={styles.cardTimestamp}>{formattedTimestamp}</p>
         </div>
         <p>{content.substr(0, 100)}...</p>
-        <SiNicehash className={styles.reaction} size={12} onClick={handleReaction}/>
+        {/* <SiNicehash className={styles.reaction} size={12} onClick={handleReaction}/> */}
       </div>
     );
   };
