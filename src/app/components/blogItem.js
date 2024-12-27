@@ -18,10 +18,10 @@ const BlogItem = ({ author, title, content, timestamp, handleBlogRoute }) => {
     }
   
     return (
-      <div className={styles.listItem}>
+      <div className={styles.listItem} onClick={() => handleBlogRoute(title)}>
         <div className={styles.titleTime}>
           <div className={styles.authorTitle}>
-            <h3 className={styles.blogTitle} onClick={handleBlogRoute}>{title}</h3>
+            <h3 className={styles.blogTitle}>{title}</h3>
             <p onClick={() => handleNavigation(author)} className={styles.author}>@{author}</p>
           </div>
           <p className={styles.cardTimestamp}>{formattedTimestamp}</p>

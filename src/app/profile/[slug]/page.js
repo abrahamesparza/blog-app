@@ -74,8 +74,7 @@ export default function Profile() {
     }
   };
 
-  const handleBlogRoute = async (e) => {
-    let blogTitle = e.target.innerText;
+  const handleBlogRoute = async (blogTitle) => {
     router.push(`/blog/${blogTitle}?username=${username}`);
   };
 
