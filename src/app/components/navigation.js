@@ -17,9 +17,6 @@ export default function Navigation() {
             const user = localStorage.getItem('loggedInUser');
             router.push(`/${page}/${slug || user}`);
         }
-        else if (page === 'home') {
-            router.push('/landing');
-        }
         else {
             router.push(`/${page}`)
         }
@@ -28,9 +25,8 @@ export default function Navigation() {
     return (
         <div>
             <div className={styles.navigation}>
-                <Search />
-                <p onClick={handleRouting} className={styles.navItem}>Write</p>
                 <p onClick={handleRouting} className={styles.navItem}>Explore</p>
+                <Search />
                 <p onClick={handleRouting} className={styles.navItem}>Profile</p>
                 <Logout reroute={'/'}/>
             </div>
