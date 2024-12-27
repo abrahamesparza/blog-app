@@ -45,6 +45,11 @@
     color: #887efa;
 }
 
+.author:hover {
+    cursor: pointer;
+    color: #58b7ff;
+}
+
 .aboutContainer {
     margin-top: 15px;
 }
