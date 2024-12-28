@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import styles from '../page.module.css';
 import { useRouter } from 'next/navigation';
+import { IoIosArrowRoundBack } from 'react-icons/io';
 
 import HomePage from '../landing/page';
 
@@ -60,18 +61,20 @@ export default function SignupForm() {
     }
 
     function handleRouting(e) {
-        let page = e.target.innerText;
+        let target = e.currentTarget;
+        let page = target.innerText || '/';
+
         if (page.includes('Sign Up')) {
-            page = 'signup'
+            page = 'signup';
         }
         else if (page.includes('Log In')) {
-            page = 'login'
+            page = 'login';
         }
         else if (page.includes('Home')) {
-            page = '/'
+            page = '/';
         }
         router.push(`/${page}`);
-      };
+    }
 
     if (nextPage) {
         router.push(`/profile/${username}`);
@@ -133,8 +136,7 @@ export default function SignupForm() {
                 onClick={handleRouting}
                 className={styles.pText}
                 >Existing User? Log In</p>
-                <p onClick={handleRouting}
-                className={styles.pText}>Home</p>
+                <IoIosArrowRoundBack className={styles.backButton} onClick={handleRouting} size={28}/>
             </form>
         </div>
     )
