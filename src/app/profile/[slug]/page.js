@@ -143,7 +143,7 @@ export default function Profile() {
   };
 
   const handleFriendRequests = () => {
-    router.push(`/profile/${username}/edit?requests=true`);
+    router.push(`/profile/${username}/edit?requests=true&count=${friendRequests.length}`);
   };
 
   return (

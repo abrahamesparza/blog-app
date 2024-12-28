@@ -15,15 +15,20 @@ export default function Edit() {
     const [option, setOption] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
     const [username, setUsername] = useState(null);
+    const [hasRequests, setHasRequests] = useState(false);
+    const [requestCount, setRequestCount] = useState(0);
     const router = useRouter();
     const searchParams = useSearchParams();
     const requests = searchParams.get('requests') || '';
+    const count = searchParams.get('count') || 0;
 
     useEffect(() => {
         let user = localStorage.getItem('loggedInUser');
         setUsername(user);
 
         if (requests === 'true') {
+            setHasRequests(true)
+            setRequestCount(count);
             setOption('FR');
         }
     }, []);
@@ -33,8 +38,8 @@ export default function Edit() {
         'Add bio',
         'Update username',
         'Update password',
-        'Friend requests',
-    ]
+        hasRequests ? `Friend requests (${requestCount})` : 'Friend requests',
+    ];
 
     const handleEditOption = (e) => {
         let text = e.target.innerText;
@@ -79,6 +84,10 @@ export default function Edit() {
         if (isEditing) {
             setIsEditing(false);
             setOption(null);
+        }
+        else if (option) {
+            setOption(null);
+            router.push(`/profile/${username}/edit`);
         }
         else {
             router.push(`/profile/${username}`);
