@@ -14,7 +14,7 @@ export function middleware(request) {
 
     if (sessionId && currentPath === '/') {
         const url = request.nextUrl.clone();
-        url.pathname = '/landing';
+        url.pathname = '/explore';
         return NextResponse.redirect(url);
     }
 
