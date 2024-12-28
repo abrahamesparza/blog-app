@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { IoIosArrowRoundBack } from 'react-icons/io';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 import Navigation from '@/app/components/navigation';
 import UploadPhoto from '@/app/components/uploadPhoto';
@@ -16,10 +16,16 @@ export default function Edit() {
     const [isEditing, setIsEditing] = useState(false);
     const [username, setUsername] = useState(null);
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const requests = searchParams.get('requests') || '';
 
     useEffect(() => {
         let user = localStorage.getItem('loggedInUser');
         setUsername(user);
+
+        if (requests === 'true') {
+            setOption('FR');
+        }
     }, []);
 
     const editList = [
@@ -32,7 +38,7 @@ export default function Edit() {
 
     const handleEditOption = (e) => {
         let text = e.target.innerText;
-        console.log('text', text)
+
         if (text === 'Upload profile photo') {
             setOption('Photo');
         }
@@ -85,27 +91,29 @@ export default function Edit() {
             <div className={styles.editContainer}>
                 <IoIosArrowRoundBack className={styles.backButton} onClick={updateEditingStatus} size={28} />
             </div>
-            <div className={styles.editContainer} style={{ display: isEditing ? 'none' : 'block' }}>
-                <div className={styles.selectOptionText}>
-                    <h3>Select an option to edit</h3>
+            {option ? (
+                renderComponent()
+            ) : (
+                <div className={styles.editContainer} style={{ display: isEditing ? 'none' : 'block' }}>
+                    <div className={styles.selectOptionText}>
+                        <h3>Select an option to edit</h3>
+                    </div>
+    
+                    <div className={styles.editList}>
+                        <ul>
+                            {editList.map((item, index) => (
+                                <li
+                                key={index}
+                                className={styles.editItems}
+                                onClick={handleEditOption}
+                                >
+                                    {item}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
                 </div>
-
-                <div className={styles.editList}>
-                    <ul>
-                        {editList.map((item, index) => (
-                            <li
-                            key={index}
-                            className={styles.editItems}
-                            onClick={handleEditOption}
-                            >
-                                {item}
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            </div>
-
-            {renderComponent()}
+            )}
         </div>
     )
 }
