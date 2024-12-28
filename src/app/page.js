@@ -12,6 +12,7 @@ import OurStory from "./our-story/page";
 
 export default function Home() {
   const [form, setForm] = useState('');
+  const introText = 'Capture your thoughts, daily experiences, and whatever’s on your mind—privately or shared with those you trust most. Share what matters to you in a way that keeps others informed, without the need for direct conversations.';
 
   function handleForm(e) {
     let formType = e.target.innerText;
@@ -31,7 +32,7 @@ export default function Home() {
         </div>
         <div className={styles.descriptionContainer}>
           <p className={styles.descriptionText}>
-            Every thought matters. <br/>Every experience shapes you. <br/>In this journal, your story is permanent — <br/>because growth isn’t about erasing <br/>the past, it’s about learning from it.
+            {introText}
           </p>
         </div>
         <div className={styles.banner}>
