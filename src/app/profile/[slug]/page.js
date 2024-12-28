@@ -142,6 +142,10 @@ export default function Profile() {
     router.push(`/write`);
   };
 
+  const handleFriendRequests = () => {
+    router.push(`/profile/${username}/edit?requests=true`);
+  };
+
   return (
     <div className={styles.profile}>
       <Navigation />
@@ -257,8 +261,18 @@ export default function Profile() {
                 <span className={styles.tooltip}>Write</span>
               </div>
               <div className={styles.iconWrapper}>
-                <CiSettings className={styles.settingsIcon} onClick={handleEditRoute} size={25} />
-                <span className={styles.tooltip}>Settings</span>
+                {friendRequests.length > 0 ? (
+                  <div className={styles.friendRequestWrapper}>
+                    <IoPerson className={styles.friendRequestIcon} size={25} onClick={handleFriendRequests} />
+                    <span className={styles.friendRequestBadge}>{friendRequests.length}</span>  
+                    <span className={styles.tooltip}>View<br/>Friend<br/>Request</span>
+                  </div>
+                ) : (
+                  <>
+                    <CiSettings className={styles.settingsIcon} onClick={handleEditRoute} size={25} />
+                    <span className={styles.tooltip}>Settings</span>
+                  </>
+                )}
               </div>
             </div>
           ) : null}
