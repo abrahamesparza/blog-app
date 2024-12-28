@@ -1,11 +1,15 @@
 'use client';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+
 import styles from '../page.module.css';
+import Image from 'next/image';
 
 export default function Search() {
     const [searchQuery, setSearchQuery] = useState('');
     const [searchResults, setSearchResults] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
+    const router = useRouter();
 
     const handleSearch = async (query) => {
         setSearchQuery(query);
@@ -18,11 +22,17 @@ export default function Search() {
         try {
             const response = await fetch(`/api/search-users?username=${query}`);
             const data = await response.json();
-            setSearchResults(data.users);
+            console.log('data', data);
+            setSearchResults(data.users || []);
         } catch (error) {
             console.error('Error fetching search results:', error);
+            setSearchResults([]);
         }
     };
+
+    const handleProfileRedirect = (username) => {
+        router.push(`/profile/${username}`);
+    }
 
     return (
         <div className={styles.searchContainer}>
@@ -44,13 +54,18 @@ export default function Search() {
                     {searchResults.length > 0 && (
                         <ul className={styles.searchResults}>
                             {searchResults.map((user) => (
-                                <li 
-                                    key={user.id} 
-                                    className={styles.searchResultItem}
-                                    onClick={() => console.log(`Selected user: ${user.username}`)}
-                                >
-                                    {user.username}
-                                </li>
+                                <div>
+                                    {/* WIP: Add image next to username */}
+                                    {/* <Image
+                                    src={generateProfileImage}
+                                    alt={`${username}'s profile`}
+                                    width={100}
+                                    height={100}
+                                    className={styles.profileImage}/> */}
+                                    <li  key={user.id}  className={styles.searchResultItem} onClick={() => handleProfileRedirect(user.username)}>
+                                        {user.username}
+                                    </li>
+                                </div>
                             ))}
                         </ul>
                     )}
