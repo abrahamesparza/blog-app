@@ -128,7 +128,7 @@ export default function LoginForm() {
 
                     <p
                     onClick={handleRouting}
-                    className={styles.signUpText}
+                    className={styles.pText}
                     value='Sign Up'
                     >New User? Sign Up</p>
                 </div>
