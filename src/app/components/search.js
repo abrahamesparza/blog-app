@@ -76,7 +76,9 @@ export default function Search() {
                     </div>
                     {loading ? (
                         <p className={styles.loadingMessage}>Loading...</p>
-                    ) : searchResults.length > 0 ? (
+                    ) : searchQuery && searchResults.length === 0 ? (
+                        <p className={styles.noResults}>No results found.</p>
+                    ) : ( searchResults.length > 0 && (
                         <ul className={styles.searchResults}>
                             {searchResults.map((user, index) => (
                                 <div className={styles.searchResultItem}>
@@ -92,8 +94,7 @@ export default function Search() {
                                 </div>
                             ))}
                         </ul>
-                    ) : searchQuery && (
-                        <p className={styles.noResults}>No results found.</p>
+                    ) 
                     )}
                 </div>
             )}
