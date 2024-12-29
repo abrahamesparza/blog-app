@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect } from "react";
-import { useRouter , useSearchParams} from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 import styles from './write.module.css';
 import Navigation from "../components/navigation";
