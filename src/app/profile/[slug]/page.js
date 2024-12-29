@@ -237,6 +237,7 @@ export default function Profile() {
                 <ul className={styles.blogUl}>
                   {filteredBlogs.map((item, index) => (
                     <BlogItem
+                      image={profileImageUrl}
                       key={index}
                       title={item.title}
                       content={item.content}
