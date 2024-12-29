@@ -1,14 +1,18 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { IoIosClose } from "react-icons/io";
 
 import styles from '../page.module.css';
 import Image from 'next/image';
+import { generateProfileImageUrl } from '../helpers/sharedFunctions';
 
 export default function Search() {
     const [searchQuery, setSearchQuery] = useState('');
     const [searchResults, setSearchResults] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
+    const [loading, setLoading] = useState(false); 
+    const [profileImageUrl, setProfileImageUrl] = useState('');
     const router = useRouter();
 
     const handleSearch = async (query) => {
@@ -16,23 +20,31 @@ export default function Search() {
 
         if (query.trim().length === 0) {
             setSearchResults([]);
+            setLoading(false)
             return;
         }
+        setLoading(true);
 
         try {
             const response = await fetch(`/api/search-users?username=${query}`);
             const data = await response.json();
-            console.log('data', data);
+            const url = data.users.map(user => generateProfileImageUrl(user.id));
+
+            setProfileImageUrl(url)
             setSearchResults(data.users || []);
         } catch (error) {
             console.error('Error fetching search results:', error);
             setSearchResults([]);
+        } finally {
+            setLoading(false);
         }
     };
 
     const handleProfileRedirect = (username) => {
         router.push(`/profile/${username}`);
     }
+
+    console.log('profile image url', profileImageUrl)
 
     return (
         <div className={styles.searchContainer}>
@@ -44,32 +56,43 @@ export default function Search() {
             </p>
             {isOpen && (
                 <div className={styles.searchDropdown}>
-                    <input 
-                        type="text" 
-                        placeholder="Search users..." 
-                        value={searchQuery} 
-                        onChange={(e) => handleSearch(e.target.value)} 
-                        className={styles.searchInput}
-                    />
-                    {searchResults.length > 0 && (
+                    <div className={styles.searchMenu}>
+                        <input 
+                            type="text" 
+                            placeholder="Search users..." 
+                            value={searchQuery} 
+                            onChange={(e) => handleSearch(e.target.value)} 
+                            className={styles.searchInput}
+                        />
+                        <IoIosClose 
+                            size={28}
+                            className={styles.closeButton} 
+                            onClick={() => {
+                                setSearchQuery('');
+                                setSearchResults([]);
+                                setIsOpen(false);
+                            }}
+                        />
+                    </div>
+                    {loading ? (
+                        <p className={styles.loadingMessage}>Loading...</p>
+                    ) : searchResults.length > 0 ? (
                         <ul className={styles.searchResults}>
-                            {searchResults.map((user) => (
-                                <div>
-                                    {/* WIP: Add image next to username */}
-                                    {/* <Image
-                                    src={generateProfileImage}
-                                    alt={`${username}'s profile`}
+                            {searchResults.map((user, index) => (
+                                <div className={styles.searchResultItem}>
+                                    <Image
+                                    src={profileImageUrl[index]}
+                                    alt={`${user.username}'s profile`}
                                     width={100}
                                     height={100}
-                                    className={styles.profileImage}/> */}
-                                    <li  key={user.id}  className={styles.searchResultItem} onClick={() => handleProfileRedirect(user.username)}>
+                                    className={styles.searchProfileImage}/>
+                                    <li  key={user.id} onClick={() => handleProfileRedirect(user.username)}>
                                         {user.username}
                                     </li>
                                 </div>
                             ))}
                         </ul>
-                    )}
-                    {searchQuery && searchResults.length === 0 && (
+                    ) : searchQuery && (
                         <p className={styles.noResults}>No results found.</p>
                     )}
                 </div>
