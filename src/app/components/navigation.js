@@ -23,7 +23,7 @@ export default function Navigation() {
     }
     
     return (
-        <div>
+        <div className={styles.navContainer}>
             <div className={styles.navigation}>
                 <p onClick={handleRouting} className={styles.navItem}>Explore</p>
                 <Search />
