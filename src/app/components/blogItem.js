@@ -1,8 +1,9 @@
 import styles from '../profile/profile.module.css';
 import { useRouter } from 'next/navigation';
 import { SiNicehash } from "react-icons/si";
+import Image from 'next/image';
 
-const BlogItem = ({ author, title, content, timestamp, handleBlogRoute }) => {
+const BlogItem = ({ image, author, title, content, timestamp, handleBlogRoute }) => {
   const router = useRouter();
 
     const formattedTimestamp = new Date(timestamp).toLocaleString('en-US', {
@@ -38,8 +39,14 @@ const BlogItem = ({ author, title, content, timestamp, handleBlogRoute }) => {
       <div className={styles.listItem} onClick={() => handleBlogRoute(title)}>
         <div className={styles.titleTime}>
           <div className={styles.authorTitle}>
-            <h3 className={styles.blogTitle}>{title}</h3>
+            <Image
+            src={image}
+            alt={`${author}'s profile`}
+            width={100}
+            height={100}
+            className={styles.profileImage}/>
             <p onClick={(e) => handleNavigation(e, author)} className={styles.author}>@{author}</p>
+            <h3 className={styles.blogTitle}>{title}</h3>
           </div>
           <p className={styles.cardTimestamp}>{formattedTimestamp}</p>
         </div>

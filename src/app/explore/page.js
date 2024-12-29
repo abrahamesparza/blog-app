@@ -6,11 +6,13 @@ import { HiPencilSquare } from "react-icons/hi2";
 import styles from './explore.module.css';
 import Navigation from '../components/navigation';
 import BlogItem from "../components/blogItem";
+import { generateProfileImageUrl } from "../helpers/sharedFunctions";
 
 export default function Explore() {
     const [blogData, setBlogData] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
     const [loading, setLoading] = useState(true);
+    const [profileUrls, setProfileUrls] = useState([]);
     const router = useRouter();
 
     useEffect(() => {
@@ -26,7 +28,16 @@ export default function Explore() {
                 throw new Error(`Response status: ${response.status}`);
             }
             const data = await response.json();
-            console.log('data', data.items[0].blogs);
+            const urls = data.items.map(user => { 
+                let imageData = { 
+                    author: user.username,
+                    profileImage: generateProfileImageUrl(user.id)
+                } 
+                return imageData
+            });
+
+            setProfileUrls(urls);
+            console.log('urls', urls);
             setBlogData(data.items || []);
             localStorage.setItem('blogData', JSON.stringify(data.items) || []);
             setLoading(false);
@@ -81,12 +92,18 @@ export default function Explore() {
                     )
                 ) : (
                     currentBlogs
-                        .flatMap(user => user.blogs)
-                        .filter(blog => blog.privacy === 'public')
+                        .flatMap((user) => 
+                            user.blogs.map((blog) => ({
+                                ...blog,
+                                authorImage: profileUrls.find(profile => profile.author === blog.author)?.profileImage
+                            }))
+                        )
+                        .filter(blog => blog.privacy === 'public' && blog.privacy !== undefined)
                         .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
                         .map((blog, index) => (
                             <div key={index} className={styles.card}>
                                 <BlogItem
+                                    image={blog.authorImage}
                                     author={blog.author}
                                     title={blog.title}
                                     content={blog.content.slice(0, 100)}
