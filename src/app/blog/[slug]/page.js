@@ -211,7 +211,7 @@ const Blog = () => {
                                     )}
                                 </div>
                                 <h2 className={styles.blogTitle}>{blog.title}</h2>
-                                <p>@{username}</p>
+                                <p onClick={() => handleNavigation(username)} className={styles.author}>@{username}</p>
                                 <p>{new Date(blog.timestamp).toLocaleString('en-US', dateOptions)}</p>
                                 <p className={styles.blogContent}>{blog.content}</p>
                             </div>
