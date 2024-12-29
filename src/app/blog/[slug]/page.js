@@ -4,16 +4,19 @@ import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import { MdDeleteOutline } from "react-icons/md";
 import { MdOutlinePublic } from "react-icons/md";
 import { RiGitRepositoryPrivateFill } from "react-icons/ri";
+import Image from 'next/image';
 
 import styles from '../blog.module.css';
 import Navigation from '../../components/navigation';
 import BackButton from '@/app/components/backButton';
+import { generateProfileImageUrl } from '@/app/helpers/sharedFunctions';
 
 const Blog = () => {
     const [blogs, setBlogs] = useState([]);
     const [loggedInUser, setLoggedInUser] = useState('');
     const [loggedInUserId, setLoggedInUserId] = useState('');
     const [deleteComplete, setDeleteComplete] = useState(false);
+    const [profileImageUrl, setProfileImageUrl] = useState('');
     const searchParams = useSearchParams();
     const username = searchParams.get('username');
     const origin = searchParams.get('origin') || '';
@@ -46,10 +49,14 @@ const Blog = () => {
     const getBlogData = async () => {
         const response = await fetch(`/api/get-user-data?username=${username}`);
         const data = await response.json()
+
         if (data.error || data.message === 404) {
             console.error('Error fetching blog data');
             return;
         }
+
+        const url = generateProfileImageUrl(data.id)
+        setProfileImageUrl(url)
         setBlogs(data.blogs);
     };
 
@@ -155,9 +162,16 @@ const Blog = () => {
                         <div className={styles.layoutOne}>
                             <div className={styles.blogContainer} key={index}>
                             <BackButton className={styles.backButton} routeBack={routeBack} />
-                            <h2 className={styles.blogTitle}>{blog.title}</h2>
+                            <Image
+                            src={profileImageUrl}
+                            alt={`${username}'s profile`}
+                            width={100}
+                            height={100}
+                            className={styles.profileImage}
+                            />
                             <p onClick={() => handleNavigation(username)} className={styles.author}>@{username}</p>
-                            <p>{new Date(blog.timestamp).toLocaleString('en-US', dateOptions)}</p>
+                            <h2 className={styles.blogTitle}>{blog.title}</h2>
+                            <p className={styles.timestamp}>{new Date(blog.timestamp).toLocaleString('en-US', dateOptions)}</p>
                             <p className={styles.blogContent}>{blog.content}</p>
                             </div>
                         </div>
@@ -210,9 +224,16 @@ const Blog = () => {
                                         </div>
                                     )}
                                 </div>
-                                <h2 className={styles.blogTitle}>{blog.title}</h2>
+                                <Image
+                                src={profileImageUrl}
+                                alt={`${username}'s profile`}
+                                width={100}
+                                height={100}
+                                className={styles.profileImage}
+                                />
                                 <p onClick={() => handleNavigation(username)} className={styles.author}>@{username}</p>
-                                <p>{new Date(blog.timestamp).toLocaleString('en-US', dateOptions)}</p>
+                                <h2 className={styles.blogTitle}>{blog.title}</h2>
+                                <p className={styles.timestamp}>{new Date(blog.timestamp).toLocaleString('en-US', dateOptions)}</p>
                                 <p className={styles.blogContent}>{blog.content}</p>
                             </div>
                         ))}
