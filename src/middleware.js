@@ -12,7 +12,7 @@ export function middleware(request) {
         return NextResponse.redirect(new URL('/', request.url));
     }
 
-    if (sessionId && currentPath === '/') {
+    if (sessionId && currentPath === '/' || currentPath === '/landing') {
         const url = request.nextUrl.clone();
         url.pathname = '/explore';
         return NextResponse.redirect(url);
