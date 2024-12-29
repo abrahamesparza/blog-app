@@ -44,8 +44,6 @@ export default function Search() {
         router.push(`/profile/${username}`);
     }
 
-    console.log('profile image url', profileImageUrl)
-
     return (
         <div className={styles.searchContainer}>
             <p 
