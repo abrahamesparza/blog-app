@@ -27,7 +27,7 @@ export default function LoginForm() {
 
     const validateLoginResult = () => {
         if (loginResult === 'Success') {
-            router.push('/landing');
+            router.push(`/profile/${username}`);
             setNextPage(true);
         }
         else {

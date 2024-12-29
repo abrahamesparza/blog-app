@@ -83,7 +83,7 @@ export default function Profile() {
   };
 
   const routeBack = () => {
-    router.push('/landing');
+    router.push('/explore');
   };
 
   const addFriend = async () => {
