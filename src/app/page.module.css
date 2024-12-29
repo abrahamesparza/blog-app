@@ -227,12 +227,19 @@
     border-radius: 4px;
 }
 
+.searchMenu {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+}
+
 .searchInput {
     width: 100%;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 .searchResults {
@@ -242,16 +249,140 @@
 }
 
 .searchResultItem {
-    padding: 5px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
     cursor: pointer;
+    gap: 25px;
     border-bottom: 1px solid #f0f0f0;
+}
+
+.searchProfileImage {
+    border-radius: 50%;
+    object-fit: cover;
+    width: 40px;
+    height: 40px;
+    /* margin-top: 10px; */
+
 }
 
 .searchResultItem:hover {
     background-color: #f8f9fa;
+    border-color: #887efa;
 }
 
 .noResults {
     margin-top: 10px;
     color: #888;
+}
+
+.loadingMessage {
+    text-align: center;
+    font-size: 14px;
+    margin-top: 10px;
+    color: #888;
+}
+
+
+
+
+
+
+@media only screen and (max-width: 768px) {
+    .homePage {
+        height: auto; /* Allow height to adjust dynamically */
+        color: #404040;
+        padding: 10px; /* Add padding for smaller screens */
+    }
+    .navItem {
+        justify-content: flex-start;
+        margin-left: -5px;
+    }
+    .banner {
+        flex-direction: row;
+        align-items: center;
+        padding: 10px;
+    }
+    .carouselItems {
+        position: relative; /* Adjust positioning for smaller screens */
+    }
+    .unorderedList {
+        flex-direction: row; /* Stack items vertically */
+        margin-top: 20px;
+        gap: 15px;
+    }
+    .formOption {
+        flex-direction: row; /* Stack options vertically */
+        align-items: flex-start;
+        gap: 15px;
+        font-size: 14px; /* Adjust font size for readability */
+        margin-right: 10px;
+    }
+    .formBody {
+        width: 100%; /* Remove viewport width constraint */
+        height: 100vh; /* Allow height to adjust */
+        padding: 20px;
+    }
+    .input {
+        width: 100%; /* Expand input to full width */
+    }
+    .descriptionContainer {
+        margin: 10vh 20px; /* Reduce side margins */
+    }
+    .descriptionText {
+        font-size: 18px; /* Adjust font size */
+        text-align: center; /* Center-align text */
+        line-height: 1.8;
+    }
+    .friendRequestsContainer {
+        max-width: 90%; /* Use more screen space */
+    }
+
+    .frP {
+        font-size: 17px;
+    }
+
+    .friendRequests {
+        /* padding: 10px 10px; */
+        border-bottom: 1px solid #ccc;
+        border-radius: 4px;
+        gap: 10px;
+    }
+
+    .profileImage {
+        width: 50px;
+        height: 50px;
+    }
+    .linksContainer {
+        flex-direction: column; /* Stack links vertically */
+        gap: 10px;
+    }
+    .forgotPassword, .signUpText {
+        font-size: 10px; /* Adjust font size */
+        text-align: center; /* Center-align text */
+    }
+    .searchButton {
+        font-size: 16px; /* Slightly larger text for touch devices */
+        padding: 10px; /* Comfortable touch target */
+    }
+
+    .searchDropdown {
+        padding: 15px; /* Extra padding for easier touch navigation */
+    }
+
+    .searchInput {
+        font-size: 16px; /* Increased input text size */
+        padding: 10px; /* Larger touch target */
+    }
+
+    .searchResultItem {
+        font-size: 16px; /* Larger text for readability */
+        padding: 12px; /* Comfortable spacing */
+    }
+
+    .noResults {
+        font-size: 16px; /* Consistent text size */
+        padding: 12px; /* Adjusted for spacing */
+    }
 }

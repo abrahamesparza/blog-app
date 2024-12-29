@@ -91,6 +91,26 @@
     animation: scaleUp 0.5s ease-in-out;
 }
 
+.author {
+    color: #887efa;
+}
+.author:hover {
+    cursor: pointer;
+    color: #58b7ff;
+}
+
+.profileImage {
+    border-radius: 50%;
+    object-fit: cover;
+    width: 100px;
+    height: 100px;
+}
+
+.timestamp {
+    margin-top: -20px;
+    color: #a7a7a7;
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -109,10 +129,56 @@
     }
 }
 
-.author {
-    color: #887efa;
+
+
+
+
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+    .blogContainer {
+        margin: 15px; /* Reduced margin */
+        padding: 15px; /* Adjusted padding */
+    }
+
+    .blogTitle {
+        font-size: 1.8rem; /* Smaller font size for titles */
+    }
+
+    .blogContent {
+        font-size: 0.95rem; /* Smaller content font size */
+    }
+
+    .editIcons {
+        gap: 8px; /* Reduced gap for compact layout */
+    }
+
+    .successAnimation {
+        width: 35px;
+        height: 35px;
+    }
 }
-.author:hover {
-    cursor: pointer;
-    color: #58b7ff;
+
+@media screen and (max-width: 480px) {
+    .blogContainer {
+        margin: 10px; /* Further reduced margin for extra-small screens */
+        padding: 10px;
+    }
+
+    .blogTitle {
+        font-size: 1.5rem;
+    }
+
+    .blogContent {
+        font-size: 0.9rem;
+    }
+
+    .privacyContainer {
+        flex-direction: row; /* Stack icons vertically */
+        gap: 5px;
+    }
+
+    .tooltip {
+        font-size: 9px; /* Even smaller font for tooltips */
+    }
 }

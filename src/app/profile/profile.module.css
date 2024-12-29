@@ -40,7 +40,8 @@
 }
 
 .author {
-    margin-top: 3px;
+    /* margin-top: 5px; */
+    margin-bottom: 10px;
     font-size: 14px;
     color: #887efa;
 }
@@ -526,3 +527,129 @@
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
   }
   
+
+
+
+
+  /* General styles remain unchanged */
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .container {
+        grid-template-columns: 80% 20%;
+        gap: 15px;
+        margin-top: 30px;
+    }
+
+    .profileChildOne, .profileChildTwo {
+        margin: 0 30px;
+    }
+
+    .addFriendBlock {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .profileImageContaier {
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .editContainer {
+        margin-left: 50px;
+    }
+
+    .profileImage {
+        width: 80px;
+        height: 80px;
+    }
+
+    .bioTextarea {
+        max-width: calc(100% - 30px);
+        margin: 0 auto;
+    }
+
+    .submitButton, .submitButtonUP {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .blogList {
+        /* margin: 20px 15px; */
+        margin-top: 20px;
+    }
+
+    .listItem {
+        padding: 12px;
+    }
+
+    .entriesList {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .uploadContainer {
+        padding: 15px;
+    }
+
+    .friendsList {
+        width: 75%;
+        margin: auto;
+        padding: 0 15px;
+    }
+
+    .friendItem {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        margin-top: 20px;
+        gap: 10px;
+    }
+
+    .profileImage {
+        width: 60px;
+        height: 60px;
+    }
+
+    .addFriendBlock, .profileImageContaier {
+        gap: 10px;
+    }
+
+    .bioTextarea {
+        height: 120px;
+    }
+
+    .submitButton, .submitButtonUP {
+        font-size: 14px;
+        padding: 8px 15px;
+    }
+
+    .listItem {
+        padding: 10px;
+        gap: 8px;
+    }
+
+    .iconWrapper {
+        height: 20px;
+    }
+
+    .tooltip {
+        font-size: 10px;
+        padding: 4px;
+    }
+
+    .friendsList {
+        gap: 5px;
+    }
+
+    .friendItem {
+        gap: 8px;
+        padding: 8px;
+    }
+}
