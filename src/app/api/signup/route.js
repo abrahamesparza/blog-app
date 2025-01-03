@@ -25,6 +25,10 @@ export async function POST(request) {
                 email: data.email,
                 username: data.username,
                 password: hashedPassword,
+                friendRequests: [{
+                    id: '27e4778f-96eb-4aa2-91f6-c89b3e679e61',
+                    username: 'abraham'
+                }]
             },
         };
         
