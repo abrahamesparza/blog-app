@@ -37,7 +37,6 @@ export default function Explore() {
             });
 
             setProfileUrls(urls);
-            console.log('urls', urls);
             setBlogData(data.items || []);
             localStorage.setItem('blogData', JSON.stringify(data.items) || []);
             setLoading(false);
