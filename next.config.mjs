@@ -3,7 +3,7 @@ const nextConfig = {
     images: {
         remotePatterns: [{
             protocol: 'https',
-            hostname: 'users-pfp.s3.amazonaws.com',
+            hostname: 'd2ttp8nkg66jp0.cloudfront.net',
             pathname: '/profiles/**',
         },
     ],
