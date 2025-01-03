@@ -1,12 +1,19 @@
 import { NextResponse } from "next/server";
 import dynamoDB from "../lib/dynamodb";
-import { useDebugValue } from "react";
+import NodeCache from "node-cache";
+
+const cache = new NodeCache({ stdTTL: 60, checkperiod: 120 });
 
 export async function GET(request) {
-    console.log('in get-user-data API')
     const { searchParams } = new URL(request.url);
     const username = searchParams.get('username');
-    
+
+    const cacheData = cache.get(username);
+    if (cacheData) {
+        console.log('Cache hit');
+        return NextResponse.json(cacheData);
+    }
+
     if (!username) {
         return NextResponse.json({ message: 'No username in query' });
     }
@@ -29,12 +36,12 @@ export async function GET(request) {
         }
         if (userData.blogs) {
             userData.blogs.reverse();
-            return NextResponse.json(userData);
         }
-        
+
+        cache.set(username, userData);
         return NextResponse.json(userData);
     } catch (error) {
-        console.error(error)
-        return NextResponse.json({ error: 'Failed to fetch data' })
+        console.error(error);
+        return NextResponse.json({ error: 'Failed to fetch data' });
     }
 }

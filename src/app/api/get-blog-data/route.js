@@ -1,10 +1,19 @@
 import dynamoDB from "../lib/dynamodb";
 import { NextResponse } from 'next/server';
+import NodeCache from "node-cache";
+
+const cache = new NodeCache({ stdTTL: 60, checkperiod: 120 });
 
 export async function GET(request) {
     const { searchParams } = new URL(request.url)
     const userId = searchParams.get('userId');
-    console.log('user id:', userId)
+
+    const cachedData = cache.get(userId);
+    if (cachedData) {
+        console.log('Cache hit');
+        return NextResponse.json(({ items: cachedData }));
+    }
+
     const params = {
         TableName: 'users',
         KeyConditionExpression: 'id = :userId',
@@ -53,6 +62,7 @@ export async function GET(request) {
                 });
             }
         }
+        cache.set(userId, data);
         return NextResponse.json({ items: data });
     } catch (err) {
         console.error(err);
