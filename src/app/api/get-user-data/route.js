@@ -10,7 +10,6 @@ export async function GET(request) {
 
     const cacheData = cache.get(username);
     if (cacheData) {
-        console.log('Cache hit');
         return NextResponse.json(cacheData);
     }
 

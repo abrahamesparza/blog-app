@@ -21,7 +21,6 @@ export async function GET(request) {
 
         const response = await dynamoDB.query(params).promise();
         const users = response.Items.map(item => item);
-        console.log('users', users);
         return NextResponse.json({ message: 'Success', users: users })
     }
     catch (error) {

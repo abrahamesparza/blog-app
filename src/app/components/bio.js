@@ -36,7 +36,6 @@ const Bio = () => {
                 localStorage.setItem('bio', response.updatedField);
                 setUploadComplete(true);
                 setTimeout(() => router.push(`/profile/${username}`), 3000);
-                console.log('response:', response)
             }
         }
         catch(error) {
@@ -51,8 +50,6 @@ const Bio = () => {
         let bio = e.target.value;
         setBio(bio);
     }
-
-    console.log('bio', bio);
 
     return (
         <div className={styles.editContainer}>

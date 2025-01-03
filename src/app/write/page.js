@@ -55,8 +55,6 @@ export default function Write() {
                 },
             });
             const data = await response.json();
-            console.log('data', data);
-            console.log('origin', origin);
 
             if (data.message === 'Success') {
                 setUploadComplete(true);

@@ -29,7 +29,6 @@ export async function POST(request) {
                 },
             };
             await dynamoDB.put(putParams).promise();
-            console.log("Item created.");
             return NextResponse.json({ message: "Item created.", bio: data });
         }
         else {
@@ -65,7 +64,6 @@ export async function POST(request) {
             };
 
             const updateResult = await dynamoDB.update(updateParams).promise();
-            console.log("Item updated.", updateResult);
             return NextResponse.json({
                 message: "Success",
                 updatedField: updateResult.Attributes.bio || updateResult.Attributes.username || updateResult.Attributes.password

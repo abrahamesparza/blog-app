@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 
 export async function POST(request) {
     let sessionId = request.cookies.get('sessionId');
-    console.log(`sessionId: ${sessionId}`);
 
     if (sessionId) {
         const response = NextResponse.json({message: 'Success' });

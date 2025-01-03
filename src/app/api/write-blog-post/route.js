@@ -7,7 +7,6 @@ export async function POST(request) {
         let data = await request.json();
         data.id = v4();
         const username = data.author;
-        console.log('username:', username);
         const queryParams = {
             TableName: 'users',
             IndexName: 'username-index',

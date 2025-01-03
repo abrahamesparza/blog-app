@@ -63,7 +63,6 @@ export default function Edit() {
     };
 
     const renderComponent = () => {
-        console.log('option', option)
         switch(option) {
             case 'Photo':
                 return <UploadPhoto />

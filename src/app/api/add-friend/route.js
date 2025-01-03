@@ -47,7 +47,6 @@ export async function POST(request) {
         };
 
         const updatedResult = await dynamoDB.update(updateParams).promise();
-        console.log(updatedResult.Attributes);
         return NextResponse.json({ message: 'Success', data: updatedResult.Attributes.friendRequests });
     }
     catch (error) {

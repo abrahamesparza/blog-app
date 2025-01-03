@@ -11,7 +11,6 @@ export default function OurStory() {
 
     function handleForm(e) {
         let formType = e.target.innerText;
-        console.log('form type', formType)
         setForm(formType)
     }
 

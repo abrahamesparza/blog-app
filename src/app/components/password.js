@@ -35,7 +35,6 @@ const Password = () => {
             else {
                 setUploadComplete(true);
                 setTimeout(() => router.push(`/profile/${username}`), 3000);
-                console.log('response:', response)
             }
         }
         catch(error) {

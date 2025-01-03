@@ -21,8 +21,6 @@ const Username = () => {
         e.preventDefault();
         setSubmitting(true);
         try {
-            console.log(username)
-            console.log(page)
             const url = '/api/edit-profile';
             const data = await fetch(url, {
                 method: 'POST',
@@ -52,8 +50,6 @@ const Username = () => {
         let username = e.target.value;
         setUpdatedUsername(username);
     };
-    console.log('updated username:', updatedUsername);
-    console.log('username', username);
 
     return (
         <div className={styles.editContainer}>
