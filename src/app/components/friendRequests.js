@@ -62,7 +62,6 @@ export default function FriendRequests() {
             });
 
             const data = await response.json();
-            console.log('DATA', data);
             if (data.message === 'Success') {
                 setFriendRequests(prevRequest =>
                     prevRequest.filter(request => request !== friendRequest)
