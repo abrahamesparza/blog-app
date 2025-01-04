@@ -55,6 +55,7 @@ export default function SignupForm() {
 
         const result = await response.json();
         localStorage.setItem('loggedInUser', result.username);
+        localStorage.setItem('userId', result.userId);
         setUsername(result.username);
         checkNextStep(result.message)
         setFormData(initialFormData)
