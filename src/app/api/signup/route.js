@@ -41,7 +41,7 @@ export async function POST(request) {
             username: data.username
         });
 
-        const response = NextResponse.json({ message: 'Success', username: data.username });
+        const response = NextResponse.json({ message: 'Success', username: data.username, userId: uniqueId });
         response.cookies.set('sessionId', sessionId, {
             httpOnly: true,
             maxAge: 86400
