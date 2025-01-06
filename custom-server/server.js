@@ -9,7 +9,7 @@ const handle = app.getRequestHandler();
 
 const port = process.env.PORT || 3000;
 
-if (cluster.isMaster) {
+if (cluster.isMaster && process.env.HEROKU !== 'true') {
     console.log(`Master ${process.pid} is running`);
 
     for (let i = 0; i < cpuCount; i++) {
@@ -17,8 +17,7 @@ if (cluster.isMaster) {
     }
 
     cluster.on('exit', (worker, code, signal) => {
-        console.log(`Worker ${worker.process.pid} died`);
-        console.log('Starting a new worker...');
+        console.log(`Worker ${worker.process.pid} died. Starting a new worker...`);
         cluster.fork();
     });
 } else {
@@ -32,6 +31,11 @@ if (cluster.isMaster) {
 
         server.listen(port, () => {
             console.log(`Worker ${process.pid} is listening on port ${port}`);
+        });
+
+        process.on('SIGTERM', () => {
+            console.log(`Worker ${process.pid} is shutting down...`);
+            process.exit(0);
         });
     });
 }
