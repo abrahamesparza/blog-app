@@ -7,6 +7,8 @@ const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
+const port = process.env.PORT || 3000;
+
 if (cluster.isMaster) {
     console.log(`Master ${process.pid} is running`);
 
@@ -28,8 +30,8 @@ if (cluster.isMaster) {
             return handle(req, res);
         });
 
-        server.listen(3000, () => {
-            console.log(`Worker ${process.pid} is listening on port 3000`);
+        server.listen(port, () => {
+            console.log(`Worker ${process.pid} is listening on port ${port}`);
         });
     });
 }
