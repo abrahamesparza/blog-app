@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "node custom-server/server.js",
+    "start": "node --optimize_for_size --max_old_space_size=460 custom-server/server.js",
     "lint": "next lint"
   },
   "dependencies": {
