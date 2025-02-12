@@ -1,4 +1,6 @@
 # Blog Application
+### Url: https://journal-mvp-a5bfc416f691.herokuapp.com/
+---
 ### This repository showcases a powerful and feature-rich full-stack blogging application, designed for seamless user interactions, content creation, and community building.
 
 ## 🛠️ Tech Stack
